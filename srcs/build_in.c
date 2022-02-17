@@ -6,32 +6,55 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 13:14:42 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/16 14:46:48 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/17 15:40:58 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_mini_cd(char *path)
+int	ft_mini_cd(t_token *cmd, t_m *mini)
 {
 	char	*base;
+	char	*path;
+	char 	cwd[1024];
 
-	base = getenv("HOME");
+	base = ft_getenv(&(cmd->mini), "HOME");
+	path = cmd[1].value;
 	if (!path || ft_strlen(path) == 0)
 		path = base;
-	else if (ft_strncmp(path, "~", 1) == 0)
+	else if (ft_strncmp(path, "~", 1) == 0 && base)
 		path = ft_strjoin(base, path + 1);
 	if (chdir(path) == -1)
 		perror("cd");
+	else
+	{
+		if (getcwd(cwd, sizeof(cwd)) != NULL)
+		{
+			ft_setenv(mini, "OLDPWD", ft_getenv(mini, "PWD"));
+			ft_setenv(mini, "PWD", cwd);
+			ft_printf("PWD : %s", cwd);
+		}
+	}
 	return (1);
 }
 
-int	ft_mini_pwd(void)
+int	ft_mini_pwd(t_token *cmd)
 {
-	char	*s;
+	char 	cwd[1024];
+	int		i;
 
-	s = getcwd(NULL, 0);
-	ft_printf("%s\n", s);
+	i = 1;
+	while (cmd[i].type && ft_strcmp(cmd[i].type, "CHAR") == 0) // Faut check le nombre darg
+		i++;
+	if (i > 1)
+	{
+			ft_printf("pwd: too many arguments\n"); // Il faut faire un print dans le stderror
+		return (1);
+	}
+	if (getcwd(cwd, sizeof(cwd)) != NULL)
+		ft_printf("%s\n", cwd);
+	else
+		perror("pwd\n"); // Afficher sur le stderror
 	return (1);
 }
 
@@ -46,26 +69,26 @@ int	ft_check_arg(char *str)
 	return (1);
 }
 
-int	ft_mini_echo(char **str)
+int	ft_mini_echo(t_token *cmd)
 {
 	int	i;
 	int	n;
 
 	i = 1;
 	n = 0;
-	while (str[i])
+	while (cmd[i].type && ft_strcmp(cmd[i].type, "CHAR") == 0)
 	{
-		if (i == 1 && ft_strncmp(str[i], "-", 1) == 0 && ft_check_arg(str[i]))
+		if (i == 1 && ft_strncmp(cmd[i].value, "-", 1) == 0 && ft_check_arg(cmd[i].value))
 		{
 			n = 1;
 			i++;
-			if (!str[i])
+			if (!cmd[i].type)
 				return (1);
 			continue ;
 		}
-		ft_printf("%s", str[i]);
+		ft_printf("%s", cmd[i].value);
 		i++;
-		if (str[i])
+		if (cmd[i].type && ft_strcmp(cmd[i].type, "CHAR") == 0)
 			ft_printf(" ");
 	}
 	if (n == 0)
@@ -73,13 +96,30 @@ int	ft_mini_echo(char **str)
 	return (1);
 }
 
-int	cmd_built(t_token *cmd)
+int	ft_mini_export(t_token *cmd, t_m *mini)
+{
+	ft_setenv(mini, cmd[1].value, cmd[2].value);
+	return (1);
+}
+
+int	ft_mini_env(t_m *mini)
+{
+	ft_printenv(mini);
+	return (1);
+}
+
+
+int	cmd_built(t_token *cmd, t_m *mini)
 {
 	if (ft_strcmp(cmd[0].value, "cd") == 0)
-		return (ft_mini_cd(cmd[1].value));
-	/*else if (ft_strcmp(cmd[0].value, "echo") == 0)
+		return (ft_mini_cd(cmd, mini));
+	else if (ft_strcmp(cmd[0].value, "echo") == 0)
 		return (ft_mini_echo(cmd));
 	else if (ft_strcmp(cmd[0].value, "pwd") == 0)
-		return (ft_mini_pwd());*/
+		return (ft_mini_pwd(cmd));
+	else if (ft_strcmp(cmd[0].value, "export") == 0)
+		return (ft_mini_export(cmd, mini));
+	else if (ft_strcmp(cmd[0].value, "env") == 0)
+		return (ft_mini_env(mini));
 	return (0);
 }

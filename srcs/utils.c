@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:45:45 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/15 15:26:25 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/17 16:08:27 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,28 @@ char	**ft_realloc(char **cmd, int size)
 	free(cmd);
 	new[i] = NULL;
 	return (new);
+}
+
+void	free_cmd(t_token *cmd)
+{
+	int	i;
+
+	i = -1;
+	while (cmd[++i].value)
+		free(cmd[i].value);
+	free(cmd);
+}
+
+void	free_env(t_m *mini)
+{
+	int	i;
+
+	i = 0;
+	while (i < (mini->env_lenght - 1))
+	{
+		free(mini->env[i].value);
+		free(mini->env[i].name);
+		i++;
+	}
+	free(mini->env);
 }

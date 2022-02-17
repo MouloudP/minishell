@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 15:26:50 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/16 11:57:45 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/17 14:45:05 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,8 @@ t_token	*ft_partsing(char *str) // La base en gros on va juste récupérér la c
 		if (ft_whitespace(str[i])) // On évite les boucles infini
 			i++;
 	}
+	cmd[j].type = NULL;
+	cmd[j].value = NULL;
 	return (cmd);
 }
 

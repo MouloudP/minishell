@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 10:20:48 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/16 09:41:25 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/17 16:08:47 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,14 +104,15 @@ int	main(int argc, char *argv[], char **env)
 	(void) argv;
 	setup_signal(&mini);
 	get_env(env, &mini);
-	line = readline("$> ");
+	line = readline("\e[0;35mLeShell\e[0;33mDeLaHonte $>\e[0;37m ");
 	while (line)
 	{
 		add_history(line);
 		if (line[0])
 		{
 			cmd = ft_partsing(line);
-			if (cmd_built(cmd) == 0)
+			cmd->mini = mini;
+			if (cmd_built(cmd, &mini) == 0)
 			{
 				//get_absolute_path(cmd);
 				//if (!cmd[0])
@@ -119,9 +120,11 @@ int	main(int argc, char *argv[], char **env)
 				//else
 				//	exec_cmd(cmd);
 			}
-			//Faut ici free le cmd;
+			free_cmd(cmd);
 		}
-		line = readline("$> ");
+		free(line);
+		line = readline("\e[0;35mLeShell\e[0;33mDeLaHonte $>\e[0;37m ");
 	}
 	rl_clear_history();
+	free_env(&mini);
 }
