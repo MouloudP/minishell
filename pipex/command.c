@@ -6,25 +6,45 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 19:13:26 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/18 14:50:11 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/18 16:29:25 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	write_command_output(int pipe_fd, int fd)
+int	write_fd_to_fd(int src_fd, int dst_fd)
 {
 	char	buffer[1023];
 	int		ret;
+	int		pipe_fd[2];
 
 	ret = 1;
+	pipe(pipe_fd);
 	while (ret > 0)
 	{
-		ret = read(pipe_fd, buffer, 1023);
-		write(fd, buffer, ret);
+		ret = read(src_fd, buffer, 1023);
+		write(dst_fd, buffer, ret);
+		write(pipe_fd[1], buffer, ret);
 	}
-	close(fd);
-	return (pipe_fd);
+	close(pipe_fd[1]);
+	return (pipe_fd[0]);
+}
+
+int	write_command_output(char *outfile, int fd_src)
+{
+	int		fd_outfile;
+
+	if (!outfile)
+		return (input_error("parse error near '\\n'", NULL, 0));
+	fd_outfile = open(outfile, O_RDWR | O_CREAT, S_IRWXU);
+	if (fd_outfile == -1)
+		return (input_error("cant open fd", NULL, 0));
+	close(fd_outfile);
+	unlink(outfile);
+	fd_outfile = open(outfile, O_RDWR | O_CREAT, S_IRWXU);
+	if (fd_outfile == -1)
+		return (input_error("cant open fd", NULL, 0));
+	return (write_fd_to_fd(fd_src, fd_outfile));
 }
 
 /* close all the open fd */

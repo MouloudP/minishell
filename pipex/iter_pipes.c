@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 12:03:44 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/18 14:56:47 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/18 17:18:38 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,32 @@ int	run_process_command(int first_pipe, char **cmd_args, char **env)
 		return (-1);
 	}
 	close_pipe(new_pipe_fd);
-	return (0);
+	return (pid);
 }
 
-int	print_outfiles(int *first_pipe, char **outfiles)
+int	print_outfiles(int first_pipe, t_str_tab *outfiles)
 {
 	int	i;
 
 	i = 0;
-	while (outfiles[i])
+	while (i < outfiles->size)
 	{
-		*first_pipe = write_command_output(*first_pipe, 1);
+		first_pipe = write_command_output(outfiles->str[i], first_pipe);
 		++i;
 	}
-	free(outfiles);
+	return (first_pipe);
+}
+
+int	wait_all_pid(pid_t *pid, int size)
+{
+	int	i;
+
+	i = 0;
+	while (i < size)
+	{
+		waitpid(pid[i], 0, 0);
+		++i;
+	}
 	return (0);
 }
 
@@ -65,13 +77,16 @@ int	iter_pipes(int argc, char **argv, char **env, char **paths)
 	int			first_pipe;
 	int			arg_i;
 	int			has_printed;
-	t_stack		*outfiles;
+	t_str_tab	*outfiles;
 	t_str_tab	*cmd_args;
+	pid_t		*pids;
+	
 
 	(void)argc;
 	first_pipe = 0;
 	arg_i = 1;
 	has_printed = 0;
+	pids = malloc(sizeof(pid_t) * 30);
 	while (argv[arg_i] != NULL)
 	{	
 		has_printed = 0;
@@ -80,21 +95,22 @@ int	iter_pipes(int argc, char **argv, char **env, char **paths)
 		has_printed = 0;
 		/* use excve on the cmd */
 		cmd_args->str[0] = parse_cmd(cmd_args->str[0], paths);
-		run_process_command(first_pipe, cmd_args->str, env);
+		//add cmd
+		pids[arg_i] = run_process_command(first_pipe, cmd_args->str, env);
 		free(cmd_args->str);
 		free(cmd_args);
 		/* end execution cmd (must be move in a function) */
 		if (outfiles->size > 0)
 		{
 			has_printed = 1;
-			write_command_output(first_pipe, outfiles->v[0]);
-			// print_outfiles(&first_pipe, outfiles);
+			first_pipe = print_outfiles(first_pipe, outfiles);
 		}
-		free(outfiles->v);
+		free(outfiles->str);
 		free(outfiles);
 	}
 	if (has_printed == 0)
-		write_command_output(first_pipe, 1);
+		write_fd_to_fd(first_pipe, 1);
+	wait_all_pid(pids, arg_i);
 	close(first_pipe);	
 	return (1);
 }

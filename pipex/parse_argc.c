@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 11:45:20 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/18 14:55:04 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/18 16:15:10 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,30 +29,16 @@ int reserved_arg(char *arg)
 	return (0);
 }
 
-t_stack	*outfiles_chevron(char **argv, t_stack *outfile_tmp, int *i, int mode)
+t_str_tab	*outfiles_chevron(char **argv, t_str_tab *outfile_tmp, int *i)
 {
-	char	buffer[1023];
-	int		ret;
-	int		fd;
-	char	*outfile;
+	// char	buffer[1023];
+	// int		ret;
 
 	++*i;
-	outfile = argv[*i];
-	if (!outfile)
-		return (input_error("parse error near '\\n'", NULL, 0), NULL);
-	fd = open(outfile, O_RDWR | O_CREAT, S_IRWXU);
-	if (fd == -1)
-		return (input_error("cant open fd", NULL, 0), NULL);
-	close(fd);
-	if (mode == 0)
-		unlink(outfile);
-	fd = open(outfile, O_RDWR | O_CREAT, S_IRWXU);
-	if (fd == -1)
-		return (input_error("cant open fd", NULL, 0), NULL);
-	ret = 1023;
-	while (ret == 1023)
-		ret = read(fd, buffer, 1023);
-	outfile_tmp->v[outfile_tmp->size] = fd;
+	// ret = 1023;
+	// while (ret == 1023)
+	// 	ret = read(fd, buffer, 1023);
+	outfile_tmp->str[outfile_tmp->size] = argv[*i];
 	outfile_tmp->size += 1;
 	return (outfile_tmp);
 }
@@ -82,24 +68,26 @@ t_stack	*create_stack(t_stack *stack, int size)
 	return (stack);
 }
 
-int	change_in_out(int first_pipe, char **argv, t_stack **outfiles, t_str_tab **cmd_args)
+int	change_in_out(int first_pipe, char **argv, t_str_tab **outfiles, t_str_tab **cmd_args)
 {
 	int			cmd_index;
 	int			i;
 	t_str_tab	*cmd_in_arg;
-	t_stack		*outfile_tmp;
+	t_str_tab	*outfile_tmp;
 
 	(void)first_pipe;
 	outfile_tmp = NULL;
 	cmd_in_arg = NULL;
 	cmd_in_arg = create_str_tab(cmd_in_arg, 30);
-	outfile_tmp = create_stack(outfile_tmp, 30);
+	outfile_tmp = create_str_tab(outfile_tmp, 30);
 	cmd_index = -1;
 	i = 0;
 	while (argv[i] && ft_strcmp(argv[i], "|") != 0)
 	{
 		if (ft_strcmp(argv[i], ">") == 0)
-			outfile_tmp = outfiles_chevron(argv, outfile_tmp, &i, 0);
+			outfile_tmp = outfiles_chevron(argv, outfile_tmp, &i);
+		else if (ft_strcmp(argv[i], ">>") == 0)
+			outfile_tmp = outfiles_chevron(argv, outfile_tmp, &i);
 		else
 			cmd_in_arg = cmd_adding(argv, cmd_in_arg, &i, &cmd_index);
 		// else if (ft_strcmp(argv[i], "<") == 0)
