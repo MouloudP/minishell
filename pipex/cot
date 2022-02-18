@@ -83,3 +83,33 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	ft_strlcpy(&res[ft_strlen(s1)], s2, ft_strlen(s2) + 1);
 	return (res);
 }
+total 144
+-rwxr-xr-x 1 pleveque 2021_paris 16784 Feb 18 10:55 a.out
+-rw-r--r-- 1 pleveque 2021_paris  3273 Feb 18 17:58 command.c
+-rwx------ 1 pleveque 2021_paris  1975 Feb 18  2022 cot
+drwxr-xr-x 2 pleveque 2021_paris  4096 Feb 17 13:04 filestest
+-rw-r--r-- 1 pleveque 2021_paris  2260 Feb 17 12:28 first_cmd.c
+-rw-r--r-- 1 pleveque 2021_paris  2413 Feb 16 18:11 ft_split.c
+-rw-r--r-- 1 pleveque 2021_paris  2694 Feb 16 18:11 get_next_line.c
+-rw-r--r-- 1 pleveque 2021_paris  1284 Feb 16 18:11 get_next_line.h
+-rw-r--r-- 1 pleveque 2021_paris  1821 Feb 16 18:11 get_next_line_utils.c
+-rw-r--r-- 1 pleveque 2021_paris     0 Feb 18 16:54 head
+-rw-r--r-- 1 pleveque 2021_paris  3072 Feb 18 18:18 iter_pipes.c
+-rwxr-xr-x 1 pleveque 2021_paris  2640 Feb 18 12:16 main.c
+-rw-r--r-- 1 pleveque 2021_paris   940 Feb 18 11:46 Makefile
+-rw-r--r-- 1 pleveque 2021_paris  2586 Feb 18 18:05 parse_argc.c
+-rwxr-xr-x 1 pleveque 2021_paris 27624 Feb 18 18:18 pipex
+-rw-r--r-- 1 pleveque 2021_paris  2387 Feb 18 18:04 pipex.h
+-rw-r--r-- 1 pleveque 2021_paris   196 Feb 16 18:11 README.md
+-rw-r--r-- 1 pleveque 2021_paris   243 Feb 18 17:39 tast
+-rw-r--r-- 1 pleveque 2021_paris     6 Feb 18 17:29 test1
+-rwx------ 1 pleveque 2021_paris     6 Feb 17 13:13 test2
+-rw-r--r-- 1 pleveque 2021_paris   348 Feb 18 10:55 test.c
+-rw-r--r-- 1 pleveque 2021_paris     0 Feb 18 17:39 tost
+-rw-r--r-- 1 pleveque 2021_paris  1422 Feb 16 18:11 utils2.c
+-rw-r--r-- 1 pleveque 2021_paris  1321 Feb 18 12:31 utils3.c
+-rwx------ 1 pleveque 2021_paris  1975 Feb 18 17:27 utils.c
+-rw-r--r-- 1 pleveque 2021_paris     0 Feb 18 17:24 yo1
+-rw-r--r-- 1 pleveque 2021_paris  1975 Feb 18 17:43 yo2
+-rw-r--r-- 1 pleveque 2021_paris  3950 Feb 18 17:25 you1
+-rw-r--r-- 1 pleveque 2021_paris  1975 Feb 18 17:25 you2
