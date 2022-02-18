@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 16:24:21 by pleveque          #+#    #+#             */
-/*   Updated: 2022/01/20 12:31:59 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/18 14:50:21 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,19 @@
 # include <sys/stat.h>
 # include "get_next_line.h"
 
+typedef struct s_str_tab
+{
+	char	**str;
+	int		size;
+}	t_str_tab;
+
+typedef struct s_stack
+{
+	int		*v;
+	int		size;
+}	t_stack;
+
+
 /* UTILS */
 char	*ft_strjoin(char const *s1, char const *s2);
 int		ft_strlen(char const *str);
@@ -37,14 +50,17 @@ int		free_split_int(char **splitted);
 void	close_pipe(int *pipe);
 int		fork_store(pid_t *pid_res);
 int		open_store(int *fd_res, char *filename, int mode);
+int		change_in_out(int first_pipe, char **argv,
+			t_stack **outfiles, t_str_tab **cmd_args);
+int    	ft_strs_include(char *s, char **str);
 
 /* MAIN */
 int		first_cmd(char **argv, char **env, char **paths);
 int		run_command(int entry_pipe, int	*pipe_fd, char **argv, char **env);
-char	**parse_cmd(char *command, char **paths);
+char	*parse_cmd(char *command, char **paths);
 int		input_error(char *error_type, char	*precision, int type);
 int		limited_stdin(char **argv);
-int		write_command_output(int pipe_fd, char *output, int add_to);
+int		write_command_output(int pipe_fd, int fd);
 int		iter_pipes(int argc, char **argv, char **env, char **paths);
 
 #endif

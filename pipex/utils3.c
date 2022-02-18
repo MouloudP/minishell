@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 12:00:13 by pleveque          #+#    #+#             */
-/*   Updated: 2022/01/20 12:31:47 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/18 12:31:03 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,17 @@ int	open_store(int *fd_res, char *filename, int mode)
 	if (*fd_res == -1)
 		return (-1);
 	return (0);
+}
+
+int	ft_strs_include(char *s, char **str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (ft_strcmp(s, str[i]) == 0)
+			return (1);
+	}
+	return(0);
 }

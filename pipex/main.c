@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 16:24:13 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/16 17:03:01 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/18 12:16:49 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,19 +41,18 @@ int	input_error(char *error_type, char	*precision, int type)
 	else
 	{
 		if (type == 1)
-		{
 			write(2, "\033[1;31mInvalid arguments\033[0m\n", 29);
-			printf("Try: ./pipex file1 <cmd1> <cmd2> <...> file2");
-			printf("\n     ./pipex here_doc <LIMITER> <cmd> <cmd1> <...> file");
-		}
 		else
 		{
-			printf("\033[1;31m%s\033[0m", error_type);
-			if (type == 2)
-				printf("Invalid command: \033[1;35m%s\n\033[0m", precision);
-			if (type == 3)
-				printf("Invalid file: \033[1;35m%s\n\033[0m", precision);
-			printf("\n");
+			(void)error_type;
+			(void)precision;
+			write(2, "Temp error msg\n", 15);
+			// printf("\033[1;31m%s\033[0m", error_type);
+			// if (type == 2)
+			// 	printf("Invalid command: \033[1;35m%s\n\033[0m", precision);
+			// if (type == 3)
+			// 	printf("Invalid file: \033[1;35m%s\n\033[0m", precision);
+			// printf("\n");
 		}
 	}
 	free(error);

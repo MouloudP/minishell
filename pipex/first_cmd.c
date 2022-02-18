@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 16:59:01 by pleveque          #+#    #+#             */
-/*   Updated: 2022/01/20 12:34:31 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/17 12:28:26 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int	first_cmd(char **argv, char **env, char **paths)
 
 	if (pipe(pipe_fd) == -1)
 		return (-1);
-	parsed_cmd = parse_cmd(argv[2], paths);
+	parsed_cmd = NULL;
+	*parsed_cmd = parse_cmd(argv[1], paths);
 	if (!parsed_cmd)
 	{
 		close(pipe_fd[1]);
