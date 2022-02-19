@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 12:00:13 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/18 12:31:03 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/19 16:13:20 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,11 @@ int	ft_strs_include(char *s, char **str)
 			return (1);
 	}
 	return(0);
+}
+
+int	ft_tern(int condition, int a, int b)
+{
+	if (condition == 1)
+		return (a);
+	return (b);
 }
