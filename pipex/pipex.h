@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 16:24:21 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/19 12:31:20 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/19 16:13:29 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int		fork_store(pid_t *pid_res);
 int		open_store(int *fd_res, char *filename, int mode);
 int		get_args(char **argv, t_str_tab **cmd_args, int *input_pipe, int *output_pipe);
 int    	ft_strs_include(char *s, char **str);
+int		ft_tern(int condition, int a, int b);
 
 /* MAIN */
 int		run_command(int entry_pipe, int	*pipe_fd, char **argv, char **env);

@@ -6,13 +6,11 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 19:13:26 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/19 12:31:55 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/19 16:01:10 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-/* close all the open fd */
 
 int	run_command(int entry_pipe, int	*pipe_fd, char **parsed_cmd, char **env)
 {

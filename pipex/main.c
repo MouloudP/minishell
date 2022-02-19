@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 16:24:13 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/19 12:15:20 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/19 15:02:27 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,14 @@ int	input_error(char *error_type, char	*precision, int type)
 /* work like old good regular pipex, return 0 if
 everything goes well or 1 if fail*/
 
-int	main(int argc, char **argv, char **env)
+int	pipex(t_pipes *pipes, char **env)
 {
 	char	**paths;
 
 	paths = get_paths(env);
 	if (!paths)
 		return (input_error("Environement", NULL, 4));
-	if (iter_pipes(argc, argv, env, paths) == -1)
+	if (iter_pipes(pipes, env, paths) == -1)
 	{
 		free_split(paths);
 		return (input_error("Excve", NULL, 0));
