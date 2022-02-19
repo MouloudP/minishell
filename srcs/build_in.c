@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 13:14:42 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/17 15:40:58 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/19 11:27:17 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,16 @@ int	ft_mini_cd(t_token *cmd, t_m *mini)
 		path = base;
 	else if (ft_strncmp(path, "~", 1) == 0 && base)
 		path = ft_strjoin(base, path + 1);
+	//ft_printf("JE VEUX ALLEZ LÀ : %s\n", path);
 	if (chdir(path) == -1)
 		perror("cd");
 	else
 	{
+		//if (ft_printf("MAIS JE ME RETROUVE ICI : %s\n", getcwd(cwd, sizeof(cwd))))
 		if (getcwd(cwd, sizeof(cwd)) != NULL)
 		{
-			ft_setenv(mini, "OLDPWD", ft_getenv(mini, "PWD"));
-			ft_setenv(mini, "PWD", cwd);
-			ft_printf("PWD : %s", cwd);
+			ft_setenv(mini, "OLDPWD", ft_getenv(mini, "PWD"), 1); // faut join le HOME Au pwd
+			ft_setenv(mini, "PWD", path, 1);
 		}
 	}
 	return (1);
@@ -52,7 +53,7 @@ int	ft_mini_pwd(t_token *cmd)
 		return (1);
 	}
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
-		ft_printf("%s\n", cwd);
+		ft_printf("%s\n", cwd); // faut join le HOME Au pwd
 	else
 		perror("pwd\n"); // Afficher sur le stderror
 	return (1);
@@ -98,7 +99,12 @@ int	ft_mini_echo(t_token *cmd)
 
 int	ft_mini_export(t_token *cmd, t_m *mini)
 {
-	ft_setenv(mini, cmd[1].value, cmd[2].value);
+	if (cmd[1].value && cmd[2].value)
+		ft_setenv(mini, cmd[1].value, cmd[2].value, 1);
+	else if (cmd[1].value)
+		ft_setenv(mini, cmd[1].value, NULL, 0);
+	else
+		ft_printexport(mini);
 	return (1);
 }
 
@@ -108,6 +114,11 @@ int	ft_mini_env(t_m *mini)
 	return (1);
 }
 
+int	ft_exit(t_m *mini)
+{
+	mini->end = 0;
+	return (1);
+}
 
 int	cmd_built(t_token *cmd, t_m *mini)
 {
@@ -121,5 +132,7 @@ int	cmd_built(t_token *cmd, t_m *mini)
 		return (ft_mini_export(cmd, mini));
 	else if (ft_strcmp(cmd[0].value, "env") == 0)
 		return (ft_mini_env(mini));
+	else if (ft_strcmp(cmd[0].value, "exit") == 0)
+		return	(ft_exit(mini));
 	return (0);
 }

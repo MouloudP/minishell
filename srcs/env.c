@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 11:26:05 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/17 16:03:28 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/19 10:28:31 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	ft_replaceenv(t_m *mini, char *name, char *value)
 	}
 }
 
-void	ft_setenv(t_m *mini, char *name, char *value)
+void	ft_setenv(t_m *mini, char *name, char *value, int init)
 {
 	int		i;
 	t_env	*env;
@@ -79,11 +79,17 @@ void	ft_setenv(t_m *mini, char *name, char *value)
 	{
 		env[i].name = mini->env[i].name;
 		env[i].value = mini->env[i].value;
+		env[i].init = mini->env[i].init;
 		i++;
 	}
 	env[i].name = ft_strdup(name);
-	env[i++].value = ft_strdup(value);
-	env[i].name = NULL;
+	env[i].init = init;
+	if (value)
+		env[i].value = ft_strdup(value);
+	else
+		env[i].value = NULL;
+	env[++i].name = NULL;
+	env[i].init = 1;
 	env[i++].value = NULL;
 	free(mini->env);
 	mini->env = env;
@@ -101,4 +107,65 @@ void	ft_printenv(t_m *mini)
 			ft_printf("%s=%s\n", mini->env[i].name, mini->env[i].value);
 		i++;
 	}
+}
+
+t_env	*ft_copy_env(t_m *mini)
+{
+	t_env	*new;
+	int		i;
+
+	new = malloc(sizeof(t_env) * (mini->env_lenght));
+	i = 0;
+	while (i < (mini->env_lenght - 1))
+	{
+		new[i].name = mini->env[i].name;
+		new[i].value = mini->env[i].value;
+		new[i].init = mini->env[i].init;
+		i++;
+	}
+	return (new);
+}
+
+void	ft_copy_part(t_env *srcs, t_env *dest)
+{
+	srcs->name = dest->name;
+	srcs->value = dest->value;
+	srcs->init = dest->init;
+}
+
+void	ft_printexport(t_m *mini)
+{
+	int		i;
+	int		j;
+	t_env	*new;
+	t_env	temp;
+
+	i = 0;
+	new = ft_copy_env(mini);
+	while (i < (mini->env_lenght - 1))
+	{
+		j = 0;
+		while (j < (mini->env_lenght - 1))
+		{
+			if(new[j + 1].name && ft_strcmp(new[j].name, new[j + 1].name) > 0)
+			{
+				//swap array[j] and array[j+1]
+				ft_copy_part(&temp, &new[j]);
+				ft_copy_part(&new[j], &new[j + 1]);
+				ft_copy_part(&new[j + 1], &temp);
+			}
+			j++;
+    	}
+		i++;
+ 	}
+	i = 0;
+	while (i < (mini->env_lenght - 1))
+	{
+		if (new[i].init)
+			ft_printf("%s=%s\n", new[i].name, new[i].value);
+		else
+			ft_printf("%s=''\n", new[i].name);
+		i++;
+	}
+	free(new);
 }

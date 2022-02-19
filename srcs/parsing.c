@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 15:26:50 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/17 14:45:05 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/19 10:50:38 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ char	*ft_getquote(char *str, int *i, char c)
 		arg = free_add_assign(arg, ft_strjoin(arg, s));
 		(*i)++;
 	}
+	free(s);
 	return (arg);
 }
 
@@ -91,12 +92,25 @@ t_token	ft_pipe(char *str, char c, int *i)
 	return (token);
 }
 
+void	*ft_calloc2(size_t count, size_t size)
+{
+	char	*copy;
+
+	copy = malloc(size * count);
+	if (!(copy))
+		return (NULL);
+	ft_memset(copy, 0, count * size);
+	return (copy);
+}
+
+
 t_token	ft_getarg(char *str, int *i) // On va traiter un argument et voir comment le traiter
 {
 	t_token	token; // A mon avis un token sera mieux
 	char	*s;
+	char	*temp;
 
-	token.value = ft_calloc(sizeof(char), 1);
+	token.value = ft_calloc2(sizeof(char), 1);
 	s = ft_calloc(sizeof(char), 2);
 	while (str[*i] && !ft_whitespace(str[*i])) // Temps que ya pas de whitespace
 	{
@@ -104,8 +118,9 @@ t_token	ft_getarg(char *str, int *i) // On va traiter un argument et voir commen
 		{
 			(*i)++;
 			token.type = "CHAR";
-			token.value = free_add_assign(token.value, ft_strjoin(token.value,
-						ft_getquote(str, i, str[*i - 1]))); // Et on va la mettre dans token.value avec strjoin
+			temp = ft_getquote(str, i, str[*i - 1]);
+			token.value = free_add_assign(token.value, ft_strjoin(token.value, temp)); // Et on va la mettre dans token.value avec strjoin
+			free(temp);
 		}
 		else // Sinon c un argument classique IL FAUT REGATDER SI YA DES PIPES OU DES TRUCS CHELOU
 		{
@@ -114,16 +129,16 @@ t_token	ft_getarg(char *str, int *i) // On va traiter un argument et voir commen
 			else if (ft_redirec(str[*i]))
 			{
 				if (ft_strlen(token.value) >= 1)
-					return (token);
+					return (free_and_return(s, token));
 				else
-					return (ft_redirection(str, str[*i], i)); // On capture le < ou le > << >>
+					return (free_and_return(token.value, free_and_return(s, ft_redirection(str, str[*i], i)))); // On capture le < ou le > << >>
 			}
 			else if (str[*i] == '|')
 			{
 				if (ft_strlen(token.value) >= 1)
-					return (token);
+					return (free_and_return(s, token));
 				else
-					return (ft_pipe(str, str[*i], i)); // On capture le | ou le ||
+					return (free_and_return(token.value, free_and_return(s, ft_pipe(str, str[*i], i)))); // On capture le | ou le ||
 			}
 			s[0] = str[*i]; // Pour le strjoin
 			token.type = "CHAR";
@@ -131,7 +146,7 @@ t_token	ft_getarg(char *str, int *i) // On va traiter un argument et voir commen
 		}
 		(*i)++;
 	}
-	return (token);
+	return (free_and_return(s, token));
 }
 
 t_token	*ft_partsing(char *str) // La base en gros on va juste récupérér la commande de base et après le parsing va faire le reste

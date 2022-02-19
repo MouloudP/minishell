@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:45:45 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/17 16:08:27 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/19 10:32:30 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,12 @@ char	*free_add_assign(char *str, char *news)
 {
 	free(str);
 	return (news);
+}
+
+t_token	free_and_return(char *str, t_token token)
+{
+	free(str);
+	return (token);
 }
 
 char	**ft_realloc(char **cmd, int size)

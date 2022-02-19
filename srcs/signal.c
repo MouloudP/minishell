@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 13:15:24 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/17 15:21:46 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/19 11:26:37 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ void	cancel_c(int sig)
 
 void	setup_signal(t_m *mini)
 {
+	mini->end = -1;
 	mini->signal_save = signal(SIGINT, cancel_c);
 }
