@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_token.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 12:26:44 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/19 16:17:40 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/19 18:02:49 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void    ft_parse_start(t_token *token, int *i)
 	int cmd;
 
 	cmd = 1;
-	while (token[*i].type && token[*i].type != TOKEN_PIPE) // On va jusquau pipe
+	while (token[*i].value && token[*i].type != TOKEN_PIPE) // On va jusquau pipe
 	{
 		if (token[*i].type >= 4 && token[*i].type <= 8) // Si on a une redirection le prochain argument est un FILE
 		{
@@ -138,7 +138,7 @@ t_pipe	*ft_create_pipe(t_token *token, int count)
 	return (pipe);
 }
 
-void    ft_parse_token(t_token *token) // On va assigner les cmd
+void    ft_parse_token(t_token *token, t_m *mini) // On va assigner les cmd
 {
 	int		i;
 	int		j;
@@ -196,8 +196,10 @@ void    ft_parse_token(t_token *token) // On va assigner les cmd
 			pipe[i].parse_cmd[j] = pipe[i].cmd[j].value;
 			j++;
 		}
+		pipe[i].parse_cmd[j] = NULL;
 		i++;
-	} 
+	}
+	pipex(pipe, count, mini->env_bis);
 }
 
 /*pipes = {

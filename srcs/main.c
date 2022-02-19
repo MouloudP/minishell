@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 10:20:48 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/19 11:42:33 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/19 17:04:51 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int	main(int argc, char *argv[], char **env)
 		add_history(line);
 		if (line[0])
 		{
-			cmd = ft_partsing(line);
+			cmd = ft_partsing(line, &mini);
 			cmd->mini = mini;
 			if (cmd_built(cmd, &mini) == 0)
 			{
@@ -126,6 +126,7 @@ int	main(int argc, char *argv[], char **env)
 		if (mini.end == -1)
 			line = readline("\e[0;35mLeShell\e[0;33mDeLaHonte $>\e[0;37m ");
 	}
+	ft_printf("c mouloud qui exit sinon c pierre");
 	rl_clear_history();
 	free_env(&mini);
 	return (mini.end);

@@ -1,0 +1,12 @@
+total 80
+-rwx------ 1 pleveque 2021_paris     0 Feb 19 17:05 ;37m
+-rw-r--r-- 1 pleveque 2021_paris     0 Aug 15  1970 blabla
+-rwx------ 1 pleveque 2021_paris     0 Feb 19 18:04 hello
+drwxr-xr-x 2 pleveque 2021_paris  4096 Feb 19 16:51 includes
+-rw-r--r-- 1 pleveque 2021_paris  1061 Feb 19 17:14 Makefile
+-rw-r--r-- 1 pleveque 2021_paris    79 Feb 19 14:44 Makefile.md
+-rwxr-xr-x 1 pleveque 2021_paris 51128 Feb 19 18:03 minishell
+drwxr-xr-x 3 pleveque 2021_paris  4096 Feb 19 18:03 pipex
+drwxr-xr-x 5 pleveque 2021_paris  4096 Feb 19 18:03 printf
+drwxr-xr-x 3 pleveque 2021_paris  4096 Feb 19 18:03 srcs
+-rwx------ 1 pleveque 2021_paris  1531 Feb 19 17:04 test.c

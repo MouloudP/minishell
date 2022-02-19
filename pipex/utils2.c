@@ -6,13 +6,13 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 17:32:16 by pleveque          #+#    #+#             */
-/*   Updated: 2022/01/20 11:59:01 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/19 17:37:34 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	ft_strcmp(char *str1, char *str2)
+/*int	ft_strcmp(char *str1, char *str2)
 {
 	int	i;
 
@@ -24,7 +24,7 @@ int	ft_strcmp(char *str1, char *str2)
 		i++;
 	}
 	return (str1[i] - str2[i]);
-}
+}*/
 
 int	ft_strclen(char *str, char c)
 {

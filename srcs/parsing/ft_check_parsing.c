@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_parsing.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 15:26:50 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/19 16:17:39 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/19 16:48:52 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ t_token	ft_getarg(char *str, int *i) // On va traiter un argument et voir commen
 	return (free_and_return(s, token));
 }
 
-t_token	*ft_partsing(char *str) // La base en gros on va juste récupérér la commande de base et après le parsing va faire le reste
+t_token	*ft_partsing(char *str, t_m *mini) // La base en gros on va juste récupérér la commande de base et après le parsing va faire le reste
 {
 	int		i;
 	int		j;
@@ -164,6 +164,6 @@ t_token	*ft_partsing(char *str) // La base en gros on va juste récupérér la c
 	}
 	cmd[j].type = TOKEN_NULL;
 	cmd[j].value = NULL;
-	ft_parse_token(cmd);
+	ft_parse_token(cmd, mini);
 	return (cmd);
 }

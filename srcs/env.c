@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 11:26:05 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/19 10:28:31 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/19 16:47:47 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	get_env(char **env, t_m *mini)
 		mini->env[i].value = ft_strdup(temp + 1);
 		mini->env[i].init = 1;
 	}
+	mini->env_bis = env;
 }
 
 char	*ft_getenv(t_m *mini, char *var)

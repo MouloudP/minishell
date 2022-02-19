@@ -4,8 +4,11 @@ get_next_line_utils.c \
 get_next_line.c \
 parse_argc.c \
 open_write.c \
+../printf/libft/libft.a
 
 CC = gcc
+
+LIBC = ar -rc
 
 HEADER = pipex.h \
 get_next_line.h \
@@ -36,7 +39,7 @@ all :
 
 ${NAME} : $(OBJ)
 	@printf "${B_CYAN}${NAME} is linking ...${NONE}\n"
-	@${CC} ${CFLAGS} -o ${NAME}  ${OBJ} -I -fsanitize=address -g
+	${LIBC} ${NAME} ${OBJ}
 	@printf "${B_GREEN}==>{${NAME}} LINKED SUCCESFULLY<==${NONE}\n"
 
 clean :

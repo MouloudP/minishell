@@ -6,13 +6,13 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 14:07:33 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/18 17:27:30 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/19 17:00:29 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	ft_strlen(const char *str)
+/*int	ft_strlen(const char *str)
 {
 	int	i;
 
@@ -20,7 +20,7 @@ int	ft_strlen(const char *str)
 	while (str[i])
 		++i;
 	return (i);
-}
+}*/
 
 void	*free_split(char **splited)
 {
@@ -38,7 +38,7 @@ void	*free_split(char **splited)
 	return (NULL);
 }
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+/*int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
 	size_t	i;
 
@@ -82,4 +82,4 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	ft_strlcpy(res, s1, ft_strlen(s1) + 1);
 	ft_strlcpy(&res[ft_strlen(s1)], s2, ft_strlen(s2) + 1);
 	return (res);
-}
+}*/

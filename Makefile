@@ -12,24 +12,29 @@ HEADER			=	includes/minishell.h
 
 PRINTF			= 	@printf "Generate Printf\n" && cd ./printf && make
 
+PIPEX			= 	@printf "Generate Pipex\n" && cd ./pipex && make
+
 LIBFT			= 	@printf "Generate Libft\n" && cd ./printf/libft && make
 
 all				:	${NAME}
 
 ${NAME}			:	${OBJS} ${HEADER}
 					${LIBFT}
+					${PIPEX}
 					${PRINTF}
-					${CC} ${CFLAGS} ${OBJS} -lreadline -g ./printf/libftprintf.a ./printf/libft/libft.a -o ${NAME}
+					${CC} ${CFLAGS} ${OBJS} -lreadline -g ./printf/libftprintf.a ./printf/libft/libft.a ./pipex/pipex -o ${NAME}
 
 clean			:
 					@rm -f ${OBJS}
 					@cd ./printf && make clean
+					@cd ./pipex && make clean
 					@cd ./printf/libft && make clean
 
 fclean			:
 					@rm -f ${OBJS}
 					@rm -f ${NAME}
 					@cd ./printf && make fclean
+					@cd ./pipex && make fclean
 					@cd ./printf/libft && make fclean
 
 re				:	fclean all
