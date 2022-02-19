@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 16:24:13 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/19 17:16:56 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/19 19:58:54 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +65,25 @@ everything goes well or 1 if fail*/
 int	pipex(t_pipe *pipes, int pipe_size,char **env)
 {
 	char	**paths;
+	pid_t	pid;
 
-	paths = get_paths(env);
-	if (!paths)
-		return (input_error("Environement", NULL, 4));	
-	if (iter_pipes(pipes, pipe_size, env, paths) == -1)
+	if (fork_store(&pid) == -1)
+		return (-1);
+	if (pid == 0)
 	{
+		paths = get_paths(env);
+		if (!paths)
+			return (input_error("Environement", NULL, 4));	
+		if (iter_pipes(pipes, pipe_size, env, paths) == -1)
+		{
+			free_split(paths);
+			return (input_error("Excve", NULL, 0));
+		}
 		free_split(paths);
-		return (input_error("Excve", NULL, 0));
+		close(0);
+		return (0);
 	}
-	free_split(paths);
+	else
+		waitpid(pid, 0, 0);
 	return (0);
 }
