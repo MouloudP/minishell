@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 13:14:42 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/19 11:27:17 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/19 12:29:33 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	ft_mini_pwd(t_token *cmd)
 	int		i;
 
 	i = 1;
-	while (cmd[i].type && ft_strcmp(cmd[i].type, "CHAR") == 0) // Faut check le nombre darg
+	while (cmd[i].type && cmd[i].type == TOKEN_ARGUMENT) // Faut check le nombre darg
 		i++;
 	if (i > 1)
 	{
@@ -77,7 +77,7 @@ int	ft_mini_echo(t_token *cmd)
 
 	i = 1;
 	n = 0;
-	while (cmd[i].type && ft_strcmp(cmd[i].type, "CHAR") == 0)
+	while (cmd[i].type && cmd[i].type == TOKEN_ARGUMENT)
 	{
 		if (i == 1 && ft_strncmp(cmd[i].value, "-", 1) == 0 && ft_check_arg(cmd[i].value))
 		{
@@ -89,7 +89,7 @@ int	ft_mini_echo(t_token *cmd)
 		}
 		ft_printf("%s", cmd[i].value);
 		i++;
-		if (cmd[i].type && ft_strcmp(cmd[i].type, "CHAR") == 0)
+		if (cmd[i].type && cmd[i].type == TOKEN_ARGUMENT)
 			ft_printf(" ");
 	}
 	if (n == 0)

@@ -1,6 +1,6 @@
 NAME			=	minishell
 
-SRCS 			=	main.c build_in.c signal.c parsing.c utils.c env.c
+SRCS 			=	main.c build_in.c signal.c parsing/ft_check_parsing.c parsing/ft_check_token.c parsing/ft_parsing_utils1.c utils.c env.c
 
 OBJS			=	${addprefix srcs/,${SRCS:.c=.o}}
 
