@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 10:16:16 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/19 14:48:59 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/19 16:12:49 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct s_token // Parsing au départ des éléments
 typedef struct s_pipe // Parsing par pipe pour le Pierro
 {
   t_token	*cmd;
+  char		**parse_cmd;
   int		cmd_count;
   t_token	*infile;
   int		infile_count;

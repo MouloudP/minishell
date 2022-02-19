@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 15:26:50 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/19 14:13:57 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/19 15:59:30 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,21 @@ char	*ft_getquote(char *str, int *i, char c)
 	return (arg);
 }
 
+int	ft_get_redirection(char *s)
+{
+	if (ft_strcmp(s, ">") == 0)
+		return (TOKEN_REDIRECTION_INPUT);
+	else if (ft_strcmp(s, "<") == 0)
+		return (TOKEN_REDIRECTION_OUTPUT);
+	else if (ft_strcmp(s, ">>") == 0)
+		return (TOKEN_REDIRECTION_APPEND);
+	else if (ft_strcmp(s, "<<") == 0)
+		return (TOKEN_REDIRECTION_DELIMTER);
+	else if (ft_strcmp(s, "<>") == 0)
+		return (TOKEN_REDIRECTION_OTHER);
+	return (TOKEN_ERROR);
+}
+
 t_token	ft_redirection(char *str, char c, int *i)
 {
 	t_token	token;
@@ -41,7 +56,7 @@ t_token	ft_redirection(char *str, char c, int *i)
 		if (c == '>' && str[*i + 1] == '<') // un ><
 			token.type = TOKEN_ERROR;
 		else
-			token.type = TOKEN_REDIRECTION_OTHER; // faire un ft_check redirection
+			token.type = ft_get_redirection(token.value); // faire un ft_check redirection
 		*i = *i + 2;
 	}
 	else // Si c'est un seul caractere on le renvoie ce token
@@ -49,7 +64,7 @@ t_token	ft_redirection(char *str, char c, int *i)
 		token.value = malloc(sizeof(char) * 2);
 		token.value[0] = c;
 		token.value[1] = '\0';
-		token.type = TOKEN_REDIRECTION_INPUT; // faire un ft_check redirection
+		token.type = ft_get_redirection(token.value); // faire un ft_check redirection
 		(*i)++;
 	}
 	return (token);
@@ -76,25 +91,13 @@ t_token	ft_pipe(char *str, char c, int *i)
 	return (token);
 }
 
-void	*ft_calloc2(size_t count, size_t size)
-{
-	char	*copy;
-
-	copy = malloc(size * count);
-	if (!(copy))
-		return (NULL);
-	ft_memset(copy, 0, count * size);
-	return (copy);
-}
-
-
 t_token	ft_getarg(char *str, int *i) // On va traiter un argument et voir comment le traiter
 {
 	t_token	token; // A mon avis un token sera mieux
 	char	*s;
 	char	*temp;
 
-	token.value = ft_calloc2(sizeof(char), 1);
+	token.value = ft_calloc(sizeof(char), 1);
 	s = ft_calloc(sizeof(char), 2);
 	while (str[*i] && !ft_whitespace(str[*i])) // Temps que ya pas de whitespace
 	{
@@ -154,7 +157,7 @@ t_token	*ft_partsing(char *str) // La base en gros on va juste récupérér la c
 			//if (ft_strcmp(cmd[j - 1].type, "PIPE") == 0) //SI on avait un pipe le prochain truc est une commande on un prog
 			//	temp.type = "CMD";
 			cmd[j++] = temp;
-			ft_printf("%d : %d : %s\n", j - 1, cmd[j - 1].type, cmd[j - 1].value);
+			//ft_printf("%d : %d : %s\n", j - 1, cmd[j - 1].type, cmd[j - 1].value);
 		}
 		if (ft_whitespace(str[i])) // On évite les boucles infini
 			i++;
