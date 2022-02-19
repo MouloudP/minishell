@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 12:03:44 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/19 17:58:40 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/19 19:30:18 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,10 @@ int	run_process_command(int first_pipe, char **pipe_cmd, char **env, int *new_pi
 		return (-1);
 	if (pid == 0)
 		return (run_command(first_pipe, new_pipe_fd, pipe_cmd, env));
-	//if (dup2(new_pipe_fd[0], first_pipe) == -1)
-	// if (dup2(new_pipe_fd[0], new_pipe_fd[1]) == -1)
-		// return (-1);
+	// if (first_pipe == 0)
+	// 	first_pipe = -1;
+	if (dup2(new_pipe_fd[0], first_pipe) == -1)
+		return (-1);
 	close_pipe(new_pipe_fd);
 	return (pid);
 }
@@ -77,6 +78,7 @@ int	iter_pipes(t_pipe *pipes, int pipe_size, char **env, char **paths)
 	}
 	wait_all_pid(pids, i);
 	free(pids);
-	//close(input_fd);
+	if (input_fd != 0)
+		close(input_fd);
 	return (1);
 }

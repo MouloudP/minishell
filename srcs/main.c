@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 10:20:48 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/19 17:04:51 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/19 20:19:58 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ int	main(int argc, char *argv[], char **env)
 		if (mini.end == -1)
 			line = readline("\e[0;35mLeShell\e[0;33mDeLaHonte $>\e[0;37m ");
 	}
-	ft_printf("c mouloud qui exit sinon c pierre");
+	ft_printf("END\n");
 	rl_clear_history();
 	free_env(&mini);
 	return (mini.end);

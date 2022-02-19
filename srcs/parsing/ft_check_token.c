@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 12:26:44 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/19 18:02:49 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/19 19:53:07 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ t_pipe	*ft_create_pipe(t_token *token, int count)
 		while (token[j].type && token[j].type != TOKEN_PIPE)
 		{
 			if (token[j].type == TOKEN_ARGUMENT || token[j].type == TOKEN_COMMAND)
-				pipe[j].cmd_count++;
+				pipe[i].cmd_count++;
 			else if (token[j].type == TOKEN_REDIRECTION_INPUT || token[j].type == TOKEN_REDIRECTION_APPEND)
 			{
 				j++;
