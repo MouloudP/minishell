@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 10:16:16 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/19 16:57:26 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/20 10:06:26 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,15 @@ void    ft_parse_token(t_token *token, t_m *mini);
 char	*free_add_assign(char *str, char *news);
 void	free_cmd(t_token *cmd);
 void	free_env(t_m *mini);
+void	free_env_bis(t_m *mini);
+void	free_pipe(t_m *mini);
 char	**ft_realloc(char **cmd, int size);
 
 char	*ft_getenv(t_m *mini, char *var);
 void	ft_setenv(t_m *mini, char *name, char *value, int init);
 void	ft_printenv(t_m *mini);
 void	ft_printexport(t_m *mini);
+void	update_env(t_m *mini);
 
 int		cmd_built(t_token *cmd, t_m *mini);
 void	setup_signal(t_m *mini);
@@ -62,5 +65,5 @@ int		ft_whitespace(char c);
 int		ft_quote(char c);
 int		ft_redirec(char c);
 
-int		pipex(t_pipe *pipes, int pipe_size,  char **env);
+int		pipex(t_pipe *pipes, int pipe_size,  char **env, t_m *mini);
 #endif

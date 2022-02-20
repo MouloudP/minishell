@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 10:20:48 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/19 20:19:58 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/20 10:08:12 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,74 +24,6 @@ void	free_str(char **str)
 	}
 	free(str);
 	str = NULL;
-}
-
-void	get_binary_path(char **cmd, char **path_split)
-{
-	int		i;
-	char	*bin;
-
-	i = -1;
-	while (path_split[++i])
-	{
-		bin = ft_calloc(sizeof(char), (ft_strlen(path_split[i])
-					+ 2 + ft_strlen(cmd[0])));
-		if (!bin)
-			break ;
-		ft_strcat(bin, path_split[i]);
-		ft_strcat(bin, "/");
-		ft_strcat(bin, cmd[0]);
-		if (access(bin, F_OK) == 0)
-			break ;
-		free(bin);
-		bin = NULL;
-	}
-	free_str(path_split);
-	free(cmd[0]);
-	cmd[0] = bin;
-}
-
-void	get_absolute_path(char **cmd)
-{
-	char	*path;
-	char	**path_split;
-
-	path = ft_strdup(getenv("PATH"));
-	if (path == NULL)
-		path = ft_strdup("/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin");
-	if (cmd[0][0] != '/' && ft_strncmp(cmd[0], "./", 2) != 0)
-	{
-		path_split = ft_split(path, ':');
-		free(path);
-		path = NULL;
-		get_binary_path(cmd, path_split);
-	}
-	else
-	{
-		free(path);
-		path = NULL;
-	}
-}
-
-void	exec_cmd(char **cmd)
-{
-	int	pid;
-	int	status;
-
-	pid = fork();
-	if (pid == -1)
-		perror("Error de fork");
-	else if (pid > 0)
-	{
-		waitpid(pid, &status, 0);
-		kill(pid, SIGTERM);
-	}
-	else
-	{
-		if (execve(cmd[0], cmd, NULL) == -1)
-			perror("Erreur du shell");
-		exit(EXIT_FAILURE);
-	}
 }
 
 int	main(int argc, char *argv[], char **env)
@@ -121,13 +53,14 @@ int	main(int argc, char *argv[], char **env)
 				//	exec_cmd(cmd);
 			}
 			free_cmd(cmd);
+			free_pipe(&mini);
 		}
 		free(line);
 		if (mini.end == -1)
 			line = readline("\e[0;35mLeShell\e[0;33mDeLaHonte $>\e[0;37m ");
 	}
-	ft_printf("END\n");
 	rl_clear_history();
 	free_env(&mini);
+	free_env_bis(&mini);
 	return (mini.end);
 }

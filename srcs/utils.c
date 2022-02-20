@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:45:45 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/19 10:32:30 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/20 10:20:56 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,33 @@ void	free_env(t_m *mini)
 		i++;
 	}
 	free(mini->env);
+}
+
+void	free_env_bis(t_m *mini)
+{
+	int	i;
+
+	i = 0;
+	while (mini->env_bis[i])
+	{
+		free(mini->env_bis[i]);
+		i++;
+	}
+	free(mini->env_bis);
+}
+
+void	free_pipe(t_m *mini)
+{
+	int i;
+
+	i = 0;
+	while (i < mini->pipe_lenght)
+	{
+		free(mini->pipe[i].cmd);
+		free(mini->pipe[i].infile);
+		free(mini->pipe[i].outfile);
+		free(mini->pipe[i].parse_cmd);
+		i++;
+	}
+	free(mini->pipe);
 }
