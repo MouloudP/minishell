@@ -1,0 +1,14 @@
+total 169
+drwxr-xr-x 7 ahamdoun 2020_paris    13 Feb 20 09:50 .
+drwxr-xr-x 5 ahamdoun 2020_paris     9 Feb 20 09:09 ..
+-rwx------ 1 ahamdoun 2020_paris     0 Feb 20 09:50 dwa.txt
+drwxr-xr-x 8 ahamdoun 2020_paris    13 Feb 20 09:11 .git
+drwxr-xr-x 2 ahamdoun 2020_paris     4 Feb 20 09:10 includes
+-rwx------ 1 ahamdoun 2020_paris     0 Feb 20 09:50 insane
+-rw-r--r-- 1 ahamdoun 2020_paris  1061 Feb 20 09:10 Makefile
+-rwxr-xr-x 1 ahamdoun 2020_paris 51264 Feb 20 09:48 minishell
+drwxr-xr-x 3 ahamdoun 2020_paris    19 Feb 20 09:48 pipex
+drwxr-xr-x 5 ahamdoun 2020_paris     7 Feb 20 09:48 printf
+-rw-r--r-- 1 ahamdoun 2020_paris    81 Feb 20 09:10 Readme.md
+drwxr-xr-x 3 ahamdoun 2020_paris    14 Feb 20 09:48 srcs
+-rwx------ 1 ahamdoun 2020_paris    43 Feb 20 09:48 waw.txt

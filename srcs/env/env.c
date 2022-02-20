@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 11:26:05 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/19 16:47:47 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/20 10:28:49 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,21 +30,39 @@ void	get_env(char **env, t_m *mini)
 		mini->env[i].value = ft_strdup(temp + 1);
 		mini->env[i].init = 1;
 	}
+	mini->env[i].name = NULL;
+	mini->env[i].value = NULL;
+	mini->env[i].init = 0;
 	mini->env_bis = env;
+	update_env(mini);
 }
 
-char	*ft_getenv(t_m *mini, char *var)
+char	*ft_getenv(t_m *mini, char *name)
 {
 	int i;
 
 	i = 0;
 	while (i < (mini->env_lenght - 1))
 	{
-		if (ft_strncmp(mini->env[i].name, var, ft_strlen(var)) == 0)
+		if (ft_strcmp(mini->env[i].name, name) == 0)
 			return (mini->env[i].value);
 		i++;
 	}
 	return (NULL);
+}
+
+int	ft_hasenv(t_m *mini, char *name)
+{
+	int i;
+
+	i = 0;
+	while (i < (mini->env_lenght - 1))
+	{
+		if (ft_strcmp(mini->env[i].name, name) == 0)
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
 void	ft_replaceenv(t_m *mini, char *name, char *value)
@@ -56,12 +74,23 @@ void	ft_replaceenv(t_m *mini, char *name, char *value)
 	{
 		if (ft_strcmp(mini->env[i].name, name) == 0)
 		{
-			free(mini->env[i].value);
-			mini->env[i].value = ft_strdup(value);
+			if (mini->env[i].value)
+				free(mini->env[i].value);
+			if (value)
+			{
+				mini->env[i].value = ft_strdup(value);
+				mini->env[i].init = 1;
+			}
+			else
+			{
+				mini->env[i].value = NULL;
+				mini->env[i].init = 0;
+			}
 			break ;
 		}
 		i++;
 	}
+	update_env(mini);
 }
 
 void	ft_setenv(t_m *mini, char *name, char *value, int init)
@@ -69,7 +98,7 @@ void	ft_setenv(t_m *mini, char *name, char *value, int init)
 	int		i;
 	t_env	*env;
 
-	if (ft_getenv(mini, name))
+	if (ft_hasenv(mini, name))
 	{
 		ft_replaceenv(mini, name, value);
 		return ;
@@ -95,78 +124,5 @@ void	ft_setenv(t_m *mini, char *name, char *value, int init)
 	free(mini->env);
 	mini->env = env;
 	mini->env_lenght++;
-}
-
-void	ft_printenv(t_m *mini)
-{
-	int	i;
-
-	i = 0;
-	while (i < (mini->env_lenght - 1))
-	{
-		if (mini->env[i].init)
-			ft_printf("%s=%s\n", mini->env[i].name, mini->env[i].value);
-		i++;
-	}
-}
-
-t_env	*ft_copy_env(t_m *mini)
-{
-	t_env	*new;
-	int		i;
-
-	new = malloc(sizeof(t_env) * (mini->env_lenght));
-	i = 0;
-	while (i < (mini->env_lenght - 1))
-	{
-		new[i].name = mini->env[i].name;
-		new[i].value = mini->env[i].value;
-		new[i].init = mini->env[i].init;
-		i++;
-	}
-	return (new);
-}
-
-void	ft_copy_part(t_env *srcs, t_env *dest)
-{
-	srcs->name = dest->name;
-	srcs->value = dest->value;
-	srcs->init = dest->init;
-}
-
-void	ft_printexport(t_m *mini)
-{
-	int		i;
-	int		j;
-	t_env	*new;
-	t_env	temp;
-
-	i = 0;
-	new = ft_copy_env(mini);
-	while (i < (mini->env_lenght - 1))
-	{
-		j = 0;
-		while (j < (mini->env_lenght - 1))
-		{
-			if(new[j + 1].name && ft_strcmp(new[j].name, new[j + 1].name) > 0)
-			{
-				//swap array[j] and array[j+1]
-				ft_copy_part(&temp, &new[j]);
-				ft_copy_part(&new[j], &new[j + 1]);
-				ft_copy_part(&new[j + 1], &temp);
-			}
-			j++;
-    	}
-		i++;
- 	}
-	i = 0;
-	while (i < (mini->env_lenght - 1))
-	{
-		if (new[i].init)
-			ft_printf("%s=%s\n", new[i].name, new[i].value);
-		else
-			ft_printf("%s=''\n", new[i].name);
-		i++;
-	}
-	free(new);
+	update_env(mini);
 }

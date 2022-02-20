@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 16:24:21 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/19 16:53:52 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/20 09:17:02 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct s_stack
 }	t_stack;
 
 /* PIPEx */
-int		pipex(t_pipe *pipes, int pipe_size,  char **env);
+int		pipex(t_pipe *pipes, int pipe_size,  char **env, t_m *mini);
 int		iter_pipes(t_pipe *pipes, int pipe_size, char **env, char **paths);
 
 /* UTILS */

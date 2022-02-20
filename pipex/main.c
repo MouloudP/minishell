@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 16:24:13 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/19 19:58:54 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/20 09:16:45 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	input_error(char *error_type, char	*precision, int type)
 /* work like old good regular pipex, return 0 if
 everything goes well or 1 if fail*/
 
-int	pipex(t_pipe *pipes, int pipe_size,char **env)
+int	pipex(t_pipe *pipes, int pipe_size,char **env, t_m *mini)
 {
 	char	**paths;
 	pid_t	pid;
@@ -79,6 +79,7 @@ int	pipex(t_pipe *pipes, int pipe_size,char **env)
 			free_split(paths);
 			return (input_error("Excve", NULL, 0));
 		}
+		mini->end = 0;
 		free_split(paths);
 		close(0);
 		return (0);

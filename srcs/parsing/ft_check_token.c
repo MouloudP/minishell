@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_token.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 12:26:44 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/19 19:53:07 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/20 10:02:35 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,42 @@ void    ft_print_token(t_token *token)
 			ft_printf("[%d] TYPE : %s | VALUE : %s\n", i, "FILE", token[i].value);
 		else if (token[i].type == 10)
 			ft_printf("[%d] TYPE : %s | VALUE : %s\n", i, "ERROR", token[i].value);
+		i++;
+	}
+}
+
+void	ft_print_pipe(t_pipe *pipe, int count)
+{
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	while (i < count)
+	{
+		ft_printf("PIPE : %d\n \tCOMMANDE : \n\t\t", i);
+		j = 0;
+		while (j < pipe[i].cmd_count)
+		{
+			ft_printf("%s ", pipe[i].cmd[j].value);
+			j++;
+		}
+		ft_printf("\n\tINFILE :\n\t\t");
+		j = 0;
+		while (j < pipe[i].infile_count)
+		{
+			ft_printf("%s ", pipe[i].infile[j].value);
+			j++;
+		}
+		ft_printf("\n\tOUTFILE :\n\t\t");
+		j = 0;
+		while (j < pipe[i].outfile_count)
+		{
+			ft_printf("%s ", pipe[i].outfile[j].value);
+			j++;
+		}
+		ft_printf("\n");
+		//ft_printf("|%d| : \n %s", count, pipe[i].cmd[0].value);
 		i++;
 	}
 }
@@ -149,43 +185,18 @@ void    ft_parse_token(t_token *token, t_m *mini) // On va assigner les cmd
 	i = 0;
 	count = 0;
 	//redirec = 1;
-	while (token[i].value)
+	//ft_print_token(token);
+	while (token[i].type)
 	{
 		ft_parse_start(token, &i);
 		count++;
-		i++;
+		ft_printf("|%d| Count | i : %d \n", count, i);
+		if (token[i].value && token[i].type == TOKEN_PIPE)
+			i++;
 	}
-	ft_print_token(token);
+	//ft_print_token(token);
 	pipe = ft_create_pipe(token, count);
-	i = 0;
-	j = 0;
-	while (i < count)
-	{
-		ft_printf("PIPE : %d\n \tCOMMANDE : \n\t\t", i);
-		j = 0;
-		while (j < pipe[i].cmd_count)
-		{
-			ft_printf("%s ", pipe[i].cmd[j].value);
-			j++;
-		}
-		ft_printf("\n\tINFILE :\n\t\t");
-		j = 0;
-		while (j < pipe[i].infile_count)
-		{
-			ft_printf("%s ", pipe[i].infile[j].value);
-			j++;
-		}
-		ft_printf("\n\tOUTFILE :\n\t\t");
-		j = 0;
-		while (j < pipe[i].outfile_count)
-		{
-			ft_printf("%s ", pipe[i].outfile[j].value);
-			j++;
-		}
-		ft_printf("\n");
-		//ft_printf("|%d| : \n %s", count, pipe[i].cmd[0].value);
-		i++;
-	}
+	ft_print_pipe(pipe, count);
 	i = 0;
 	while (i < count)
 	{
@@ -199,7 +210,10 @@ void    ft_parse_token(t_token *token, t_m *mini) // On va assigner les cmd
 		pipe[i].parse_cmd[j] = NULL;
 		i++;
 	}
-	pipex(pipe, count, mini->env_bis);
+	mini->pipe = pipe;
+	mini->pipe_lenght = count;
+	//pipex(pipe, count, mini->env_bis, mini);
+	//ft_print_pipe(pipe, count);
 }
 
 /*pipes = {
