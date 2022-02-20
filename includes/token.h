@@ -24,6 +24,7 @@ typedef struct s_token // Parsing au départ des éléments
 	int		type;
 	char	*value;
 	int		fd;
+	int		env;
     t_m     mini;
 }	t_token;
 
