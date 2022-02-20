@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 10:16:16 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/20 14:38:37 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/20 15:40:29 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int		ft_whitespace(char c);
 int		ft_quote(char c);
 int		ft_redirec(char c);
 
-char    *ft_delimiters(char *s, t_token *token);
+void    ft_delimiters(char *s, t_token *token);
 
 int		pipex(t_pipe *pipes, int pipe_size,  char **env, t_m *mini);
 #endif

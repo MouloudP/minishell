@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 11:45:46 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/20 15:29:10 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/20 15:42:13 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_token *ft_remove_cmd(t_token *cmd, int size, int del)
     return (new);
 }
 
-char    *ft_delimiters(char *s, t_token *token)
+void    ft_delimiters(char *s, t_token *token)
 {
     char    *line;
     char    *ret;
@@ -57,12 +57,12 @@ char    *ft_delimiters(char *s, t_token *token)
     if (pipe(pipes) == -1)
     {
         perror("pipe");
-        return (NULL);
+        return ;
     }
     
     ret = ft_calloc(sizeof(char), 1);
     line = ft_calloc(sizeof(char), 1);
-    while (ft_strcmp(line, s) != 0)
+    while (line && ft_strcmp(line, s) != 0)
     {
         free(line);
         line = readline("\e[0;35m>\e[0;37m ");
@@ -73,9 +73,11 @@ char    *ft_delimiters(char *s, t_token *token)
         ret = ft_strjoin(ret, line);
         free(temp);
     }
+    if (line)
+        free(line);
     write(pipes[1], ret, ft_strlen(ret));
     close(pipes[1]);
     token->fd = pipes[1];
-    token->value = ft_strdup(s);
-    return (ret);
+    token->value = free_add_assign(token->value, ft_strdup(s));
+    free(ret);
 }
