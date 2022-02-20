@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 12:26:44 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/20 10:02:35 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/20 15:08:58 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,12 +98,12 @@ t_token	ft_copy_token(t_token token)
 
 	copy.value = token.value;
 	copy.type = token.type;
+	copy.fd = token.fd;
 	return (copy);
 }
 
 void    ft_add_pipe(t_token *token, t_pipe *pipe, int i, int j)
 {
-	ft_printf("START J : %d | PIPE : %d\n", j, i);
 	pipe[i].cmd = malloc(sizeof(t_token) * (pipe[i].cmd_count + 2));
 	pipe[i].infile = malloc(sizeof(t_token) * (pipe[i].infile_count + 2));
 	pipe[i].outfile = malloc(sizeof(t_token) * (pipe[i].outfile_count + 2));
@@ -125,6 +125,8 @@ void    ft_add_pipe(t_token *token, t_pipe *pipe, int i, int j)
 		else if (token[j].type == TOKEN_REDIRECTION_OUTPUT || token[j].type == TOKEN_REDIRECTION_OTHER || token[j].type == TOKEN_REDIRECTION_DELIMTER)
 		{
 			pipe[i].infile[pipe[i].infile_count] = ft_copy_token(token[++j]);
+			if (token[j - 1].type == TOKEN_REDIRECTION_DELIMTER)
+				pipe[i].infile[pipe[i].infile_count].value = token[j - 1].value;
 			pipe[i].infile[pipe[i].infile_count].type = token[j - 1].type;
 			pipe[i].infile_count++;
 		}
@@ -185,16 +187,14 @@ void    ft_parse_token(t_token *token, t_m *mini) // On va assigner les cmd
 	i = 0;
 	count = 0;
 	//redirec = 1;
-	//ft_print_token(token);
 	while (token[i].type)
 	{
 		ft_parse_start(token, &i);
 		count++;
-		ft_printf("|%d| Count | i : %d \n", count, i);
 		if (token[i].value && token[i].type == TOKEN_PIPE)
 			i++;
 	}
-	//ft_print_token(token);
+	ft_print_token(token);
 	pipe = ft_create_pipe(token, count);
 	ft_print_pipe(pipe, count);
 	i = 0;
@@ -215,32 +215,3 @@ void    ft_parse_token(t_token *token, t_m *mini) // On va assigner les cmd
 	//pipex(pipe, count, mini->env_bis, mini);
 	//ft_print_pipe(pipe, count);
 }
-
-/*pipes = {
-	cmd = {
-		[0] = echo
-		[1] = bonsoir
-		[2] = paris
-		[3] = NULL
-	}
-	size = 3
-	t_token = tokens
-}*/
-
-/*t_pipe = 
-{
-	[0] = {
-		cmd = {
-			[0] = cat
-			[1] = Makefile
-			[2] = Makefile
-			[3] = Makefile
-		}
-		infile = {
-			[0] = file2
-		}
-		output = {
-			[0] = file
-		}
-	}
-}*/

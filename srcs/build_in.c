@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 13:14:42 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/19 12:29:33 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/20 14:38:22 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,6 @@ int	cmd_built(t_token *cmd, t_m *mini)
 	else if (ft_strcmp(cmd[0].value, "env") == 0)
 		return (ft_mini_env(mini));
 	else if (ft_strcmp(cmd[0].value, "exit") == 0)
-		return	(ft_exit(mini));
+		return (ft_exit(mini));
 	return (0);
 }
