@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 11:45:46 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/20 14:51:02 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/20 15:29:10 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ char    *ft_delimiters(char *s, t_token *token)
         ret = ft_strjoin(ret, line);
         free(temp);
     }
-    //ft_printf("DELIMITERS : %s\n", ret);
     write(pipes[1], ret, ft_strlen(ret));
     close(pipes[1]);
     token->fd = pipes[1];

@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 12:26:44 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/20 15:08:58 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/20 15:31:41 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void    ft_parse_start(t_token *token, int *i)
 	cmd = 1;
 	while (token[*i].value && token[*i].type != TOKEN_PIPE) // On va jusquau pipe
 	{
-		if (token[*i].type >= 4 && token[*i].type <= 8) // Si on a une redirection le prochain argument est un FILE
+		if (token[*i].type >= 4 && token[*i].type <= 8 && token[*i].type != TOKEN_REDIRECTION_DELIMTER) // Si on a une redirection le prochain argument est un FILE
 		{
 			(*i)++;
 			token[*i].type = TOKEN_FILE;
@@ -99,6 +99,7 @@ t_token	ft_copy_token(t_token token)
 	copy.value = token.value;
 	copy.type = token.type;
 	copy.fd = token.fd;
+	copy.env = token.env;
 	return (copy);
 }
 
@@ -124,10 +125,13 @@ void    ft_add_pipe(t_token *token, t_pipe *pipe, int i, int j)
 		}
 		else if (token[j].type == TOKEN_REDIRECTION_OUTPUT || token[j].type == TOKEN_REDIRECTION_OTHER || token[j].type == TOKEN_REDIRECTION_DELIMTER)
 		{
-			pipe[i].infile[pipe[i].infile_count] = ft_copy_token(token[++j]);
-			if (token[j - 1].type == TOKEN_REDIRECTION_DELIMTER)
-				pipe[i].infile[pipe[i].infile_count].value = token[j - 1].value;
-			pipe[i].infile[pipe[i].infile_count].type = token[j - 1].type;
+			if (token[j].type != TOKEN_REDIRECTION_DELIMTER)
+			{
+				pipe[i].infile[pipe[i].infile_count] = ft_copy_token(token[++j]);
+				pipe[i].infile[pipe[i].infile_count].type = token[j - 1].type;
+			}
+			else
+				pipe[i].infile[pipe[i].infile_count] = ft_copy_token(token[j]);
 			pipe[i].infile_count++;
 		}
 		j++;
@@ -162,7 +166,8 @@ t_pipe	*ft_create_pipe(t_token *token, int count)
 			}
 			else if (token[j].type == TOKEN_REDIRECTION_OUTPUT || token[j].type == TOKEN_REDIRECTION_OTHER || token[i].type == TOKEN_REDIRECTION_DELIMTER)
 			{
-				j++;
+				if (token[i].type != TOKEN_REDIRECTION_DELIMTER)
+					j++;
 				//token[i].type = token[i - 1].type;
 				pipe[i].infile_count++;
 			}
