@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 10:16:16 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/20 10:06:26 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/20 14:21:19 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,5 @@ int		ft_quote(char c);
 int		ft_redirec(char c);
 
 int		pipex(t_pipe *pipes, int pipe_size,  char **env, t_m *mini);
+
 #endif

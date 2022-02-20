@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 16:24:21 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/20 09:17:02 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/20 16:11:29 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct s_stack
 
 /* PIPEx */
 int		pipex(t_pipe *pipes, int pipe_size,  char **env, t_m *mini);
-int		iter_pipes(t_pipe *pipes, int pipe_size, char **env, char **paths);
+int		iter_pipes(t_pipe *pipes, int pipe_size, t_m *mini, char **paths);
 
 /* UTILS */
 char	*ft_strjoin(char const *s1, char const *s2);
@@ -70,9 +70,13 @@ int		redirections(t_pipe *pipe, int *input_fd, int *output_fd);
 int    	ft_strs_include(char *s, char **str);
 int		ft_tern(int condition, int a, int b);
 
+/* BUILTINS */
+int		is_builtin(char *cmd);
+int		run_builtin(char **cmd, t_m *mini);
+
 /* MAIN */
-int		run_command(int entry_pipe, int	*pipe_fd, char **argv, char **env);
-char	*parse_cmd(char *command, char **paths);
+int		run_command(int entry_pipe, int	*pipe_fd, char **argv, t_m *mini);
+int		parse_cmd(char **command, char **paths);
 int		input_error(char *error_type, char	*precision, int type);
 int		limited_stdin(char **argv);
 

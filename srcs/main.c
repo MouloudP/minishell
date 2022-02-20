@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 10:20:48 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/20 10:08:12 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/20 14:17:10 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,14 @@ int	main(int argc, char *argv[], char **env)
 		{
 			cmd = ft_partsing(line, &mini);
 			cmd->mini = mini;
-			if (cmd_built(cmd, &mini) == 0)
-			{
-				//get_absolute_path(cmd);
-				//if (!cmd[0])
-				//	ft_printf("Command not found !\n");
-				//else
-				//	exec_cmd(cmd);
-			}
+			// if (cmd_built(cmd, &mini) == 0)
+			// {
+			// 	//get_absolute_path(cmd);
+			// 	//if (!cmd[0])
+			// 	//	ft_printf("Command not found !\n");
+			// 	//else
+			// 	//	exec_cmd(cmd);
+			// }
 			free_cmd(cmd);
 			free_pipe(&mini);
 		}

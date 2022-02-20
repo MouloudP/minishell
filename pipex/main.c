@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 16:24:13 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/20 09:16:45 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/20 16:11:59 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,42 +31,24 @@ char	**get_paths(char **env)
 	return (NULL);
 }
 
-int	input_error(char *error_type, char	*precision, int type)
-{
-	char	*error;
-
-	error = ft_strjoin("\033[1;31m", error_type);
-	if (!error)
-		perror("Malloc failed");
-	else
-	{
-		if (type == 1)
-			write(2, "\033[1;31mInvalid arguments\033[0m\n", 29);
-		else
-		{
-			(void)error_type;
-			(void)precision;
-			write(2, "Temp error msg\n", 15);
-			// printf("\033[1;31m%s\033[0m", error_type);
-			// if (type == 2)
-			// 	printf("Invalid command: \033[1;35m%s\n\033[0m", precision);
-			// if (type == 3)
-			// 	printf("Invalid file: \033[1;35m%s\n\033[0m", precision);
-			// printf("\n");
-		}
-	}
-	free(error);
-	return (-1);
-}
-
 /* work like old good regular pipex, return 0 if
 everything goes well or 1 if fail*/
+int	run_builtin(char **cmd, t_m *mini)
+{
+	if (ft_strcmp(cmd[0], "pwd") == 0)
+		ft_mini_pwd(cmd);
+	else if (ft_strcmp(cmd[0], "cd") == 0)
+		ft_mini_cd(cmd, mini);
+	return (0);
+}
 
-int	pipex(t_pipe *pipes, int pipe_size,char **env, t_m *mini)
+int	pipex(t_pipe *pipes, int pipe_size, char **env, t_m *mini)
 {
 	char	**paths;
 	pid_t	pid;
 
+	if (pipe_size == 1 && is_builtin(pipes[0].parse_cmd[0]))
+		return (run_builtin(pipes[0].parse_cmd, mini));
 	if (fork_store(&pid) == -1)
 		return (-1);
 	if (pid == 0)
@@ -74,7 +56,7 @@ int	pipex(t_pipe *pipes, int pipe_size,char **env, t_m *mini)
 		paths = get_paths(env);
 		if (!paths)
 			return (input_error("Environement", NULL, 4));	
-		if (iter_pipes(pipes, pipe_size, env, paths) == -1)
+		if (iter_pipes(pipes, pipe_size, mini, paths) == -1)
 		{
 			free_split(paths);
 			return (input_error("Excve", NULL, 0));
@@ -82,7 +64,7 @@ int	pipex(t_pipe *pipes, int pipe_size,char **env, t_m *mini)
 		mini->end = 0;
 		free_split(paths);
 		close(0);
-		return (0);
+		return (1);
 	}
 	else
 		waitpid(pid, 0, 0);
