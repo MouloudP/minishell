@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 10:16:16 by ahamdoun          #+#    #+#             */
 /*   Updated: 2022/02/20 15:40:29 by ahamdoun         ###   ########.fr       */
@@ -71,4 +71,5 @@ int		ft_redirec(char c);
 void    ft_delimiters(char *s, t_token *token);
 
 int		pipex(t_pipe *pipes, int pipe_size,  char **env, t_m *mini);
+
 #endif

@@ -24,6 +24,10 @@ ${NAME}			:	${OBJS} ${HEADER}
 					${PRINTF}
 					${CC} ${CFLAGS} ${OBJS} -lreadline -g ./printf/libftprintf.a ./printf/libft/libft.a ./pipex/pipex -o ${NAME}
 
+upd_p			:	
+					cd	pipex && make
+					${CC} ${CFLAGS} ${OBJS} -lreadline -g ./printf/libftprintf.a ./printf/libft/libft.a ./pipex/pipex -o ${NAME}
+
 clean			:
 					@rm -f ${OBJS}
 					@cd ./printf && make clean

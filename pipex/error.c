@@ -1,42 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils2.c                                           :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/19 17:32:16 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/20 11:44:38 by pleveque         ###   ########.fr       */
+/*   Created: 2022/02/20 12:03:35 by pleveque          #+#    #+#             */
+/*   Updated: 2022/02/20 12:15:30 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	ft_strclen(char *str, char c)
+int write_fd(char *s, int fd)
 {
-	int	i;
+    int size;
 
-	i = 0;
-	while (str[i] && str[i] != c)
-		++i;
-	return (i);
+    if (!s)
+        return (-1);
+    size = ft_strlen(s);
+    write(fd, s, size);
+    return (0);
 }
 
-int	ft_biggest(int a, int b)
+int	input_error(char *error_type, char	*precision, int type)
 {
-	if (b > a)
-		return (b);
-	return (a);
-}
-
-int	free_split_int(char **splitted)
-{
-	free_split(splitted);
+    (void)type;
+	write_fd("\033[1;36m", 2);
+	write_fd(error_type, 2);
+	write_fd(": \033[1;31m", 2);
+	write_fd(precision, 2);
+	write_fd("\033[0m\n", 2);
 	return (-1);
-}
-
-void	close_pipe(int *pipe)
-{
-	close(pipe[1]);
-	close(pipe[0]);
 }

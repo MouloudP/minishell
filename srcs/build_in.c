@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   build_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 13:14:42 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/20 14:38:22 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/20 15:36:35 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_mini_cd(t_token *cmd, t_m *mini)
+int	ft_mini_cd(char **cmd, t_m *mini)
 {
 	char	*base;
 	char	*path;
 	char 	cwd[1024];
 
-	base = ft_getenv(&(cmd->mini), "HOME");
-	path = cmd[1].value;
+	base = ft_getenv(mini, "HOME");
+	path = cmd[1];
 	if (!path || ft_strlen(path) == 0)
 		path = base;
 	else if (ft_strncmp(path, "~", 1) == 0 && base)
@@ -39,17 +39,17 @@ int	ft_mini_cd(t_token *cmd, t_m *mini)
 	return (1);
 }
 
-int	ft_mini_pwd(t_token *cmd)
+int	ft_mini_pwd(char **cmd)
 {
 	char 	cwd[1024];
 	int		i;
 
 	i = 1;
-	while (cmd[i].type && cmd[i].type == TOKEN_ARGUMENT) // Faut check le nombre darg
+	while (cmd[i]) // Faut check le nombre darg
 		i++;
 	if (i > 1)
 	{
-			ft_printf("pwd: too many arguments\n"); // Il faut faire un print dans le stderror
+		ft_printf("pwd: too many arguments\n"); // Il faut faire un print dans le stderror
 		return (1);
 	}
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
@@ -122,17 +122,19 @@ int	ft_exit(t_m *mini)
 
 int	cmd_built(t_token *cmd, t_m *mini)
 {
-	if (ft_strcmp(cmd[0].value, "cd") == 0)
-		return (ft_mini_cd(cmd, mini));
-	else if (ft_strcmp(cmd[0].value, "echo") == 0)
-		return (ft_mini_echo(cmd));
-	else if (ft_strcmp(cmd[0].value, "pwd") == 0)
-		return (ft_mini_pwd(cmd));
-	else if (ft_strcmp(cmd[0].value, "export") == 0)
-		return (ft_mini_export(cmd, mini));
-	else if (ft_strcmp(cmd[0].value, "env") == 0)
-		return (ft_mini_env(mini));
-	else if (ft_strcmp(cmd[0].value, "exit") == 0)
-		return (ft_exit(mini));
+	(void)cmd;
+	(void)mini;
+	// if (ft_strcmp(cmd[0].value, "cd") == 0)
+	// 	return (ft_mini_cd(cmd, mini));
+	// else if (ft_strcmp(cmd[0].value, "echo") == 0)
+	// 	return (ft_mini_echo(cmd));
+	// else if (ft_strcmp(cmd[0].value, "pwd") == 0)
+	// 	return (ft_mini_pwd(cmd));
+	// else if (ft_strcmp(cmd[0].value, "export") == 0)
+	// 	return (ft_mini_export(cmd, mini));
+	// else if (ft_strcmp(cmd[0].value, "env") == 0)
+	// 	return (ft_mini_env(mini));
+	// else if (ft_strcmp(cmd[0].value, "exit") == 0)
+	// 	return	(ft_exit(mini));
 	return (0);
 }

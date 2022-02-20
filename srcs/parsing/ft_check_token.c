@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_token.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 12:26:44 by ahamdoun          #+#    #+#             */
 /*   Updated: 2022/02/20 15:31:41 by ahamdoun         ###   ########.fr       */
@@ -217,6 +217,6 @@ void    ft_parse_token(t_token *token, t_m *mini) // On va assigner les cmd
 	}
 	mini->pipe = pipe;
 	mini->pipe_lenght = count;
-	//pipex(pipe, count, mini->env_bis, mini);
+	pipex(pipe, count, mini->env_bis, mini);
 	//ft_print_pipe(pipe, count);
 }
