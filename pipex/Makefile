@@ -4,7 +4,8 @@ get_next_line_utils.c \
 get_next_line.c \
 parse_argc.c \
 open_write.c \
-../printf/libft/libft.a
+error.c \
+../printf/libft/libft.a \
 
 CC = gcc
 

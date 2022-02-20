@@ -38,4 +38,8 @@ typedef struct s_pipe // Parsing par pipe pour le Pierro
   int		outfile_count;
 }  t_pipe;
 
+/* BUILTS IN */
+int	    ft_mini_cd(char **cmd, t_m *mini);
+int		ft_mini_pwd(char **cmd);
+
 #endif
