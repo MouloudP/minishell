@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 10:16:16 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/20 15:40:29 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/21 11:15:46 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ void	ft_printenv(t_m *mini);
 void	ft_printexport(t_m *mini);
 void	update_env(t_m *mini);
 
-int		cmd_built(t_token *cmd, t_m *mini);
 void	setup_signal(t_m *mini);
 void	get_env(char **env, t_m *mini);
 

@@ -7,5 +7,6 @@ int	main(void)
 	i = -1;
 	while (++i < 999)
 		printf("made on minishell\n");
+	printf("heheh\n");
 	return(0);
 }

@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 10:20:48 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/20 14:17:10 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/21 13:02:57 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	main(int argc, char *argv[], char **env)
 	(void) argv;
 	setup_signal(&mini);
 	get_env(env, &mini);
+	mini.exit_status = 0;
 	line = readline("\e[0;35mLeShell\e[0;33mDeLaHonte $>\e[0;37m ");
 	while (line && mini.end == -1)
 	{

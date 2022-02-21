@@ -17,6 +17,7 @@ typedef struct s_m // La struc du minishell
 	struct s_pipe	*pipe;
 	int				pipe_lenght;
 	int				end;
+	int				exit_status;
 }	t_m;
 
 typedef struct s_token // Parsing au départ des éléments
@@ -42,5 +43,9 @@ typedef struct s_pipe // Parsing par pipe pour le Pierro
 /* BUILTS IN */
 int	    ft_mini_cd(char **cmd, t_m *mini);
 int		ft_mini_pwd(char **cmd);
+int		ft_exit(t_m *mini);
+int		ft_mini_env(t_m *mini);
+int		ft_mini_echo(char **cmd);
+int		ft_mini_export(char **cmd, t_m *mini);
 
 #endif
