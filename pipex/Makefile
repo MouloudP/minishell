@@ -2,7 +2,7 @@ SRC = main.c utils.c ft_split.c \
 command.c utils2.c utils3.c iter_pipes.c\
 get_next_line_utils.c \
 get_next_line.c \
-parse_argc.c \
+redirection.c \
 open_write.c \
 error.c \
 ../printf/libft/libft.a \

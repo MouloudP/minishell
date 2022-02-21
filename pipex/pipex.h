@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 16:24:21 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/20 16:11:29 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/21 16:36:44 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,14 @@ int		free_split_int(char **splitted);
 void	close_pipe(int *pipe);
 int		fork_store(pid_t *pid_res);
 int		open_store(int *fd_res, char *filename, int mode);
-int		redirections(t_pipe *pipe, int *input_fd, int *output_fd);
+int		redirections(t_pipe pipe, int *input_fd, int *output_fd);
 int    	ft_strs_include(char *s, char **str);
 int		ft_tern(int condition, int a, int b);
 
 /* BUILTINS */
 int		is_builtin(char *cmd);
-int		run_builtin(char **cmd, t_m *mini);
+int		run_builtin(char **cmd, t_m *mini, int fd_in, int fd_out);
+
 
 /* MAIN */
 int		run_command(int entry_pipe, int	*pipe_fd, char **argv, t_m *mini);

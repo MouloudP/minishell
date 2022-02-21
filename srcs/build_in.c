@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 13:14:42 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/21 11:24:42 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/21 16:39:23 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,24 +39,28 @@ int	ft_mini_cd(char **cmd, t_m *mini)
 	return (1);
 }
 
-int	ft_mini_pwd(char **cmd)
+int    ft_mini_pwd(char **cmd, int fd_in, int fd_out)
 {
-	char 	cwd[1024];
-	int		i;
+    char     cwd[1024];
+    int        i;
 
-	i = 1;
-	while (cmd[i]) // Faut check le nombre darg
-		i++;
-	if (i > 1)
-	{
-		ft_printf("pwd: too many arguments\n"); // Il faut faire un print dans le stderror
-		return (1);
-	}
-	if (getcwd(cwd, sizeof(cwd)) != NULL)
-		ft_printf("%s\n", cwd); // faut join le HOME Au pwd
-	else
-		perror("pwd\n"); // Afficher sur le stderror
-	return (1);
+	(void)fd_in;
+    i = 1;
+    while (cmd[i]) // Faut check le nombre darg
+        i++;
+    if (i > 1)
+    {
+        ft_printf("pwd: too many arguments\n"); // Il faut faire un print dans le stderror
+        return (1);
+    }
+    if (getcwd(cwd, sizeof(cwd)) != NULL)
+    {
+        write(fd_out, cwd, ft_strlen(cwd));
+        write(fd_out, "\n", 1);
+    }
+    else
+        perror("pwd\n"); // Afficher sur le stderror
+    return (1);
 }
 
 int	ft_check_arg(char *str)

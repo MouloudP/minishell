@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_token.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 12:26:44 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/21 14:22:39 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/21 15:04:53 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,9 +199,9 @@ void    ft_parse_token(t_token *token, t_m *mini) // On va assigner les cmd
 		if (token[i].value && token[i].type == TOKEN_PIPE)
 			i++;
 	}
-	ft_print_token(token);
+	//ft_print_token(token);
 	pipe = ft_create_pipe(token, count);
-	ft_print_pipe(pipe, count);
+	//ft_print_pipe(pipe, count);
 	i = 0;
 	while (i < count)
 	{

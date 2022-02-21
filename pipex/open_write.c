@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 12:32:06 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/19 17:36:59 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/21 16:02:27 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ int	write_command_output(char *outfile, int fd_src)
 int	open_output(char *outfile, int append)
 {
 	int		fd_outfile;
+	int		readed;
+	char	buffer[1023];
 
 	if (!outfile)
 		return (input_error("parse error near '\\n'", NULL, 0));
@@ -63,6 +65,12 @@ int	open_output(char *outfile, int append)
 		fd_outfile = open(outfile, O_RDWR | O_CREAT, S_IRWXU);
 		if (fd_outfile == -1)
 			return (input_error("cant open fd", NULL, 0));
+	}
+	else
+	{
+		readed = 1023;
+		while (readed == 1023)
+			readed = read(fd_outfile, buffer, 1023);
 	}
 	return (fd_outfile);
 }

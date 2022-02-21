@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 12:03:44 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/21 13:22:03 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/21 16:54:41 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	iter_pipes(t_pipe *pipes, int pipe_size, t_m *mini, char **paths)
 	{	
 		if (pipe(pipe_fd) == -1)
 			return (-1);
-		redir = redirections(&pipes[i], &input_fd, &pipe_fd[1]);
+		redir = redirections(pipes[i], &input_fd, &pipe_fd[1]);
 		if (redir < 0)
 			return (redir);
 		if (redir == 0 && i + 1 == pipe_size)
