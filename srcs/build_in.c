@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 13:14:42 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/21 16:32:28 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/21 16:46:34 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,9 @@ int	ft_mini_cd(char **cmd, t_m *mini)
 	if (!path || ft_strlen(path) == 0)
 		path = base;
 	else if (ft_strncmp(path, "~", 1) == 0 && base)
-		path = ft_strjoin(base, path + 1);
+		path = ft_strjoin(base, path + 1); // JE dois freeeeeee
 	//ft_printf("JE VEUX ALLEZ LÀ : %s\n", path);
+
 	if (chdir(path) == -1)
 		perror("cd");
 	else
@@ -32,7 +33,7 @@ int	ft_mini_cd(char **cmd, t_m *mini)
 		//if (ft_printf("MAIS JE ME RETROUVE ICI : %s\n", getcwd(cwd, sizeof(cwd))))
 		if (getcwd(cwd, sizeof(cwd)) != NULL)
 		{
-			ft_setenv(mini, "OLDPWD", ft_getenv(mini, "PWD"), 1); // faut join le HOME Au pwd
+			ft_setenv(mini, "OLDPWD", ft_getenv(mini, "PWD"), 1);
 			ft_setenv(mini, "PWD", path, 1);
 		}
 	}
