@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 11:45:46 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/20 15:42:13 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/21 11:35:58 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ t_token *ft_remove_cmd(t_token *cmd, int size, int del)
             new[j++] = cmd[i];
         i++;
     }
-    free(cmd[del].value);
+    if (cmd[del].value)
+        free(cmd[del].value);
     free(cmd);
     return (new);
 }
@@ -69,9 +70,12 @@ void    ft_delimiters(char *s, t_token *token)
         temp = ret;
         ret = ft_strjoin(ret, "\n");
         free(temp);
-        temp = ret;
-        ret = ft_strjoin(ret, line);
-        free(temp);
+        if (line && ft_strcmp(line, s) != 0)
+        {
+            temp = ret;
+            ret = ft_strjoin(ret, line);
+            free(temp);
+        }
     }
     if (line)
         free(line);
