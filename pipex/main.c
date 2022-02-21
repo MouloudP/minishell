@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 16:24:13 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/21 16:39:33 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/21 16:42:27 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@ char	**get_paths(char **env)
 
 /* work like old good regular pipex, return 0 if
 everything goes well or 1 if fail*/
-int	run_builtin(char **cmd, t_m *mini, int fd_out)
+int	run_builtin(char **cmd, t_m *mini, int fd_in, int fd_out)
 {
+	(void) fd_in;
 	if (ft_strcmp(cmd[0], "pwd") == 0)
 		return (ft_mini_pwd(cmd, fd_out));
 	else if (ft_strcmp(cmd[0], "cd") == 0)
@@ -57,7 +58,7 @@ int	pipex(t_pipe *pipes, int pipe_size, char **env, t_m *mini)
 
 	if (pipe_size == 1 && is_builtin(pipes[0].parse_cmd[0]))
 	{
-		mini->exit_status = run_builtin(pipes[0].parse_cmd, mini, 1);
+		mini->exit_status = run_builtin(pipes[0].parse_cmd, mini, 0, 1);
 		return (0);
 	}
 	if (fork_store(&pid) == -1)

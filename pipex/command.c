@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 19:13:26 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/21 16:39:46 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/21 16:41:32 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	run_command(int entry_pipe, int	*pipe_fd, char **parsed_cmd, t_m *mini)
 		perror("split error");
 	if (is_builtin(parsed_cmd[0]))
 	{
-		run_builtin(parsed_cmd, mini, 1);
+		run_builtin(parsed_cmd, mini, 0, 1);
 		exit(0);
 	}
 	if (execve(parsed_cmd[0], &parsed_cmd[0], mini->env_bis) == -1)
