@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 10:16:16 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/21 11:15:46 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/21 14:54:40 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_token	*ft_partsing(char *str, t_m *mini);
 t_token *ft_realloc_cmd(t_token	*cmd, int size);
 t_token	free_and_return(char *str, t_token token);
 t_token *ft_remove_cmd(t_token *cmd, int size, int del);
-t_token	ft_getarg(char *str, int *i);
+t_token	ft_getarg(char *str, int *i, t_m *mini);
 void    ft_parse_token(t_token *token, t_m *mini);
 
 char	*free_add_assign(char *str, char *news);
