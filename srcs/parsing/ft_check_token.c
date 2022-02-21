@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 12:26:44 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/21 14:22:39 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/21 15:18:52 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,6 +217,7 @@ void    ft_parse_token(t_token *token, t_m *mini) // On va assigner les cmd
 	}
 	mini->pipe = pipe;
 	mini->pipe_lenght = count;
+	ft_printf("\nTEST : %d\n", pipe[0].infile[0].fd);
 	pipex(pipe, count, mini->env_bis, mini);
 	//ft_print_pipe(pipe, count);
 }

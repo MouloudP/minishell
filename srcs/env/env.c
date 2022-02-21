@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 11:26:05 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/21 11:24:48 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/21 16:35:37 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_mini_export(char **cmd, t_m *mini)
+int	ft_mini_export(char **cmd, t_m *mini, int out_fd)
 {
 	if (cmd[1] && cmd[2])
 		ft_setenv(mini, cmd[1], cmd[2], 1);
 	else if (cmd[1])
 		ft_setenv(mini, cmd[1], NULL, 0);
 	else
-		ft_printexport(mini);
+		ft_printexport(mini, out_fd);
 	return (1);
 }
 

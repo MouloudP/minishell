@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 10:16:16 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/21 14:54:40 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/21 16:35:03 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ char	**ft_realloc(char **cmd, int size);
 
 char	*ft_getenv(t_m *mini, char *var);
 void	ft_setenv(t_m *mini, char *name, char *value, int init);
-void	ft_printenv(t_m *mini);
-void	ft_printexport(t_m *mini);
+void	ft_printenv(t_m *mini, int out_fd);
+void	ft_printexport(t_m *mini, int out_fd);
 void	update_env(t_m *mini);
 
 void	setup_signal(t_m *mini);
@@ -70,5 +70,8 @@ int		ft_redirec(char c);
 void    ft_delimiters(char *s, t_token *token);
 
 int		pipex(t_pipe *pipes, int pipe_size,  char **env, t_m *mini);
+
+void	cancel_c(int sig);
+void	cancel_c2(int sig);
 
 #endif

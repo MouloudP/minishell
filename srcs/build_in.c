@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 13:14:42 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/21 11:24:42 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/21 16:32:28 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	ft_mini_cd(char **cmd, t_m *mini)
 	return (1);
 }
 
-int	ft_mini_pwd(char **cmd)
+int	ft_mini_pwd(char **cmd, int fd_out)
 {
 	char 	cwd[1024];
 	int		i;
@@ -53,7 +53,10 @@ int	ft_mini_pwd(char **cmd)
 		return (1);
 	}
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
-		ft_printf("%s\n", cwd); // faut join le HOME Au pwd
+	{
+		write(fd_out, cwd, ft_strlen(cwd));
+		write(fd_out, "\n", 1);
+	}
 	else
 		perror("pwd\n"); // Afficher sur le stderror
 	return (1);
@@ -70,7 +73,7 @@ int	ft_check_arg(char *str)
 	return (1);
 }
 
-int	ft_mini_echo(char **cmd)
+int	ft_mini_echo(char **cmd, int fd_out)
 {
 	int	i;
 	int	n;
@@ -87,19 +90,19 @@ int	ft_mini_echo(char **cmd)
 				return (1);
 			continue ;
 		}
-		ft_printf("%s", cmd[i]);
+		write(fd_out, cmd[i], ft_strlen(cmd[i]));
 		i++;
 		if (cmd[i])
-			ft_printf(" ");
+			write(fd_out, " ", 1);
 	}
 	if (n == 0)
-		ft_printf("\n");
+		write(fd_out, "\n", 1);
 	return (1);
 }
 
-int	ft_mini_env(t_m *mini)
+int	ft_mini_env(t_m *mini, int fd_out)
 {
-	ft_printenv(mini);
+	ft_printenv(mini, fd_out);
 	return (1);
 }
 

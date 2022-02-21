@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 16:24:21 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/20 16:11:29 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/21 16:39:22 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int		ft_tern(int condition, int a, int b);
 
 /* BUILTINS */
 int		is_builtin(char *cmd);
-int		run_builtin(char **cmd, t_m *mini);
+int		run_builtin(char **cmd, t_m *mini, int fd_out);
 
 /* MAIN */
 int		run_command(int entry_pipe, int	*pipe_fd, char **argv, t_m *mini);

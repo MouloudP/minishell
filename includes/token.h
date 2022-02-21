@@ -11,6 +11,8 @@ typedef struct s_env // LENv du minishell
 typedef struct s_m // La struc du minishell
 {
 	void			(*signal_save)(int);
+	void			(*cancel_c)(int);
+	void			(*cancel_c2)(int);
 	t_env			*env;
 	char			**env_bis;
 	int				env_lenght;
@@ -42,10 +44,10 @@ typedef struct s_pipe // Parsing par pipe pour le Pierro
 
 /* BUILTS IN */
 int	    ft_mini_cd(char **cmd, t_m *mini);
-int		ft_mini_pwd(char **cmd);
+int		ft_mini_pwd(char **cmd, int out_fd);
 int		ft_exit(t_m *mini);
-int		ft_mini_env(t_m *mini);
-int		ft_mini_echo(char **cmd);
-int		ft_mini_export(char **cmd, t_m *mini);
+int		ft_mini_env(t_m *mini, int out_fd);
+int		ft_mini_echo(char **cmd, int out_fd);
+int		ft_mini_export(char **cmd, t_m *mini, int out_fd);
 
 #endif
