@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parsing_utils2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 11:45:46 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/21 11:35:58 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/21 15:41:31 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void    ft_delimiters(char *s, t_token *token)
         free(line);
     write(pipes[1], ret, ft_strlen(ret));
     close(pipes[1]);
-    token->fd = pipes[1];
+    token->fd = pipes[0];
     token->value = free_add_assign(token->value, ft_strdup(s));
     free(ret);
 }

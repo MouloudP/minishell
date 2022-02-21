@@ -42,7 +42,7 @@ typedef struct s_pipe // Parsing par pipe pour le Pierro
 
 /* BUILTS IN */
 int	    ft_mini_cd(char **cmd, t_m *mini);
-int		ft_mini_pwd(char **cmd);
+int		ft_mini_pwd(char **cmd, int fd_in, int fd_out);
 int		ft_exit(t_m *mini);
 int		ft_mini_env(t_m *mini);
 int		ft_mini_echo(char **cmd);

@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 16:24:13 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/21 13:03:12 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/21 16:59:57 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,21 @@ char	**get_paths(char **env)
 
 /* work like old good regular pipex, return 0 if
 everything goes well or 1 if fail*/
-int	run_builtin(char **cmd, t_m *mini)
+int	run_builtin(char **cmd, t_m *mini, int fd_in, int fd_out)
 {
+	(void)mini;
 	if (ft_strcmp(cmd[0], "pwd") == 0)
-		return (ft_mini_pwd(cmd));
-	else if (ft_strcmp(cmd[0], "cd") == 0)
-		return (ft_mini_cd(cmd, mini));
-	else if (ft_strcmp(cmd[0], "echo") == 0)
-		return (ft_mini_echo(cmd));
-	else if (ft_strcmp(cmd[0], "export") == 0)
-		return (ft_mini_export(cmd, mini));
-	else if (ft_strcmp(cmd[0], "env") == 0)
-		return (ft_mini_env(mini));
-	else if (ft_strcmp(cmd[0], "exit") == 0)
-		return (ft_exit(mini));
+		return (ft_mini_pwd(cmd, fd_in, fd_out));
+	// else if (ft_strcmp(cmd[0], "cd") == 0)
+	// 	return (ft_mini_cd(cmd, mini, fd_in, fd_out));
+	// else if (ft_strcmp(cmd[0], "echo") == 0)
+	// 	return (ft_mini_echo(cmd, fd_in, fd_out));
+	// else if (ft_strcmp(cmd[0], "export") == 0)
+	// 	return (ft_mini_export(cmd, mini, fd_in, fd_out));
+	// else if (ft_strcmp(cmd[0], "env") == 0)
+	// 	return (ft_mini_env(mini, fd_in, fd_out));
+	// else if (ft_strcmp(cmd[0], "exit") == 0)
+	// 	return (ft_exit(mini, fd_in, fd_out));
 	return (0);
 }
 
@@ -54,10 +55,15 @@ int	pipex(t_pipe *pipes, int pipe_size, char **env, t_m *mini)
 {
 	char	**paths;
 	pid_t	pid;
+	int		fd_in;
+	int		fd_out;
 
 	if (pipe_size == 1 && is_builtin(pipes[0].parse_cmd[0]))
 	{
-		mini->exit_status = run_builtin(pipes[0].parse_cmd, mini);
+		fd_in = 0;
+		fd_out = 1;
+		redirections(pipes[0], &fd_in, &fd_out);
+		mini->exit_status = run_builtin(pipes[0].parse_cmd, mini, fd_in, fd_out);
 		return (0);
 	}
 	if (fork_store(&pid) == -1)
