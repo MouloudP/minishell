@@ -6,13 +6,70 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 15:26:50 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/20 14:59:47 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/21 13:16:54 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_getquote(char *str, int *i, char c)
+char	*ft_quote_env(char *str, char c, t_m *mini)
+{
+	int		i;
+	int		start;
+	char	*temp;
+	char	*copy;
+	char	*temp2;
+
+	i = 0;
+	while (str[i] && c != '\'')
+	{
+		if (str[i] == '$')
+		{
+			start = i + 1;
+			i++;
+			if (str[i] == '{')
+				start = (++i);
+			while (str[i] && !ft_whitespace(str[i]) && str[i] != '$' && str[i] != '}')
+				i++;
+			//ft_printf("END WHILE\n");
+			temp = str + start;
+			if (str[i] == '}')
+			{
+				temp = ft_strndup(temp, i - start);
+				temp2 = ft_strndup(str, start - 2);
+			}
+			else
+			{
+				temp = ft_strndup(temp, i - start);
+				temp2 = ft_strndup(str, start - 1);
+			}
+			//ft_printf("START : |%s|\n", temp2);
+			//ft_printf("MILIEU : |%s|\n", temp);
+			if (ft_getenv(mini, temp))
+				copy = ft_strjoin(temp2, ft_getenv(mini, temp));
+			else
+				copy = ft_strdup(temp2);
+			free(temp);
+			free(temp2);
+			temp = copy;
+			if (str[i] == '}')
+				copy = ft_strjoin(copy, str + i + 1);
+			else
+				copy = ft_strjoin(copy, str + i);
+			//ft_printf("END : |%s|\n", str + i);
+			//ft_printf("MILIEU : |%s|\n", ft_getenv(mini, temp));
+			//ft_printf("FINALE : |%s| \n", copy);
+			free(str);
+			str = copy;
+			str = ft_quote_env(str, c, mini);
+			break;
+		}
+		i++;
+	}
+	return (str);
+}
+
+char	*ft_getquote(char *str, int *i, char c, t_m *mini) // Check env dans les quotes OUBLIE PAS !
 {
 	char	*arg;
 	char	*s;
@@ -28,6 +85,7 @@ char	*ft_getquote(char *str, int *i, char c)
 		(*i)++;
 	}
 	free(s);
+	arg = ft_quote_env(arg, c, mini);
 	return (arg);
 }
 
@@ -46,7 +104,7 @@ int	ft_get_redirection(char *s)
 	return (TOKEN_ERROR);
 }
 
-t_token	ft_redirection(char *str, char c, int *i)
+t_token	ft_redirection(char *str, char c, int *i, t_m *mini)
 {
 	t_token	token;
 	t_token	temp;
@@ -65,7 +123,7 @@ t_token	ft_redirection(char *str, char c, int *i)
 		{
 			while (str[(*i)] && ft_whitespace(str[(*i)]))
 				(*i)++;
-			temp = ft_getarg(str, i);
+			temp = ft_getarg(str, i, mini);
 			ft_delimiters(temp.value, &token);
 			free(temp.value);
 		}
@@ -104,7 +162,7 @@ t_token	ft_pipe(char *str, char c, int *i)
 	return (token);
 }
 
-t_token	ft_getarg(char *str, int *i) // On va traiter un argument et voir comment le traiter
+t_token	ft_getarg(char *str, int *i, t_m *mini) // On va traiter un argument et voir comment le traiter
 {
 	t_token	token; // A mon avis un token sera mieux
 	char	*s;
@@ -120,7 +178,7 @@ t_token	ft_getarg(char *str, int *i) // On va traiter un argument et voir commen
 		{
 			(*i)++;
 			token.type = TOKEN_ARGUMENT;
-			temp = ft_getquote(str, i, str[*i - 1]);
+			temp = ft_getquote(str, i, str[*i - 1], mini);
 			token.value = free_add_assign(token.value, ft_strjoin(token.value, temp)); // Et on va la mettre dans token.value avec strjoin
 			free(temp);
 		}
@@ -133,7 +191,7 @@ t_token	ft_getarg(char *str, int *i) // On va traiter un argument et voir commen
 				if (ft_strlen(token.value) >= 1)
 					return (free_and_return(s, token));
 				else
-					return (free_and_return(token.value, free_and_return(s, ft_redirection(str, str[*i], i)))); // On capture le < ou le > << >>
+					return (free_and_return(token.value, free_and_return(s, ft_redirection(str, str[*i], i, mini)))); // On capture le < ou le > << >>
 			}
 			else if (str[*i] == '|')
 			{
@@ -156,20 +214,15 @@ t_token	ft_getarg(char *str, int *i) // On va traiter un argument et voir commen
 t_token *ft_parse_env(t_token *cmd, t_m *mini, int j)
 {
 	int 	i;
-	char	*temp;
+	//char	*temp;
 
 	i = 0;
 	while (cmd[i].type)
 	{
 		if (cmd[i].env)
 		{
-			temp = ft_getenv(mini, cmd[i].value + 1);
-			if (temp)
-			{
-				free(cmd[i].value);
-				cmd[i].value = ft_strdup(temp);
-			}
-			else
+			cmd[i].value = ft_quote_env(cmd[i].value, '"', mini);
+			if (!cmd[i].value || ft_strlen(cmd[i].value) <= 0)
 			{
 				cmd = ft_remove_cmd(cmd, j--, i);
 				cmd = ft_parse_env(cmd, mini, j);
@@ -195,15 +248,11 @@ t_token	*ft_partsing(char *str, t_m *mini) // La base en gros on va juste récup
 	j = 0;
 	while (str[i])
 	{
-		temp = ft_getarg(str, &i); // On va recup chaque argument
+		temp = ft_getarg(str, &i, mini); // On va recup chaque argument
 		if (temp.value)
 		{
-			// Il faut realloc MOULOUD OUBLIE PAS
-			//if (ft_strcmp(cmd[j - 1].type, "PIPE") == 0) //SI on avait un pipe le prochain truc est une commande on un prog
-			//	temp.type = "CMD";
 			cmd = ft_realloc_cmd(cmd, j);
 			cmd[j++] = temp;
-			//ft_printf("%d : %d : %s\n", j - 1, cmd[j - 1].type, cmd[j - 1].value);
 		}
 		while (str[i] && ft_whitespace(str[i])) // On évite les boucles infini
 			i++;
