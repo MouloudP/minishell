@@ -3,14 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 11:26:05 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/20 10:28:49 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/21 11:24:48 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	ft_mini_export(char **cmd, t_m *mini)
+{
+	if (cmd[1] && cmd[2])
+		ft_setenv(mini, cmd[1], cmd[2], 1);
+	else if (cmd[1])
+		ft_setenv(mini, cmd[1], NULL, 0);
+	else
+		ft_printexport(mini);
+	return (1);
+}
 
 void	get_env(char **env, t_m *mini)
 {

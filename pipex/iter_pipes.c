@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 12:03:44 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/20 16:05:37 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/21 13:22:03 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,17 @@ int	run_process_command(int first_pipe, char **pipe_cmd, t_m *mini, int *new_pip
 int	wait_all_pid(pid_t *pid, int size)
 {
 	int	i;
+	int status;
 
 	i = 0;
+	status = 1;
 	while (i < size)
 	{
 		if (pid[i] != -1)
-			waitpid(pid[i], 0, 0);
+			waitpid(pid[i], &status, 0);
 		++i;
 	}
-	return (0);
+	return (status);
 }
 
 int	iter_pipes(t_pipe *pipes, int pipe_size, t_m *mini, char **paths)
@@ -77,7 +79,7 @@ int	iter_pipes(t_pipe *pipes, int pipe_size, t_m *mini, char **paths)
 		}
 		++i;
 	}
-	wait_all_pid(pids, i);
+	mini->exit_status = wait_all_pid(pids, i);
 	free(pids);
 	if (input_fd != 0)
 		close(input_fd);

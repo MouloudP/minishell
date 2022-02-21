@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 19:13:26 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/20 16:13:11 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/21 13:25:20 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,14 @@ int	is_builtin(char *cmd)
 		return (1);
 	else if (ft_strcmp(cmd, "cd") == 0)
 		return (1);
+	else if (ft_strcmp(cmd, "echo") == 0)
+		return (1);
+	else if (ft_strcmp(cmd, "export") == 0)
+		return (1);
+	else if (ft_strcmp(cmd, "env") == 0)
+		return (1);
+	else if (ft_strcmp(cmd, "exit") == 0)
+		return (1);
 	return (0);
 }
 
@@ -78,7 +86,6 @@ int	parse_cmd(char **command, char **paths)
 	int		i;
 	char	*full_path;
 
-	(void)full_path;
 	if (!*command)
 		return (-1);
 	if (is_path(*command))
