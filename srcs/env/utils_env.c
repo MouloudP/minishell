@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 09:53:12 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/20 09:54:04 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/21 16:33:39 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	update_env(t_m *mini) // Pour le piero
 	mini->env_bis[j++] = NULL;
 }
 
-void	ft_printenv(t_m *mini)
+void	ft_printenv(t_m *mini, int fd_out)
 {
 	int	i;
 
@@ -54,7 +54,12 @@ void	ft_printenv(t_m *mini)
 	while (i < (mini->env_lenght - 1))
 	{
 		if (mini->env[i].init)
-			ft_printf("%s=%s\n", mini->env[i].name, mini->env[i].value);
+		{
+			write(fd_out, mini->env[i].name, ft_strlen(mini->env[i].name));
+			write(fd_out, "=", 1);
+			write(fd_out, mini->env[i].value, ft_strlen(mini->env[i].value));
+			write(fd_out, "\n", 1);
+		}
 		i++;
 	}
 }

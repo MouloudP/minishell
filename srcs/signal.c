@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 13:15:24 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/21 15:06:37 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/21 17:06:46 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	cancel_c(int sig)
 {
 	if (sig == SIGINT)
 	{
+		ft_printf("CANCEL");
 		write(1, "\n", 1);
 		rl_replace_line("", 0);
 		rl_on_new_line();
@@ -24,8 +25,15 @@ void	cancel_c(int sig)
 	}
 }
 
+void	cancel_c2(int sig)
+{
+	(void) sig;
+}
+
 void	setup_signal(t_m *mini)
 {
 	mini->end = -1;
 	mini->signal_save = signal(SIGINT, cancel_c);
+	mini->cancel_c = cancel_c;
+	mini->cancel_c2 = cancel_c2;
 }

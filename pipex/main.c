@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 16:24:13 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/21 16:59:57 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/21 17:05:28 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,19 @@ char	**get_paths(char **env)
 everything goes well or 1 if fail*/
 int	run_builtin(char **cmd, t_m *mini, int fd_in, int fd_out)
 {
-	(void)mini;
+	(void) fd_in;
 	if (ft_strcmp(cmd[0], "pwd") == 0)
-		return (ft_mini_pwd(cmd, fd_in, fd_out));
-	// else if (ft_strcmp(cmd[0], "cd") == 0)
-	// 	return (ft_mini_cd(cmd, mini, fd_in, fd_out));
-	// else if (ft_strcmp(cmd[0], "echo") == 0)
-	// 	return (ft_mini_echo(cmd, fd_in, fd_out));
-	// else if (ft_strcmp(cmd[0], "export") == 0)
-	// 	return (ft_mini_export(cmd, mini, fd_in, fd_out));
-	// else if (ft_strcmp(cmd[0], "env") == 0)
-	// 	return (ft_mini_env(mini, fd_in, fd_out));
-	// else if (ft_strcmp(cmd[0], "exit") == 0)
-	// 	return (ft_exit(mini, fd_in, fd_out));
+		return (ft_mini_pwd(cmd, fd_out));
+	else if (ft_strcmp(cmd[0], "cd") == 0)
+		return (ft_mini_cd(cmd, mini));
+	else if (ft_strcmp(cmd[0], "echo") == 0)
+		return (ft_mini_echo(cmd, fd_out));
+	else if (ft_strcmp(cmd[0], "export") == 0)
+		return (ft_mini_export(cmd, mini, fd_out));
+	else if (ft_strcmp(cmd[0], "env") == 0)
+		return (ft_mini_env(mini, fd_out));
+	else if (ft_strcmp(cmd[0], "exit") == 0)
+		return (ft_exit(mini));
 	return (0);
 }
 
@@ -70,6 +70,8 @@ int	pipex(t_pipe *pipes, int pipe_size, char **env, t_m *mini)
 		return (-1);
 	if (pid == 0)
 	{
+		signal(SIGINT, mini->signal_save);
+		mini->end = 1;
 		paths = get_paths(env);
 		if (!paths)
 			return (input_error("Environement", NULL, 4));	
@@ -84,6 +86,10 @@ int	pipex(t_pipe *pipes, int pipe_size, char **env, t_m *mini)
 		return (1);
 	}
 	else
+	{
+		signal(SIGINT, mini->cancel_c2);
 		waitpid(pid, 0, 0);
+		signal(SIGINT, mini->cancel_c);
+	}
 	return (0);
 }

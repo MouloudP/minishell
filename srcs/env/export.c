@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 09:51:42 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/20 09:52:50 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/21 16:37:28 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ft_copy_part(t_env *srcs, t_env *dest)
 	srcs->init = dest->init;
 }
 
-void	ft_printexport(t_m *mini)
+void	ft_printexport(t_m *mini, int out_fd)
 {
 	int		i;
 	int		j;
@@ -65,9 +65,18 @@ void	ft_printexport(t_m *mini)
 	while (i < (mini->env_lenght - 1))
 	{
 		if (new[i].init)
-			ft_printf("%s=%s\n", new[i].name, new[i].value);
+		{
+			write(out_fd, new[i].name, ft_strlen(new[i].name));
+			write(out_fd, "=", 1);
+			write(out_fd, new[i].value, ft_strlen(new[i].value));
+			write(out_fd, "\n", 1);
+			//ft_printf("%s=%s\n", new[i].name, new[i].value);
+		}
 		else
-			ft_printf("%s=''\n", new[i].name);
+		{
+			write(out_fd, new[i].name, ft_strlen(new[i].name));
+			write(out_fd, "=''\n", 4);
+		}
 		i++;
 	}
 	free(new);

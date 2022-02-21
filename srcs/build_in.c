@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 13:14:42 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/21 16:39:23 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/21 17:06:24 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,9 @@ int	ft_mini_cd(char **cmd, t_m *mini)
 	if (!path || ft_strlen(path) == 0)
 		path = base;
 	else if (ft_strncmp(path, "~", 1) == 0 && base)
-		path = ft_strjoin(base, path + 1);
+		path = ft_strjoin(base, path + 1); // JE dois freeeeeee
 	//ft_printf("JE VEUX ALLEZ LÀ : %s\n", path);
+
 	if (chdir(path) == -1)
 		perror("cd");
 	else
@@ -32,35 +33,34 @@ int	ft_mini_cd(char **cmd, t_m *mini)
 		//if (ft_printf("MAIS JE ME RETROUVE ICI : %s\n", getcwd(cwd, sizeof(cwd))))
 		if (getcwd(cwd, sizeof(cwd)) != NULL)
 		{
-			ft_setenv(mini, "OLDPWD", ft_getenv(mini, "PWD"), 1); // faut join le HOME Au pwd
+			ft_setenv(mini, "OLDPWD", ft_getenv(mini, "PWD"), 1);
 			ft_setenv(mini, "PWD", path, 1);
 		}
 	}
 	return (1);
 }
 
-int    ft_mini_pwd(char **cmd, int fd_in, int fd_out)
+int	ft_mini_pwd(char **cmd, int fd_out)
 {
     char     cwd[1024];
     int        i;
 
-	(void)fd_in;
-    i = 1;
-    while (cmd[i]) // Faut check le nombre darg
-        i++;
-    if (i > 1)
-    {
-        ft_printf("pwd: too many arguments\n"); // Il faut faire un print dans le stderror
-        return (1);
-    }
-    if (getcwd(cwd, sizeof(cwd)) != NULL)
-    {
-        write(fd_out, cwd, ft_strlen(cwd));
-        write(fd_out, "\n", 1);
-    }
-    else
-        perror("pwd\n"); // Afficher sur le stderror
-    return (1);
+	i = 1;
+	while (cmd[i]) // Faut check le nombre darg
+		i++;
+	if (i > 1)
+	{
+		ft_printf("pwd: too many arguments\n"); // Il faut faire un print dans le stderror
+		return (1);
+	}
+	if (getcwd(cwd, sizeof(cwd)) != NULL)
+	{
+		write(fd_out, cwd, ft_strlen(cwd));
+		write(fd_out, "\n", 1);
+	}
+	else
+		perror("pwd\n"); // Afficher sur le stderror
+	return (1);
 }
 
 int	ft_check_arg(char *str)
@@ -74,7 +74,7 @@ int	ft_check_arg(char *str)
 	return (1);
 }
 
-int	ft_mini_echo(char **cmd)
+int	ft_mini_echo(char **cmd, int fd_out)
 {
 	int	i;
 	int	n;
@@ -91,19 +91,19 @@ int	ft_mini_echo(char **cmd)
 				return (1);
 			continue ;
 		}
-		ft_printf("%s", cmd[i]);
+		write(fd_out, cmd[i], ft_strlen(cmd[i]));
 		i++;
 		if (cmd[i])
-			ft_printf(" ");
+			write(fd_out, " ", 1);
 	}
 	if (n == 0)
-		ft_printf("\n");
+		write(fd_out, "\n", 1);
 	return (1);
 }
 
-int	ft_mini_env(t_m *mini)
+int	ft_mini_env(t_m *mini, int fd_out)
 {
-	ft_printenv(mini);
+	ft_printenv(mini, fd_out);
 	return (1);
 }
 
