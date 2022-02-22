@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 10:16:16 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/22 16:24:02 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/22 17:55:55 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,9 @@
 # define TOKEN_FILE 9
 # define TOKEN_ERROR 10 // >< Error de parsing || &&
 
-
 /// Parsing
 t_token	*ft_partsing(char *str, t_m *mini);
-t_token *ft_realloc_cmd(t_token	*cmd, int size);
+t_token	*ft_realloc_cmd(t_token	*cmd, int size);
 t_token	free_and_return(char *str, t_token token);
 t_token *ft_remove_cmd(t_token *cmd, int size, int del);
 t_token *ft_insert_cmd(t_token *cmd, int size, int insert, t_token token);
@@ -76,12 +75,15 @@ int		ft_redirec(char c);
 void	ft_exit_error(char *str, int num);
 
 // Pipex
-int		pipex(t_pipe *pipes, int pipe_size,  char **env, t_m *mini);
+int		pipex(t_pipe *pipes, int pipe_size, char **env, t_m *mini);
 
 // Signal
 void	setup_signal(t_m *mini);
 void	cancel_c(int sig);
 void	cancel_c2(int sig);
 void	cancel_c3(int sig);
+
+/* UTILS */
+char	**first_split(char *s, char c);
 
 #endif

@@ -1,4 +1,16 @@
-#ifndef	TOKEN_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   token.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/22 15:44:14 by pleveque          #+#    #+#             */
+/*   Updated: 2022/02/22 15:44:29 by pleveque         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef TOKEN_H
 # define TOKEN_H
 
 typedef struct s_env // LENv du minishell
@@ -44,14 +56,14 @@ typedef struct s_pipe // Parsing par pipe pour le Pierro
 	int			outfile_count;
 }	t_pipe;
 
-typedef	struct s_ep
+typedef struct s_ep
 {
 	t_pipe	*pipe;
 	t_m		*m;
 }	t_ep;
 
 /* BUILTS IN */
-int	  ft_mini_cd(char **cmd, t_m *mini);
+int		ft_mini_cd(char **cmd, t_m *mini);
 int		ft_mini_pwd(char **cmd, int out_fd);
 int		ft_exit(t_m *mini);
 int		ft_mini_env(t_m *mini, int out_fd);
