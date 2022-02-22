@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 13:14:42 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/22 14:13:52 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/22 18:28:26 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	ft_mini_cd(char **cmd, t_m *mini)
 {
 	char	*base;
 	char	*path;
-	char 	cwd[1024];
+	char	cwd[1024];
 
 	base = ft_getenv(mini, "HOME");
 	path = cmd[1];
@@ -25,7 +25,6 @@ int	ft_mini_cd(char **cmd, t_m *mini)
 	else if (ft_strncmp(path, "~", 1) == 0 && base)
 		path = ft_strjoin(base, path + 1); // JE dois freeeeeee
 	//ft_printf("JE VEUX ALLEZ LÀ : %s\n", path);
-
 	if (chdir(path) == -1)
 		perror("cd");
 	else
