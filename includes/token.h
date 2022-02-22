@@ -1,4 +1,4 @@
-#ifndef TOKEN_H
+#ifndef	TOKEN_H
 # define TOKEN_H
 
 typedef struct s_env // LENv du minishell
@@ -28,26 +28,32 @@ typedef struct s_token // Parsing au départ des éléments
 	char	*value;
 	int		fd;
 	int		env;
-    t_m     mini;
+	t_m		mini;
 }	t_token;
 
 typedef struct s_pipe // Parsing par pipe pour le Pierro
 {
-  t_token	*cmd;
-  char		**parse_cmd;
-  int		cmd_count;
-  t_token	*infile;
-  int		infile_count;
-  t_token	*outfile;
-  int		outfile_count;
-}  t_pipe;
+	t_token		*cmd;
+	char		**parse_cmd;
+	int			cmd_count;
+	t_token		*infile;
+	int			infile_count;
+	t_token		*outfile;
+	int			outfile_count;
+}	t_pipe;
+
+typedef	struct s_ep
+{
+	t_pipe	*pipe;
+	t_m		*m;
+}	t_ep;
 
 /* BUILTS IN */
-int	    ft_mini_cd(char **cmd, t_m *mini);
-int		ft_mini_pwd(char **cmd, int out_fd);
-int		ft_exit(t_m *mini);
-int		ft_mini_env(t_m *mini, int out_fd);
-int		ft_mini_echo(char **cmd, int out_fd);
-int		ft_mini_export(char **cmd, t_m *mini, int out_fd);
+int	ft_mini_cd(char **cmd, t_m *mini);
+int	ft_mini_pwd(char **cmd, int out_fd);
+int	ft_exit(t_m *mini);
+int	ft_mini_env(t_m *mini, int out_fd);
+int	ft_mini_echo(char **cmd, int out_fd);
+int	ft_mini_export(char **cmd, t_m *mini, int out_fd);
 
 #endif
