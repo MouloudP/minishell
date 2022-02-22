@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 10:11:35 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/22 11:33:25 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/22 14:39:34 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,23 +36,6 @@ int	is_path(char *cmd)
 			return (1);
 		++i;
 	}
-	return (0);
-}
-
-int	is_builtin(char *cmd)
-{
-	if (ft_strcmp(cmd, "pwd") == 0)
-		return (1);
-	else if (ft_strcmp(cmd, "cd") == 0)
-		return (1);
-	else if (ft_strcmp(cmd, "echo") == 0)
-		return (1);
-	else if (ft_strcmp(cmd, "export") == 0)
-		return (1);
-	else if (ft_strcmp(cmd, "env") == 0)
-		return (1);
-	else if (ft_strcmp(cmd, "exit") == 0)
-		return (1);
 	return (0);
 }
 
