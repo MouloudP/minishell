@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 11:26:05 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/22 14:26:22 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/22 17:18:26 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,32 @@
 
 int	ft_mini_export(char **cmd, t_m *mini, int out_fd)
 {
-	if (cmd[1] && cmd[2])
-		ft_setenv(mini, cmd[1], cmd[2], 1);
-	else if (cmd[1])
-		ft_setenv(mini, cmd[1], NULL, 0);
-	else
+	int		i;
+	char	**sep;
+
+	i = 1;
+	while (cmd[i])
+	{
+		sep = first_split(cmd[i], '=');
+		if (!sep)
+			return (1);
+		if (!sep[1])
+			ft_setenv(mini, sep[0], NULL, 0);
+		else
+			ft_setenv(mini, sep[0], sep[1], 1);
+		free(sep[0]);
+		free(sep[1]);
+		free(sep);
+		++i;
+	}
+	if (i == 1)
 		ft_printexport(mini, out_fd);
-	return (1);
+	return (0);
 }
 
 int	ft_mini_unset(char **cmd, t_m *mini)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	while (cmd[i])
@@ -33,7 +47,7 @@ int	ft_mini_unset(char **cmd, t_m *mini)
 		ft_removeenv(mini, cmd[i]);
 		i++;
 	}
-	return (1);
+	return (0);
 }
 
 void	get_env(char **env, t_m *mini)
@@ -63,7 +77,7 @@ void	get_env(char **env, t_m *mini)
 
 char	*ft_getenv(t_m *mini, char *name)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	//if (ft_strcmp("?", name))
@@ -79,7 +93,7 @@ char	*ft_getenv(t_m *mini, char *name)
 
 int	ft_hasenv(t_m *mini, char *name)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < (mini->env_lenght - 1))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 19:13:26 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/22 14:39:59 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/22 15:22:56 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ int	run_command(int entry_pipe, int	*pipe_fd, char **parsed_cmd, t_m *mini)
 	return (-1);
 }
 
-int	run_process_command(int first_pipe, char **pipe_cmd, t_m *mini, int *new_pipe_fd)
+int	run_process_command(int first_pipe, char **pipe_cmd,
+t_m *mini, int *new_pipe_fd)
 {
 	pid_t	pid;
 

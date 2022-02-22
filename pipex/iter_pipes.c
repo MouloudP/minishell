@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 12:03:44 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/22 12:56:38 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/22 15:43:08 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,24 +32,6 @@ int	wait_all_pid(pid_t *pid, int size)
 	return (status);
 }
 
-char	**args_cpy(char **cmd, int size)
-{
-	char	**res;
-	int		i;
-
-	res = malloc(sizeof(char *) * (size + 1));
-	if (!res)
-		return (NULL);
-	i = 0;
-	while (i < size)
-	{
-		res[i] = cmd[i];
-		++i;
-	}
-	res[i] = NULL;
-	return (res);
-}
-
 int	print_stdout(int fd)
 {
 	if (fd > 2)
@@ -67,10 +49,11 @@ char	**get_args(t_pipe *pipe_a, t_m *mini, int *redir)
 	char		**paths;
 	char		**args;
 
+	args = NULL;
 	paths = get_paths(mini->env_bis);
 	if (!paths)
 	{
-		input_error("Environement", NULL, 3);
+		input_error("Environement", "cant find PATH", 3);
 		*redir = -6;
 		return (NULL);
 	}
@@ -101,10 +84,10 @@ int	proceed_pipe(int *input_fd, int *pid, t_ep ep, int last_pipe)
 		if (print_stdout(pipe_fd[1]) < 0)
 			return (-1);
 	args = get_args(ep.pipe, ep.m, &redir);
-	if (redir < 0)
-		return (free(args[0]), free(args), -2);
-	else if (redir == INVALID_CMD)
+	if (redir == -6 || redir == INVALID_CMD)
 		return (free(args), *pid = -1, 0);
+	else if (redir < 0)
+		return (free(args[0]), free(args), -2);
 	else if (redir == VALID_CMD)
 	{
 		*pid = run_process_command(*input_fd, args, ep.m, pipe_fd);
@@ -131,7 +114,7 @@ int	iter_pipes(t_pipe *pipes, int pipe_size, t_m *mini)
 		ep.m = mini;
 		ep.pipe = &pipes[i];
 		if (proceed_pipe(&input_fd, &pids[i], ep, i + 1 == pipe_size) < 0)
-			return (-1);
+			return (free(pids), -1);
 		++i;
 	}
 	mini->exit_status = wait_all_pid(pids, pipe_size);
