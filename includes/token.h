@@ -13,6 +13,8 @@ typedef struct s_m // La struc du minishell
 	void			(*signal_save)(int);
 	void			(*cancel_c)(int);
 	void			(*cancel_c2)(int);
+	int				canceldelimiters;
+	int				dup_fd;
 	t_env			*env;
 	char			**env_bis;
 	int				env_lenght;

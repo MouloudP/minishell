@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 15:26:50 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/21 13:16:54 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/22 17:26:21 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ char	*ft_quote_env(char *str, char c, t_m *mini)
 				start = (++i);
 			while (str[i] && !ft_whitespace(str[i]) && str[i] != '$' && str[i] != '}')
 				i++;
-			//ft_printf("END WHILE\n");
 			temp = str + start;
 			if (str[i] == '}')
 			{
@@ -43,8 +42,6 @@ char	*ft_quote_env(char *str, char c, t_m *mini)
 				temp = ft_strndup(temp, i - start);
 				temp2 = ft_strndup(str, start - 1);
 			}
-			//ft_printf("START : |%s|\n", temp2);
-			//ft_printf("MILIEU : |%s|\n", temp);
 			if (ft_getenv(mini, temp))
 				copy = ft_strjoin(temp2, ft_getenv(mini, temp));
 			else
@@ -56,10 +53,8 @@ char	*ft_quote_env(char *str, char c, t_m *mini)
 				copy = ft_strjoin(copy, str + i + 1);
 			else
 				copy = ft_strjoin(copy, str + i);
-			//ft_printf("END : |%s|\n", str + i);
-			//ft_printf("MILIEU : |%s|\n", ft_getenv(mini, temp));
-			//ft_printf("FINALE : |%s| \n", copy);
 			free(str);
+			free(temp);
 			str = copy;
 			str = ft_quote_env(str, c, mini);
 			break;
@@ -124,7 +119,8 @@ t_token	ft_redirection(char *str, char c, int *i, t_m *mini)
 			while (str[(*i)] && ft_whitespace(str[(*i)]))
 				(*i)++;
 			temp = ft_getarg(str, i, mini);
-			ft_delimiters(temp.value, &token);
+			if (mini->canceldelimiters == 0)
+				ft_delimiters(temp.value, &token, mini);
 			free(temp.value);
 		}
 	}
@@ -211,9 +207,12 @@ t_token	ft_getarg(char *str, int *i, t_m *mini) // On va traiter un argument et 
 	return (free_and_return(s, token));
 }
 
-t_token *ft_parse_env(t_token *cmd, t_m *mini, int j)
+t_token *ft_parse_env(t_token *cmd, t_m *mini, int size)
 {
 	int 	i;
+	int		h;
+	int		count;
+	t_token token;
 	//char	*temp;
 
 	i = 0;
@@ -222,12 +221,27 @@ t_token *ft_parse_env(t_token *cmd, t_m *mini, int j)
 		if (cmd[i].env)
 		{
 			cmd[i].value = ft_quote_env(cmd[i].value, '"', mini);
+			//temp = cmd[i].value;
 			if (!cmd[i].value || ft_strlen(cmd[i].value) <= 0)
 			{
-				cmd = ft_remove_cmd(cmd, j--, i);
-				cmd = ft_parse_env(cmd, mini, j);
+				cmd = ft_remove_cmd(cmd, size--, i);
+				cmd = ft_parse_env(cmd, mini, size);
 				break;
 			}
+			h = 0;
+			count = 1;
+			while (cmd[i].value[h])
+			{
+				token = ft_getarg(cmd[i].value, &h, mini);
+				token.type = cmd[i].type;
+				token.env = 0;
+				cmd = ft_insert_cmd(cmd, ++size, i + count++, token);
+				while (cmd[i].value[h] && ft_whitespace(cmd[i].value[h])) // On évite les boucles infini
+					h++;
+			}
+			cmd = ft_remove_cmd(cmd, size--, i);
+			cmd = ft_parse_env(cmd, mini, size);
+			break;
 		}
 		i++;
 	}

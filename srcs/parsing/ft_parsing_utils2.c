@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 11:45:46 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/21 17:06:02 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/22 16:35:14 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,31 @@ t_token *ft_realloc_cmd(t_token	*cmd, int size)
     return (new);
 }
 
+t_token *ft_insert_cmd(t_token *cmd, int size, int ins, t_token token)
+{
+    t_token	*new;
+    int     i;
+    int     j;
+
+    new = malloc(sizeof(t_token) * (size + 1));
+    i = 0;
+    j = 0;
+    while (i < size)
+    {
+        if ((i) == ins)
+            new[j++] = token;
+        else if (i > ins)
+            new[j++] = cmd[i - 1];
+        else
+            new[j++] = cmd[i];
+        i++;
+    }
+    new[j].value = NULL;
+    new[j].type = 0;
+    free(cmd);
+    return (new);
+}
+
 t_token *ft_remove_cmd(t_token *cmd, int size, int del)
 {
     t_token	*new;
@@ -43,40 +68,47 @@ t_token *ft_remove_cmd(t_token *cmd, int size, int del)
             new[j++] = cmd[i];
         i++;
     }
+    new[j].value = NULL;
+    new[j].type = 0;
     if (cmd[del].value)
         free(cmd[del].value);
     free(cmd);
     return (new);
 }
 
-void    ft_delimiters(char *s, t_token *token)
+void    ft_delimiters(char *s, t_token *token, t_m *mini)
 {
     char    *line;
     char    *ret;
     char    *temp;
     int     pipes[2];
+
     if (pipe(pipes) == -1)
     {
         perror("pipe");
         return ;
     }
-    
     ret = ft_calloc(sizeof(char), 1);
     line = ft_calloc(sizeof(char), 1);
-    while (line && ft_strcmp(line, s) != 0)
+    signal(SIGINT, cancel_c3);
+    mini->dup_fd = dup(0);
+    while (line && ft_strcmp(line, s) != 0 && mini->canceldelimiters == 0)
     {
+        //ft_printf("TEST %d", mini->canceldelimiters);
         free(line);
         line = readline("\e[0;35m>\e[0;37m ");
         temp = ret;
         ret = ft_strjoin(ret, "\n");
         free(temp);
-        if (line && ft_strcmp(line, s) != 0)
+        if (line && line[0] && ft_strcmp(line, s) != 0)
         {
             temp = ret;
             ret = ft_strjoin(ret, line);
             free(temp);
         }
     }
+    if (mini->canceldelimiters)
+        return ;
     if (line)
         free(line);
     write(pipes[1], ret, ft_strlen(ret));
