@@ -49,11 +49,12 @@ typedef	struct s_ep
 }	t_ep;
 
 /* BUILTS IN */
-int	ft_mini_cd(char **cmd, t_m *mini);
-int	ft_mini_pwd(char **cmd, int out_fd);
-int	ft_exit(t_m *mini);
-int	ft_mini_env(t_m *mini, int out_fd);
-int	ft_mini_echo(char **cmd, int out_fd);
-int	ft_mini_export(char **cmd, t_m *mini, int out_fd);
+int	  ft_mini_cd(char **cmd, t_m *mini);
+int		ft_mini_pwd(char **cmd, int out_fd);
+int		ft_exit(t_m *mini);
+int		ft_mini_env(t_m *mini, int out_fd);
+int		ft_mini_echo(char **cmd, int out_fd);
+int		ft_mini_export(char **cmd, t_m *mini, int out_fd);
+int		ft_mini_unset(char **cmd, t_m *mini);
 
 #endif

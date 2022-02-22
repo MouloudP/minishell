@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 16:24:13 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/22 10:53:35 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/22 14:15:48 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ int	run_builtin(char **cmd, t_m *mini, int fd_in, int fd_out)
 		return (ft_mini_env(mini, fd_out));
 	else if (ft_strcmp(cmd[0], "exit") == 0)
 		return (ft_exit(mini));
+	else if (ft_strcmp(cmd[0], "unset") == 0)
+		return (ft_mini_unset(cmd, mini));
 	return (0);
 }
 

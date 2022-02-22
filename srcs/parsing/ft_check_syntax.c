@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 16:42:56 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/21 16:54:23 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/22 12:28:37 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_check_syntax(char *str)
 
 	i = 0;
 	count = ft_calloc(sizeof(int), 255);
-	error = 1;
+	error = 0;
 	while (str[i])
 	{
 		if (str[i] == '\\')
@@ -58,11 +58,12 @@ int	ft_check_syntax(char *str)
 				error = 1;
 			//while (str[++i])
 		}
-		i++
+		i++;
 	}
-	if (count[1] > count[0] || error)
-		ft_printf("Minishell : parse error\n");
-	free(count)
+	if (error)
+		ft_printf("Minishell : syntax error\n");
+	free(count);
+	return (error);
 }
 
 // 0 = {
