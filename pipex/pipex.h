@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 16:24:21 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/22 11:34:02 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/22 15:43:22 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int		ft_strs_include(char *s, char **str);
 int		ft_tern(int condition, int a, int b);
 char	*ft_strdupp(const char *s);
 char	**get_paths(char **env);
+char	**args_cpy(char **cmd, int size);
 
 /* BUILTINS */
 int		is_builtin(char *cmd);

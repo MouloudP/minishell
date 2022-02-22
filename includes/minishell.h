@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 10:16:16 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/22 14:13:35 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/22 16:21:26 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,15 @@
 # define TOKEN_FILE 9
 # define TOKEN_ERROR 10 // >< Error de parsing || &&
 
-
 /// Parsing
 t_token	*ft_partsing(char *str, t_m *mini);
-t_token *ft_realloc_cmd(t_token	*cmd, int size);
+t_token	*ft_realloc_cmd(t_token	*cmd, int size);
 t_token	free_and_return(char *str, t_token token);
-t_token *ft_remove_cmd(t_token *cmd, int size, int del);
+t_token	*ft_remove_cmd(t_token *cmd, int size, int del);
 t_token	ft_getarg(char *str, int *i, t_m *mini);
-void    ft_parse_token(t_token *token, t_m *mini);
-int     ft_check_syntax(char *str);
-void    ft_delimiters(char *s, t_token *token);
-
+void	ft_parse_token(t_token *token, t_m *mini);
+int		ft_check_syntax(char *str);
+void	ft_delimiters(char *s, t_token *token);
 
 /// Mem gestion
 char	*free_add_assign(char *str, char *news);
@@ -74,11 +72,14 @@ int		ft_redirec(char c);
 void	ft_exit_error(char *str, int num);
 
 // Pipex
-int		pipex(t_pipe *pipes, int pipe_size,  char **env, t_m *mini);
+int		pipex(t_pipe *pipes, int pipe_size, char **env, t_m *mini);
 
 // Signal
 void	setup_signal(t_m *mini);
 void	cancel_c(int sig);
 void	cancel_c2(int sig);
+
+/* UTILS */
+char	**first_split(char *s, char c);
 
 #endif

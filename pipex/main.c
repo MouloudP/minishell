@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 16:24:13 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/22 14:15:48 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/22 15:35:07 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	pipex(t_pipe *pipes, int pipe_size, char **env, t_m *mini)
 		signal(SIGINT, mini->signal_save);
 		mini->end = 1;
 		if (iter_pipes(pipes, pipe_size, mini) == -1)
-			return (input_error("Excve", NULL, 0));
+			return (input_error("Execution error", NULL, 0));
 		return (mini->end = 0, close(0), 1);
 	}
 	else

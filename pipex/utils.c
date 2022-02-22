@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 14:07:33 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/19 18:09:37 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/22 15:43:13 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,22 @@ void	*free_split(char **splited)
 	}
 	free(splited);
 	return (NULL);
+}
+
+char	**args_cpy(char **cmd, int size)
+{
+	char	**res;
+	int		i;
+
+	res = malloc(sizeof(char *) * (size + 1));
+	if (!res)
+		return (NULL);
+	i = 0;
+	while (i < size)
+	{
+		res[i] = cmd[i];
+		++i;
+	}
+	res[i] = NULL;
+	return (res);
 }
