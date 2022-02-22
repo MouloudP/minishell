@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 11:26:05 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/21 16:35:37 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/22 14:26:22 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,19 @@ int	ft_mini_export(char **cmd, t_m *mini, int out_fd)
 		ft_setenv(mini, cmd[1], NULL, 0);
 	else
 		ft_printexport(mini, out_fd);
+	return (1);
+}
+
+int	ft_mini_unset(char **cmd, t_m *mini)
+{
+	int i;
+
+	i = 1;
+	while (cmd[i])
+	{
+		ft_removeenv(mini, cmd[i]);
+		i++;
+	}
 	return (1);
 }
 
@@ -53,6 +66,8 @@ char	*ft_getenv(t_m *mini, char *name)
 	int i;
 
 	i = 0;
+	//if (ft_strcmp("?", name))
+	//	return (itoa(mini->exit_status, NULL, 10));
 	while (i < (mini->env_lenght - 1))
 	{
 		if (ft_strcmp(mini->env[i].name, name) == 0)
@@ -135,5 +150,36 @@ void	ft_setenv(t_m *mini, char *name, char *value, int init)
 	free(mini->env);
 	mini->env = env;
 	mini->env_lenght++;
+	update_env(mini);
+}
+
+void	ft_removeenv(t_m *mini, char *name)
+{
+	int		i;
+	int		j;
+	t_env	*env;
+
+	if (!ft_hasenv(mini, name))
+		return ;
+	env = malloc(sizeof(t_env) * (mini->env_lenght));
+	i = 0;
+	j = 0;
+	while (i < (mini->env_lenght - 1))
+	{
+		if (ft_strcmp(mini->env[i].name, name) != 0)
+		{
+			env[j].name = mini->env[i].name;
+			env[j].value = mini->env[i].value;
+			env[j].init = mini->env[i].init;
+			j++;
+		}
+		i++;
+	}
+	env[j].name = NULL;
+	env[j].init = 1;
+	env[j++].value = NULL;
+	free(mini->env);
+	mini->env = env;
+	mini->env_lenght--;
 	update_env(mini);
 }

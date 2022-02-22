@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:45:45 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/20 10:20:56 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/22 12:43:55 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,4 +94,10 @@ void	free_pipe(t_m *mini)
 		i++;
 	}
 	free(mini->pipe);
+}
+
+void	ft_exit_error(char *str, int num)
+{
+	write(2, str, ft_strlen(str));
+	exit(num);
 }

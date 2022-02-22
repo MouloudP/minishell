@@ -1,6 +1,6 @@
 NAME			=	minishell
 
-SRCS 			=	main.c build_in.c signal.c parsing/ft_check_parsing.c parsing/ft_check_token.c parsing/ft_parsing_utils1.c parsing/ft_parsing_utils2.c utils.c env/env.c env/utils_env.c env/export.c
+SRCS 			=	main.c build_in.c signal.c parsing/ft_check_parsing.c parsing/ft_check_token.c parsing/ft_parsing_utils1.c parsing/ft_parsing_utils2.c parsing/ft_check_syntax.c utils.c env/env.c env/utils_env.c env/export.c
 
 OBJS			=	${addprefix srcs/,${SRCS:.c=.o}}
 
@@ -43,4 +43,4 @@ fclean			:
 
 re				:	fclean all
 
-.PHONY			:	all clean fclean re bonus
+.PHONY			:	all clean fclean re

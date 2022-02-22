@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 19:13:26 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/21 17:05:05 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/22 14:16:12 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ int	is_builtin(char *cmd)
 	else if (ft_strcmp(cmd, "env") == 0)
 		return (1);
 	else if (ft_strcmp(cmd, "exit") == 0)
+		return (1);
+	else if (ft_strcmp(cmd, "unset") == 0)
 		return (1);
 	return (0);
 }
