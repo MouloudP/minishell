@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 10:20:48 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/22 12:49:25 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/22 15:55:58 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,15 @@ int	main(int argc, char *argv[], char **env)
 			{		
 				cmd = ft_partsing(line, &mini);
 				cmd->mini = mini;
-				// if (cmd_built(cmd, &mini) == 0)
-				// {
-				// 	//get_absolute_path(cmd);
-				// 	//if (!cmd[0])
-				// 	//	ft_printf("Command not found !\n");
-				// 	//else
-				// 	//	exec_cmd(cmd);
-				// }
 				free_cmd(cmd);
 				free_pipe(&mini);
 			}
+		}
+		if (mini.canceldelimiters == 1)
+		{
+			dup2(mini.dup_fd, 0);
+			mini.canceldelimiters = 0;
+			signal(SIGINT, cancel_c);
 		}
 		free(line);
 		if (mini.end == -1)
