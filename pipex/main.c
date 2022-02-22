@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 16:24:13 by pleveque          #+#    #+#             */
 /*   Updated: 2022/02/22 14:15:48 by ahamdoun         ###   ########.fr       */
@@ -53,39 +53,35 @@ int	run_builtin(char **cmd, t_m *mini, int fd_in, int fd_out)
 	return (0);
 }
 
-int	pipex(t_pipe *pipes, int pipe_size, char **env, t_m *mini)
+int	single_builtin(t_pipe pipe, t_m *mini)
 {
-	char	**paths;
-	pid_t	pid;
 	int		fd_in;
 	int		fd_out;
 
+	fd_in = 0;
+	fd_out = 1;
+	redirections(pipe, &fd_in, &fd_out);
+	mini->exit_status = run_builtin(pipe.parse_cmd, mini,
+			fd_in, fd_out);
+	return (0);
+}
+
+int	pipex(t_pipe *pipes, int pipe_size, char **env, t_m *mini)
+{
+	pid_t	pid;
+
+	(void)env;
 	if (pipe_size == 1 && is_builtin(pipes[0].parse_cmd[0]))
-	{
-		fd_in = 0;
-		fd_out = 1;
-		redirections(pipes[0], &fd_in, &fd_out);
-		mini->exit_status = run_builtin(pipes[0].parse_cmd, mini, fd_in, fd_out);
-		return (0);
-	}
+		return (single_builtin(pipes[0], mini));
 	if (fork_store(&pid) == -1)
 		return (-1);
 	if (pid == 0)
 	{
 		signal(SIGINT, mini->signal_save);
 		mini->end = 1;
-		paths = get_paths(env);
-		if (!paths)
-			return (input_error("Environement", NULL, 4));	
-		if (iter_pipes(pipes, pipe_size, mini, paths) == -1)
-		{
-			free_split(paths);
+		if (iter_pipes(pipes, pipe_size, mini) == -1)
 			return (input_error("Excve", NULL, 0));
-		}
-		mini->end = 0;
-		free_split(paths);
-		close(0);
-		return (1);
+		return (mini->end = 0, close(0), 1);
 	}
 	else
 	{

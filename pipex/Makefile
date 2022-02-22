@@ -5,6 +5,7 @@ get_next_line.c \
 redirection.c \
 open_write.c \
 error.c \
+parse_cmd.c \
 ../printf/libft/libft.a \
 
 CC = gcc
