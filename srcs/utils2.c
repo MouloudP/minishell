@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 15:57:54 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/22 17:18:03 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/23 09:21:53 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ char	**first_split(char *s, char c)
 		return (NULL);
 	size_alpha = ft_strlen_c(s, c);
 	size_omega = ft_strlen_c(s, '\0');
-	sep[0] = malloc(sizeof(char) * (size_alpha + 1));
-	sep[1] = malloc(sizeof(char) * (size_omega + 1));
+	sep[0] = malloc(sizeof(char) * (size_alpha + 2));
+	sep[1] = malloc(sizeof(char) * (size_omega + 2));
 	sep[2] = NULL;
 	if (!sep[0] || !sep[1])
 		return (free(sep[0]), free(sep[1]), free(sep), NULL);
