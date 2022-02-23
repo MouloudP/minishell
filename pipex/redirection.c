@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 11:45:20 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/22 10:09:08 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/23 12:12:57 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,22 +44,21 @@ int	redirections(t_pipe pipe, int *input_fd, int *output_fd)
 	i = -1;
 	while (++i < pipe.infile_count)
 	{
-		if (*input_fd != 0)
+		if (*input_fd > 2)
 			close(*input_fd);
 		if (pipe.infile[i].type == TOKEN_REDIRECTION_OUTPUT)
 			*input_fd = open(pipe.infile[i].value, O_RDONLY);
-		if (pipe.infile[i].type == TOKEN_REDIRECTION_DELIMTER)
+		else if (pipe.infile[i].type == TOKEN_REDIRECTION_DELIMTER)
 			*input_fd = pipe.infile[i].fd;
-		if (*input_fd == -1)
-			return (-1);
-	}
-	i = -1;
-	while (++i < pipe.outfile_count)
-	{
+		if (*input_fd == INVALID_FD)
+			return (input_error(pipe.infile[i].value, NULL, -666), INVALID_FD);
+		////
 		if (*output_fd != 1)
 			close(*output_fd);
 		*output_fd = open_output(pipe.outfile[i].value,
 				ft_tern(pipe.outfile[i].type == TOKEN_REDIRECTION_INPUT, 0, 1));
+		if (*output_fd == INVALID_FD)
+			return (input_error(pipe.outfile[i].value, NULL, -666), INVALID_FD);
 	}
 	if (pipe.outfile_count > 0)
 		return (1);

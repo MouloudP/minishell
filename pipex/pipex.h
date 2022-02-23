@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 16:24:21 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/22 15:43:22 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/23 10:55:51 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@
 // cmd
 # define VALID_CMD 1 // 
 # define INVALID_CMD 3 // 
+# define INVALID_FD -1 // 
 
 typedef struct s_str_tab
 {

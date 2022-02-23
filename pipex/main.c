@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 16:24:13 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/22 15:35:07 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/23 10:47:55 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ everything goes well or 1 if fail*/
 int	run_builtin(char **cmd, t_m *mini, int fd_in, int fd_out)
 {
 	(void) fd_in;
+	if (!cmd[0])
+		return (0);
 	if (ft_strcmp(cmd[0], "pwd") == 0)
 		return (ft_mini_pwd(cmd, fd_out));
 	else if (ft_strcmp(cmd[0], "cd") == 0)
@@ -60,7 +62,7 @@ int	single_builtin(t_pipe pipe, t_m *mini)
 
 	fd_in = 0;
 	fd_out = 1;
-	redirections(pipe, &fd_in, &fd_out);
+	mini->exit_status = redirections(pipe, &fd_in, &fd_out);
 	mini->exit_status = run_builtin(pipe.parse_cmd, mini,
 			fd_in, fd_out);
 	return (0);
@@ -80,7 +82,7 @@ int	pipex(t_pipe *pipes, int pipe_size, char **env, t_m *mini)
 		signal(SIGINT, mini->signal_save);
 		mini->end = 1;
 		if (iter_pipes(pipes, pipe_size, mini) == -1)
-			return (input_error("Execution error", NULL, 0));
+			return (0);
 		return (mini->end = 0, close(0), 1);
 	}
 	else

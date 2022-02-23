@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 12:03:44 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/22 15:43:08 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/23 12:00:26 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ int	wait_all_pid(pid_t *pid, int size)
 	int	i;
 	int	status;
 
-	waitpid(pid[size - 1], &status, 0);
-	return (0);
 	i = 0;
 	status = 1;
 	if (!pid)
@@ -69,30 +67,46 @@ char	**get_args(t_pipe *pipe_a, t_m *mini, int *redir)
 	return (args);
 }
 
+int	default_pipe(int *input_fd, int *pipe_fd)
+{
+	int	other_pipe[2];
+
+	if (pipe_fd[1] != -1)
+		close(pipe_fd[1]);
+	close(pipe_fd[0]);
+	if (pipe(other_pipe) == -1)
+		return (-1);
+	close(other_pipe[1]);
+	if (dup2(other_pipe[0], *input_fd) == -1)
+		return (-1);
+	return (0);
+}
+
 int	proceed_pipe(int *input_fd, int *pid, t_ep ep, int last_pipe)
 {
 	char		**args;
 	int			redir;
 	int			pipe_fd[2];
 
-	if (pipe(pipe_fd) == -1)
-		return (-1);
+	if (pipe(pipe_fd) == INVALID_FD)
+		return (INVALID_FD);
 	redir = redirections(*(ep.pipe), input_fd, &pipe_fd[1]);
-	if (redir < 0)
-		return (redir);
-	else if (redir == 0 && last_pipe)
-		if (print_stdout(pipe_fd[1]) < 0)
-			return (-1);
+	if (redir == 0 && last_pipe && print_stdout(pipe_fd[1]) < 0)
+		return (-2);
+	else if (redir == INVALID_FD)
+		return (default_pipe(input_fd, pipe_fd), 0);
+	else if (!ep.pipe->parse_cmd[0])
+		return (*pid = INVALID_FD, 0);
 	args = get_args(ep.pipe, ep.m, &redir);
 	if (redir == -6 || redir == INVALID_CMD)
-		return (free(args), *pid = -1, 0);
+		return (free(args), *pid = INVALID_FD, 0);
 	else if (redir < 0)
 		return (free(args[0]), free(args), -2);
 	else if (redir == VALID_CMD)
 	{
 		*pid = run_process_command(*input_fd, args, ep.m, pipe_fd);
-		if (*pid == -1)
-			return (free(args[0]), free(args), -4);
+		if (*pid == INVALID_FD)
+			return (free(args[0]), free(args), input_error("?", "!", 0), -4);
 	}
 	return (free(args[0]), free(args), 0);
 }
@@ -105,10 +119,13 @@ int	iter_pipes(t_pipe *pipes, int pipe_size, t_m *mini)
 	t_ep		ep;
 
 	input_fd = 0;
-	i = 0;
-	pids = malloc(sizeof(pid_t) * pipe_size * 100);
+	pids = malloc(sizeof(pid_t) * pipe_size);
 	if (!pids)
 		return (-2);
+	i = -1;
+	while (++i < pipe_size)
+		pids[i] = -1;
+	i = 0;
 	while (i < pipe_size)
 	{	
 		ep.m = mini;
@@ -118,8 +135,7 @@ int	iter_pipes(t_pipe *pipes, int pipe_size, t_m *mini)
 		++i;
 	}
 	mini->exit_status = wait_all_pid(pids, pipe_size);
-	free(pids);
-	if (input_fd != 0)
+	if (input_fd > 0)
 		close(input_fd);
-	return (1);
+	return (free(pids), 1);
 }
