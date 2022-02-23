@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 10:20:48 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 16:59:16 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/23 17:21:17 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	minishell(char **line, t_m *mini, t_token *cmd)
 	add_history(*line);
 	if (*line[0])
 	{
-		ft_printf("dwadwadwa");
 		if (!ft_check_syntax(*line))
 		{
 			cmd = ft_partsing(*line, mini);
