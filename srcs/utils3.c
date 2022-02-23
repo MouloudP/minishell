@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 18:25:28 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/23 12:49:25 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/23 16:44:45 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,10 @@ void	ft_exit_error(char *str, int num)
 {
 	write(2, str, ft_strlen(str));
 	exit(num);
+}
+
+void	free_pwd(char *str, int fre)
+{
+	if (fre)
+		free(str);
 }

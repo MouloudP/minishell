@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 16:24:13 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/23 15:23:30 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/23 16:08:59 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	run_builtin(char **cmd, t_m *mini, int fd_in, int fd_out)
 	else if (ft_strcmp(cmd[0], "env") == 0)
 		return (ft_mini_env(mini, fd_out));
 	else if (ft_strcmp(cmd[0], "exit") == 0)
-		return (ft_exit(mini));
+		return (ft_exit(cmd, mini));
 	else if (ft_strcmp(cmd[0], "unset") == 0)
 		return (ft_mini_unset(cmd, mini));
 	return (0);

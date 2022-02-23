@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 12:26:44 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 12:50:57 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/23 17:15:28 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ void	ft_parse_start(t_token *token, int *i)
 			&& token[*i].type != TOKEN_REDIRECTION_DELIMTER)
 		{
 			(*i)++;
-			token[*i].type = TOKEN_FILE;
+			if (token[*i].type == TOKEN_ARGUMENT)
+				token[*i].type = TOKEN_FILE;
 		}
 		else if (cmd && token[*i].type == TOKEN_ARGUMENT)
 		{

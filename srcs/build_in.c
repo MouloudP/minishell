@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 13:14:42 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 15:07:16 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/23 16:45:37 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,14 @@ int	ft_mini_cd(char **cmd, t_m *mini)
 	char	*base;
 	char	*path;
 	char	cwd[1024];
+	int		fre;
 
+	fre = 0;
 	base = ft_getenv(mini, "HOME");
 	path = cmd[1];
 	if (!path || ft_strlen(path) == 0)
 		path = base;
-	else if (ft_strncmp(path, "~", 1) == 0 && base)
+	else if (ft_strncmp(path, "~", 1) == 0 && base && ++fre)
 		path = ft_strjoin(base, path + 1);
 	if (chdir(path) == -1)
 		perror("cd");
@@ -34,23 +36,14 @@ int	ft_mini_cd(char **cmd, t_m *mini)
 			ft_setenv(mini, "PWD", path, 1);
 		}
 	}
-	//free path
-	return (EXIT_SUCCESS);
+	return (free_pwd(path, fre), EXIT_SUCCESS);
 }
 
 int	ft_mini_pwd(char **cmd, int fd_out)
 {
 	char	cwd[1024];
-	int		i;
 
-	i = 1;
-	while (cmd[i])
-		i++;
-	if (i > 1)
-	{
-		write(2, "pwd: too many arguments\n", 25);
-		return (EXIT_FAILURE);
-	}
+	(void) cmd;
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 	{
 		write(fd_out, cwd, ft_strlen(cwd));

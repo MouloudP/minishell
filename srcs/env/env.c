@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 11:26:05 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 15:08:15 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/23 16:46:46 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,34 +114,4 @@ char	*ft_exit_satus(int n, t_m *mini)
 	}
 	mini->exit_char[--i] = ((n % 10) + '0');
 	return (mini->exit_char);
-}
-
-char	*ft_getenv(t_m *mini, char *name)
-{
-	int	i;
-
-	i = 0;
-	if (ft_strcmp("?", name) == 0)
-		return (ft_exit_satus(mini->exit_status, mini));
-	while (i < (mini->env_lenght - 1))
-	{
-		if (ft_strcmp(mini->env[i].name, name) == 0)
-			return (mini->env[i].value);
-		i++;
-	}
-	return (NULL);
-}
-
-int	ft_hasenv(t_m *mini, char *name)
-{
-	int	i;
-
-	i = 0;
-	while (i < (mini->env_lenght - 1))
-	{
-		if (ft_strcmp(mini->env[i].name, name) == 0)
-			return (1);
-		i++;
-	}
-	return (0);
 }

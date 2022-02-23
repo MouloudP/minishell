@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 15:44:14 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/23 15:18:41 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/23 16:08:27 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ typedef struct s_get_arg
 /* BUILTS IN */
 int		ft_mini_cd(char **cmd, t_m *mini);
 int		ft_mini_pwd(char **cmd, int out_fd);
-int		ft_exit(t_m *mini);
+int		ft_exit(char **cmd, t_m *mini);
 int		ft_mini_env(t_m *mini, int out_fd);
 int		ft_mini_echo(char **cmd, int out_fd);
 int		ft_mini_export(char **cmd, t_m *mini, int out_fd);

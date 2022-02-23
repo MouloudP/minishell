@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 12:50:05 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 12:57:23 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/23 17:15:21 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,24 @@ void	ft_parse_token1(t_pipe *pipe, t_m *mini, int count)
 	mini->pipe_lenght = count;
 }
 
+int	ft_check_token_syntax(t_token *token, int i)
+{
+	if (token[i - 1].type == TOKEN_PIPE)
+		return (1);
+	i = 0;
+	while (token[i].value)
+	{
+		if (token[i].type >= 4 && token[i].type <= 8
+			&& token[i].type != TOKEN_REDIRECTION_DELIMTER)
+		{
+			if (!token[i + 1].value || token[i + 1].type != TOKEN_FILE)
+				return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
 void	ft_parse_token(t_token *token, t_m *mini)
 {
 	int		i;
@@ -85,7 +103,7 @@ void	ft_parse_token(t_token *token, t_m *mini)
 
 	i = 0;
 	count = 0;
-	while (token[i].type)
+	while (token[i].value)
 	{
 		ft_parse_start(token, &i);
 		count++;
@@ -93,15 +111,13 @@ void	ft_parse_token(t_token *token, t_m *mini)
 			i++;
 	}
 	pipe = ft_create_pipe(token, count);
-	if (token[i - 1].type == TOKEN_PIPE)
+	ft_parse_token1(pipe, mini, count);
+	if (ft_check_token_syntax(token, i))
 	{
-		write(2, "Error parsing\n", 14);
+		write(2, "Minishell : syntax error\n", 25);
 		return ;
 	}
-	ft_parse_token1(pipe, mini, count);
 	if (mini->canceldelimiters != 0)
 		return ;
 	pipex(pipe, count, mini->env_bis, mini);
 }
-
-//ft_print_pipe(pipe, count);
