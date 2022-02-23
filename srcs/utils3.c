@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 18:25:28 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/22 18:26:03 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/23 12:49:25 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ void	free_pipe(t_m *mini)
 	while (i < mini->pipe_lenght)
 	{
 		free(mini->pipe[i].cmd);
-		free(mini->pipe[i].infile);
-		free(mini->pipe[i].outfile);
+		free(mini->pipe[i].files);
 		free(mini->pipe[i].parse_cmd);
 		i++;
 	}
