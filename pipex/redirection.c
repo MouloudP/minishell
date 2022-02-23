@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 11:45:20 by pleveque          #+#    #+#             */
 /*   Updated: 2022/02/23 16:56:05 by pleveque         ###   ########.fr       */

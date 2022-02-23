@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 11:26:05 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 11:54:41 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/23 15:08:15 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_mini_export(char **cmd, t_m *mini, int out_fd)
 	{
 		sep = first_split(cmd[i], '=');
 		if (!sep)
-			return (1);
+			return (EXIT_SUCCESS);
 		if (!sep[1])
 			ft_setenv(mini, sep[0], NULL, 0);
 		else
@@ -34,7 +34,7 @@ int	ft_mini_export(char **cmd, t_m *mini, int out_fd)
 	}
 	if (i == 1)
 		ft_printexport(mini, out_fd);
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 int	ft_mini_unset(char **cmd, t_m *mini)
@@ -47,7 +47,7 @@ int	ft_mini_unset(char **cmd, t_m *mini)
 		ft_removeenv(mini, cmd[i]);
 		i++;
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 void	get_env(char **env, t_m *mini)
@@ -75,13 +75,54 @@ void	get_env(char **env, t_m *mini)
 	update_env(mini);
 }
 
+void	ft_putnbr_fd(int n, int fd)
+{
+	unsigned int	nbr;
+
+	if (n < 0)
+	{
+		ft_putchar_fd('-', fd);
+		nbr = (unsigned int)(n * -1);
+	}
+	else
+		nbr = (unsigned int)n;
+	if (nbr >= 10)
+		ft_putnbr_fd(nbr / 10, fd);
+	ft_putchar_fd((char)(nbr % 10 + '0'), fd);
+}
+
+char	*ft_exit_satus(int n, t_m *mini)
+{
+	int		nb;
+	int		i;
+
+	nb = n;
+	i = 0;
+	while (n >= 10)
+	{
+		i++;
+		n = n / 10;
+	}
+	i++;
+	ft_bzero(mini->exit_char, 4);
+	mini->exit_char[i] = '\0';
+	n = nb;
+	while (n >= 10)
+	{
+		mini->exit_char[--i] = ((n % 10) + '0');
+		n = n / 10;
+	}
+	mini->exit_char[--i] = ((n % 10) + '0');
+	return (mini->exit_char);
+}
+
 char	*ft_getenv(t_m *mini, char *name)
 {
 	int	i;
 
 	i = 0;
-	//if (ft_strcmp("?", name))
-	//	return (itoa(mini->exit_status, NULL, 10));
+	if (ft_strcmp("?", name) == 0)
+		return (ft_exit_satus(mini->exit_status, mini));
 	while (i < (mini->env_lenght - 1))
 	{
 		if (ft_strcmp(mini->env[i].name, name) == 0)

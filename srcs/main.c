@@ -26,6 +26,15 @@ void	free_str(char **str)
 	str = NULL;
 }
 
+void	free_exit(t_m *mini)
+{
+	if (mini->exit_char)
+	{
+		free(mini->exit_char);
+		mini->exit_char = NULL;
+	}
+}
+
 int	main(int argc, char *argv[], char **env)
 {
 	char	*line;
@@ -37,6 +46,7 @@ int	main(int argc, char *argv[], char **env)
 	setup_signal(&mini);
 	get_env(env, &mini);
 	mini.exit_status = 255;
+	mini.exit_char = malloc(sizeof(char) * 4);
 	line = readline("\e[0;35mLeShell\e[0;33mDeLaHonte $>\e[0;37m ");
 	while (line && mini.end == -1)
 	{
