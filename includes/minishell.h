@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 10:16:16 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 11:54:58 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/23 15:18:29 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ void	ft_parse_token(t_token *token, t_m *mini);
 int		ft_check_syntax(char *str);
 void	ft_delimiters(char *s, t_token *token, t_m *mini);
 void	ft_print_token(t_token *token);
+void	ft_add_pipe(t_token *token, t_pipe *pipe, int i, int j);
+void	ft_parse_start(t_token *token, int *i);
 
 char	*ft_quote_env(char *str, char c, t_m *mini);
 char	*ft_quote_env2(t_quote_env arg, char c, int i);
@@ -94,6 +96,7 @@ void	setup_signal(t_m *mini);
 void	cancel_c(int sig);
 void	cancel_c2(int sig);
 void	cancel_c3(int sig);
+void	cancel_c4(int sig);
 
 /* UTILS */
 char	**first_split(char *s, char c);

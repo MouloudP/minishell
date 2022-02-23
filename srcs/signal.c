@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 13:15:24 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 11:57:20 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/23 15:19:48 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,13 @@ void	cancel_delimiters(t_m *mini, int i)
 
 	if (!m)
 		m = mini;
-	m->canceldelimiters = i;
+	if (i >= 2)
+	{
+		m->exit_status = 128 + i;
+		m->signal_save(i);
+	}
+	else
+		m->canceldelimiters = i;
 }
 
 void	cancel_c3(int sig)
@@ -49,11 +55,18 @@ void	cancel_c3(int sig)
 	}
 }
 
+void	cancel_c4(int sig)
+{
+	if (sig == SIGINT || sig == SIGSEGV)
+		cancel_delimiters(NULL, sig);
+}
+
 void	setup_signal(t_m *mini)
 {
 	mini->end = -1;
 	mini->signal_save = signal(SIGINT, cancel_c);
 	mini->cancel_c = cancel_c;
 	mini->cancel_c2 = cancel_c2;
+	mini->cancel_c4 = cancel_c4;
 	cancel_delimiters(mini, 0);
 }

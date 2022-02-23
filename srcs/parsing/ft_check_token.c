@@ -6,13 +6,13 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 12:26:44 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 12:13:39 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/23 12:50:57 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_print_token(t_token *token)
+/*void	ft_print_token(t_token *token)
 {
 	int	i;
 
@@ -33,7 +33,7 @@ void	ft_print_token(t_token *token)
 			ft_printf("[%d] TYPE : %s | VALUE : %s\n", i, "ERROR", token[i].value);
 		i++;
 	}
-}
+}*/
 
 void	ft_print_pipe(t_pipe *pipe, int count)
 {
@@ -68,9 +68,10 @@ void	ft_parse_start(t_token *token, int *i)
 	int	cmd;
 
 	cmd = 1;
-	while (token[*i].value && token[*i].type != TOKEN_PIPE) // On va jusquau pipe
+	while (token[*i].value && token[*i].type != TOKEN_PIPE)
 	{
-		if (token[*i].type >= 4 && token[*i].type <= 8 && token[*i].type != TOKEN_REDIRECTION_DELIMTER) // Si on a une redirection le prochain argument est un FILE
+		if (token[*i].type >= 4 && token[*i].type <= 8
+			&& token[*i].type != TOKEN_REDIRECTION_DELIMTER)
 		{
 			(*i)++;
 			token[*i].type = TOKEN_FILE;
@@ -121,86 +122,4 @@ void	ft_add_pipe(t_token *token, t_pipe *pipe, int i, int j)
 		}
 		j++;
 	}
-}
-
-t_pipe	*ft_create_pipe(t_token *token, int count)
-{
-	t_pipe	*pipe;
-	int		i;
-	int		j;
-	int		n;
-
-	pipe = malloc(sizeof(t_pipe) * (count + 1));
-	i = 0;
-	j = 0;
-	while (i < count)
-	{
-		pipe[i].cmd_count = 0;
-		pipe[i].files_count = 0;
-		n = j;
-		while (token[j].type && token[j].type != TOKEN_PIPE)
-		{
-			if (token[j].type == TOKEN_ARGUMENT
-				|| token[j].type == TOKEN_COMMAND)
-				pipe[i].cmd_count++;
-			else if (token[j].type >= TOKEN_REDIRECTION_INPUT
-				&& token[j].type <= TOKEN_REDIRECTION_OTHER)
-			{
-				if (token[i].type != TOKEN_REDIRECTION_DELIMTER)
-					j++;
-				pipe[i].files_count++;
-			}
-			j++;
-		}
-		ft_add_pipe(token, pipe, i, n);
-		if (token[j].type == TOKEN_PIPE)
-			j++;
-		i++;
-	}
-	return (pipe);
-}
-
-void	ft_parse_token(t_token *token, t_m *mini)
-{
-	int		i;
-	int		j;
-	int		count;
-	t_pipe	*pipe;
-	//int redirec;
-
-	i = 0;
-	count = 0;
-	//redirec = 1;
-	while (token[i].type)
-	{
-		ft_parse_start(token, &i);
-		count++;
-		if (token[i].value && token[i].type == TOKEN_PIPE)
-			i++;
-	}
-	//ft_print_token(token);
-	pipe = ft_create_pipe(token, count);
-	if (token[i - 1].type == TOKEN_PIPE)
-		return ; // Error parsing
-	ft_print_pipe(pipe, count);
-	i = 0;
-	pipe[i].parse_cmd = NULL;
-	while (i < count)
-	{
-		pipe[i].parse_cmd = malloc(sizeof(char *) * (pipe[i].cmd_count + 1));
-		j = 0;
-		while (j < pipe[i].cmd_count)
-		{
-			pipe[i].parse_cmd[j] = pipe[i].cmd[j].value;
-			j++;
-		}
-		pipe[i].parse_cmd[j] = NULL;
-		i++;
-	}
-	mini->pipe = pipe;
-	mini->pipe_lenght = count;
-	if (mini->canceldelimiters != 0)
-		return ; // QUand on controle C un delimiters
-	pipex(pipe, count, mini->env_bis, mini);
-	//ft_print_pipe(pipe, count);
 }

@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 13:14:42 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 12:04:02 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/23 15:07:16 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	ft_mini_cd(char **cmd, t_m *mini)
 		}
 	}
 	//free path
-	return (1);
+	return (EXIT_SUCCESS);
 }
 
 int	ft_mini_pwd(char **cmd, int fd_out)
@@ -97,11 +97,11 @@ int	ft_mini_echo(char **cmd, int fd_out)
 	}
 	if (n == 0)
 		write(fd_out, "\n", 1);
-	return (1);
+	return (EXIT_SUCCESS);
 }
 
 int	ft_mini_env(t_m *mini, int fd_out)
 {
 	ft_printenv(mini, fd_out);
-	return (1);
+	return (EXIT_SUCCESS);
 }
