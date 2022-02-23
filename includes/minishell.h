@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 10:16:16 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 16:46:55 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/23 17:44:39 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int		ft_get_redirection(char *s);
 void	ft_set_token(t_token *token, char c, int type, int i);
 void	ft_reset_token(t_token *token);
 void	ft_reset_token2(t_token *token);
+
 /// Mem gestion
 char	*ft_fa(char *str, char *news); // Free and assign
 void	free_cmd(t_token *cmd);
@@ -99,6 +100,7 @@ void	cancel_c(int sig);
 void	cancel_c2(int sig);
 void	cancel_c3(int sig);
 void	cancel_c4(int sig);
+void	cancel_delimiters(t_m *mini, int i);
 
 /* UTILS */
 char	**first_split(char *s, char c);
