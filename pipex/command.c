@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 19:13:26 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/23 12:04:11 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/23 17:40:50 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,7 @@ int	run_command(int entry_pipe, int	*pipe_fd, char **parsed_cmd, t_m *mini)
 	if (!parsed_cmd)
 		perror("split error");
 	if (is_builtin(parsed_cmd[0]))
-	{
-		run_builtin(parsed_cmd, mini, 0, 1);
-		exit(0);
-	}
+		exit(run_builtin(parsed_cmd, mini, 0, 1));
 	if (execve(parsed_cmd[0], &parsed_cmd[0], mini->env_bis) == -1)
 		input_error("Command execution", parsed_cmd[0], 0);
 	return (-1);
