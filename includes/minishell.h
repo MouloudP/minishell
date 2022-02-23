@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 10:16:16 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 17:44:39 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/23 18:53:34 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ t_token	ft_getarg(char *str, int *i, t_m *mini);
 t_token	ft_redirection(char *str, char c, int *i, t_m *mini);
 t_token	ft_pipe(char *str, char c, int *i);
 t_token	*ft_parse_env(t_token *cmd, t_m *mini, int size);
+void	ft_print_pipe(t_pipe *pipe, int count);
 void	ft_parse_token(t_token *token, t_m *mini);
 int		ft_check_syntax(char *str);
 void	ft_delimiters(char *s, t_token *token, t_m *mini);

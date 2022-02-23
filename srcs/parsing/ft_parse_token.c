@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 12:50:05 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 17:25:15 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/23 19:08:53 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_create_pipe1(t_token *token, t_pipe *pipe, int i, int *j)
 	else if (token[*j].type >= TOKEN_REDIRECTION_INPUT
 		&& token[*j].type <= TOKEN_REDIRECTION_OTHER)
 	{
-		if (token[i].type != TOKEN_REDIRECTION_DELIMTER)
+		if (token[*j].type != TOKEN_REDIRECTION_DELIMTER)
 			(*j)++;
 		pipe[i].files_count++;
 	}
@@ -42,10 +42,8 @@ t_pipe	*ft_create_pipe(t_token *token, int count)
 		pipe[i].cmd_count = 0;
 		pipe[i].files_count = 0;
 		n = j;
-		while (token[j].type && token[j].type != TOKEN_PIPE)
-		{
+		while (token[j].value && token[j].type != TOKEN_PIPE)
 			ft_create_pipe1(token, pipe, i, &j);
-		}
 		ft_add_pipe(token, pipe, i, n);
 		if (token[j].type == TOKEN_PIPE)
 			j++;
