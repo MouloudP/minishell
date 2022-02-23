@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 16:24:13 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/23 15:55:41 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/23 17:02:28 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,23 +71,26 @@ int	single_builtin(t_pipe pipe, t_m *mini)
 int	pipex(t_pipe *pipes, int pipe_size, char **env, t_m *mini)
 {
 	pid_t	pid;
+	int		status;
 
 	(void)env;
+	mini->exit_status = 0;
 	if (pipe_size == 1 && is_builtin(pipes[0].parse_cmd[0]))
 		return (single_builtin(pipes[0], mini));
 	if (fork_store(&pid) == -1)
-		return (-1);
+		return (mini->exit_status = 1, -1);
 	if (pid == 0)
 	{
 		mini->end = 1;
 		if (iter_pipes(pipes, pipe_size, mini) == -1)
-			return (0);
+			return (mini->exit_status = 1, 0);
 		return (mini->end = 0, close(0), 1);
 	}
 	else
 	{
 		signal(SIGINT, mini->cancel_c2);
-		waitpid(pid, 0, 0);
+		waitpid(pid, &status, 0);
+		printf("exit %d\n", WEXITSTATUS(status));
 		signal(SIGINT, mini->cancel_c);
 	}
 	return (0);
