@@ -6,6 +6,7 @@ redirection.c \
 open_write.c \
 error.c \
 parse_cmd.c \
+wait_pid.c \
 ../printf/libft/libft.a \
 
 CC = gcc
@@ -37,7 +38,7 @@ B_CYAN 			= \033[1;36m
 
 all :	
 	@mkdir -p .build
-	@make ${NAME}
+	@make --no-print-directory ${NAME}
 
 ${NAME} : $(OBJ)
 	@printf "${B_CYAN}${NAME} is linking ...${NONE}\n"

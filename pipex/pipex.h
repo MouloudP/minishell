@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 16:24:21 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/23 14:58:07 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/23 16:48:04 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@
 // cmd
 # define VALID_CMD 1 // 
 # define INVALID_CMD 3 // 
+# define EXCUTE_NOT 4 // 
 # define INVALID_FD -1 // 
 
 typedef struct s_str_tab
@@ -62,6 +63,7 @@ typedef struct s_pstat
 /* PIPEx */
 int		pipex(t_pipe *pipes, int pipe_size, char **env, t_m *mini);
 int		iter_pipes(t_pipe *pipes, int pipe_size, t_m *mini);
+int		wait_all_pid(t_pstat *pipe_status, int size);
 
 /* UTILS */
 char	*ft_strjoin(char const *s1, char const *s2);

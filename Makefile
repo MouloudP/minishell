@@ -31,11 +31,19 @@ CC				=	gcc
 
 HEADER			=	includes/minishell.h
 
-PRINTF			= 	@printf "Generate Printf\n" && cd ./printf && make
+PRINTF			= 	@printf "Generate Printf\n" && cd ./printf && make --no-print-directory
 
-PIPEX			= 	@printf "Generate Pipex\n" && cd ./pipex && make
+PIPEX			= 	@printf "Generate Pipex\n" && cd ./pipex && make --no-print-directory
+ 
+LIBFT			= 	@printf "Generate Libft\n" && cd ./printf/libft && make --no-print-directory
 
-LIBFT			= 	@printf "Generate Libft\n" && cd ./printf/libft && make
+# COLORS
+NONE			= \033[0m
+CL_LINE			= \033[2K
+B_RED			= \033[1;31m
+B_GREEN			= \033[1;32m
+B_MAGENTA 		= \033[1;35m
+B_CYAN 			= \033[1;36m
 
 all				:	${NAME}
 
@@ -43,24 +51,25 @@ ${NAME}			:	${OBJS} ${HEADER}
 					${LIBFT}
 					${PIPEX}
 					${PRINTF}
-					${CC} ${CFLAGS} ${OBJS} -lreadline -g ./printf/libftprintf.a ./printf/libft/libft.a ./pipex/pipex -o ${NAME}
+					@${CC} ${CFLAGS} ${OBJS} -lreadline -g ./printf/libftprintf.a ./printf/libft/libft.a ./pipex/pipex -o ${NAME}
+					@printf "${B_GREEN}==>{${NAME}} LINKED SUCCESFULLY<==${NONE}\n"
 
 upd_p			:	
-					cd	pipex && make
+					cd	pipex && make --no-print-directory
 					${CC} ${CFLAGS} ${OBJS} -lreadline -g ./printf/libftprintf.a ./printf/libft/libft.a ./pipex/pipex -o ${NAME}
 
 clean			:
 					@rm -f ${OBJS}
-					@cd ./printf && make clean
-					@cd ./pipex && make clean
-					@cd ./printf/libft && make clean
+					@cd ./printf && make --no-print-directory clean
+					@cd ./pipex && make --no-print-directory clean
+					@cd ./printf/libft && make --no-print-directory clean
 
 fclean			:
 					@rm -f ${OBJS}
 					@rm -f ${NAME}
-					@cd ./printf && make fclean
-					@cd ./pipex && make fclean
-					@cd ./printf/libft && make fclean
+					@cd ./printf && make --no-print-directory fclean
+					@cd ./pipex && make --no-print-directory fclean
+					@cd ./printf/libft && make --no-print-directory fclean
 
 re				:	fclean all
 

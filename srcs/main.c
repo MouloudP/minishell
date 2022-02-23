@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 10:20:48 by ahamdoun          #+#    #+#             */
 /*   Updated: 2022/02/23 16:59:16 by ahamdoun         ###   ########.fr       */
@@ -86,5 +86,5 @@ int	main(int argc, char *argv[], char **env)
 		minishell(&line, &mini, cmd);
 	}
 	free_all(&mini);
-	return (mini.end);
+	return (mini.exit_status);
 }
