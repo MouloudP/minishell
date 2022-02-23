@@ -13,6 +13,7 @@ SRCS 			=	main.c \
 					parsing/ft_gerarg.c \
 					parsing/ft_parse_env.c \
 					parsing/ft_delimiters.c \
+					parsing/ft_parse_token.c \
 					utils.c \
 					env/env.c \
 					env/set_env.c \

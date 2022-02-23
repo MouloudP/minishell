@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 11:45:20 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/23 12:18:45 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/23 12:23:56 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	redirections(t_pipe pipe, int *input_fd, int *output_fd)
 		{
 			if (*input_fd > 2)
 				close(*input_fd);
-			if (pipe.files[i].type == TOKEN_REDIRECTION_OUTPUT ||)
+			if (pipe.files[i].type == TOKEN_REDIRECTION_OUTPUT)
 				*input_fd = open(pipe.files[i].value, O_RDONLY);
 			else if (pipe.files[i].type == TOKEN_REDIRECTION_DELIMTER)
 				*input_fd = pipe.files[i].fd;
