@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 16:24:21 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/23 10:55:51 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/23 14:58:07 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,12 @@ typedef struct s_stack
 	int		size;
 }	t_stack;
 
+typedef struct s_pstat
+{
+	pid_t		pid;
+	int			status;
+}	t_pstat;
+
 /* PIPEx */
 int		pipex(t_pipe *pipes, int pipe_size, char **env, t_m *mini);
 int		iter_pipes(t_pipe *pipes, int pipe_size, t_m *mini);
@@ -93,5 +99,6 @@ int		limited_stdin(char **argv);
 int		write_fd_to_fd(int src_fd, int dst_fd);
 int		write_command_output(char *dst, int fd);
 int		open_output(char *outfile, int append);
+int		print_stdout(int fd);
 
 #endif
