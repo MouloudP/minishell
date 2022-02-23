@@ -7,13 +7,20 @@ SRCS 			=	main.c \
 					parsing/ft_check_token.c \
 					parsing/ft_parsing_utils1.c \
 					parsing/ft_parsing_utils2.c \
+					parsing/ft_parsing_utils3.c \
 					parsing/ft_check_syntax.c \
+					parsing/ft_quote_env.c \
+					parsing/ft_gerarg.c \
+					parsing/ft_parse_env.c \
+					parsing/ft_delimiters.c \
 					utils.c \
 					env/env.c \
+					env/set_env.c \
 					env/utils_env.c \
 					env/export.c \
 					utils2.c \
 					utils3.c \
+					exit.c \
 
 OBJS			=	${addprefix srcs/,${SRCS:.c=.o}}
 

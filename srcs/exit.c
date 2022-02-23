@@ -1,29 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_parsing_utils1.c                                :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/19 12:27:14 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 11:46:57 by ahamdoun         ###   ########.fr       */
+/*   Created: 2022/02/23 12:01:54 by ahamdoun          #+#    #+#             */
+/*   Updated: 2022/02/23 12:02:09 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_whitespace(char c)
+int	ft_exit(t_m *mini)
 {
-	return (c == ' ' || c == '\f' || c == '\n'
-		|| c == '\r' || c == '\t' || c == '\v');
-}
-
-int	ft_quote(char c)
-{
-	return (c == '\'' || c == '"');
-}
-
-int	ft_redirec(char c)
-{
-	return (c == '>' || c == '<');
+	mini->end = 0;
+	return (1);
 }

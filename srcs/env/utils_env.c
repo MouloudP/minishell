@@ -6,31 +6,18 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 09:53:12 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/21 16:33:39 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/23 11:48:28 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	update_env(t_m *mini) // Pour le piero
+void	copy_env(t_m *mini)
 {
-	static int	first = 1;
-	int			i;
-	int			j;
-	char		*temp;
+	int		i;
+	int		j;
+	char	*temp;
 
-	i = 0;
-	j = 0;
-	while (mini->env[i].name)
-	{
-		if (mini->env[i].init)
-			j++;
-		i++;
-	}
-	if (first == 0)
-		free_env_bis(mini);
-	first = 0;
-	mini->env_bis = malloc(sizeof(char *) * (j + 1));
 	i = 0;
 	j = 0;
 	while (mini->env[i].name)
@@ -44,6 +31,27 @@ void	update_env(t_m *mini) // Pour le piero
 		i++;
 	}
 	mini->env_bis[j++] = NULL;
+}
+
+void	update_env(t_m *mini)
+{
+	static int	first = 1;
+	int			i;
+	int			j;
+
+	i = 0;
+	j = 0;
+	while (mini->env[i].name)
+	{
+		if (mini->env[i].init)
+			j++;
+		i++;
+	}
+	if (first == 0)
+		free_env_bis(mini);
+	first = 0;
+	mini->env_bis = malloc(sizeof(char *) * (j + 1));
+	copy_env(mini);
 }
 
 void	ft_printenv(t_m *mini, int fd_out)

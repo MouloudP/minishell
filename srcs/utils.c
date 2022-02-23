@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:45:45 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/22 18:25:15 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/23 11:12:50 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*free_add_assign(char *str, char *news)
+char	*ft_fa(char *str, char *news)
 {
 	free(str);
 	return (news);

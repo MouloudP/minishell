@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 10:16:16 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/22 17:55:55 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/23 11:54:58 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,28 @@
 t_token	*ft_partsing(char *str, t_m *mini);
 t_token	*ft_realloc_cmd(t_token	*cmd, int size);
 t_token	free_and_return(char *str, t_token token);
-t_token *ft_remove_cmd(t_token *cmd, int size, int del);
-t_token *ft_insert_cmd(t_token *cmd, int size, int insert, t_token token);
+t_token	*ft_remove_cmd(t_token *cmd, int size, int del);
+t_token	*ft_insert_cmd(t_token *cmd, int size, int insert, t_token token);
 t_token	ft_getarg(char *str, int *i, t_m *mini);
-void    ft_parse_token(t_token *token, t_m *mini);
-int     ft_check_syntax(char *str);
-void    ft_delimiters(char *s, t_token *token, t_m *mini);
-void    ft_print_token(t_token *token);
+t_token	ft_redirection(char *str, char c, int *i, t_m *mini);
+t_token	ft_pipe(char *str, char c, int *i);
+t_token	*ft_parse_env(t_token *cmd, t_m *mini, int size);
+void	ft_parse_token(t_token *token, t_m *mini);
+int		ft_check_syntax(char *str);
+void	ft_delimiters(char *s, t_token *token, t_m *mini);
+void	ft_print_token(t_token *token);
 
+char	*ft_quote_env(char *str, char c, t_m *mini);
+char	*ft_quote_env2(t_quote_env arg, char c, int i);
 
+char	*ft_getquote(char *str, int *i, char c, t_m *mini);
+int		ft_get_redirection(char *s);
+
+void	ft_set_token(t_token *token, char c, int type, int i);
+void	ft_reset_token(t_token *token);
+void	ft_reset_token2(t_token *token);
 /// Mem gestion
-char	*free_add_assign(char *str, char *news);
+char	*ft_fa(char *str, char *news); // Free and assign
 void	free_cmd(t_token *cmd);
 void	free_env(t_m *mini);
 void	free_env_bis(t_m *mini);
@@ -67,6 +78,7 @@ void	ft_printenv(t_m *mini, int out_fd);
 void	ft_printexport(t_m *mini, int out_fd);
 void	update_env(t_m *mini);
 void	get_env(char **env, t_m *mini);
+int		ft_hasenv(t_m *mini, char *name);
 
 // Tools
 int		ft_whitespace(char c);

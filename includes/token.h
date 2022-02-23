@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 15:44:14 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/22 15:44:29 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/23 12:05:14 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,8 @@ typedef struct s_pipe // Parsing par pipe pour le Pierro
 	t_token		*cmd;
 	char		**parse_cmd;
 	int			cmd_count;
-	t_token		*infile;
-	int			infile_count;
-	t_token		*outfile;
-	int			outfile_count;
+	t_token		*files;
+	int			files_count;
 }	t_pipe;
 
 typedef struct s_ep
@@ -61,6 +59,23 @@ typedef struct s_ep
 	t_pipe	*pipe;
 	t_m		*m;
 }	t_ep;
+
+typedef struct s_quote_env
+{
+	char	*temp;
+	char	*copy;
+	char	*temp2;
+	char	*str;
+	t_m		*mini;
+}	t_quote_env;
+
+typedef struct s_get_arg
+{
+	char	*temp;
+	char	*s;
+	char	*str;
+	t_m		*mini;
+}	t_get_arg;
 
 /* BUILTS IN */
 int		ft_mini_cd(char **cmd, t_m *mini);

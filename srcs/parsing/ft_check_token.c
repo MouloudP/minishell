@@ -6,15 +6,15 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 12:26:44 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 09:59:41 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/23 12:13:39 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void    ft_print_token(t_token *token)
+void	ft_print_token(t_token *token)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (token[i].value)
@@ -37,8 +37,8 @@ void    ft_print_token(t_token *token)
 
 void	ft_print_pipe(t_pipe *pipe, int count)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
@@ -51,29 +51,21 @@ void	ft_print_pipe(t_pipe *pipe, int count)
 			ft_printf("%s ", pipe[i].cmd[j].value);
 			j++;
 		}
-		ft_printf("\n\tINFILE :\n\t\t");
+		ft_printf("\n\tFILES :\n\t\t");
 		j = 0;
-		while (j < pipe[i].infile_count)
+		while (j < pipe[i].files_count)
 		{
-			ft_printf("%s ", pipe[i].infile[j].value);
-			j++;
-		}
-		ft_printf("\n\tOUTFILE :\n\t\t");
-		j = 0;
-		while (j < pipe[i].outfile_count)
-		{
-			ft_printf("%s ", pipe[i].outfile[j].value);
+			ft_printf("%s ", pipe[i].files[j].value);
 			j++;
 		}
 		ft_printf("\n");
-		//ft_printf("|%d| : \n %s", count, pipe[i].cmd[0].value);
 		i++;
 	}
 }
 
-void    ft_parse_start(t_token *token, int *i)
+void	ft_parse_start(t_token *token, int *i)
 {
-	int cmd;
+	int	cmd;
 
 	cmd = 1;
 	while (token[*i].value && token[*i].type != TOKEN_PIPE) // On va jusquau pipe
@@ -94,7 +86,7 @@ void    ft_parse_start(t_token *token, int *i)
 
 t_token	ft_copy_token(t_token token)
 {
-	t_token copy;
+	t_token	copy;
 
 	copy.value = token.value;
 	copy.type = token.type;
@@ -103,36 +95,29 @@ t_token	ft_copy_token(t_token token)
 	return (copy);
 }
 
-void    ft_add_pipe(t_token *token, t_pipe *pipe, int i, int j)
+void	ft_add_pipe(t_token *token, t_pipe *pipe, int i, int j)
 {
 	pipe[i].cmd = malloc(sizeof(t_token) * (pipe[i].cmd_count + 2));
-	pipe[i].infile = malloc(sizeof(t_token) * (pipe[i].infile_count + 2));
-	pipe[i].outfile = malloc(sizeof(t_token) * (pipe[i].outfile_count + 2));
+	pipe[i].files = malloc(sizeof(t_token) * (pipe[i].files_count + 2));
 	pipe[i].cmd_count = 0;
-	pipe[i].infile_count = 0;
-	pipe[i].outfile_count = 0;
+	pipe[i].files_count = 0;
 	while (token[j].type && token[j].type != TOKEN_PIPE)
 	{
 		if (token[j].type == TOKEN_ARGUMENT || token[j].type == TOKEN_COMMAND)
 		{
 			pipe[i].cmd[pipe[i].cmd_count++] = ft_copy_token(token[j]);
 		}
-		else if (token[j].type == TOKEN_REDIRECTION_INPUT || token[j].type == TOKEN_REDIRECTION_APPEND)
-		{
-			pipe[i].outfile[pipe[i].outfile_count] = ft_copy_token(token[++j]);
-			pipe[i].outfile[pipe[i].outfile_count].type = token[j - 1].type;
-			pipe[i].outfile_count++;
-		}
-		else if (token[j].type == TOKEN_REDIRECTION_OUTPUT || token[j].type == TOKEN_REDIRECTION_OTHER || token[j].type == TOKEN_REDIRECTION_DELIMTER)
+		else if (token[j].type >= TOKEN_REDIRECTION_INPUT
+			&& token[j].type <= TOKEN_REDIRECTION_OTHER)
 		{
 			if (token[j].type != TOKEN_REDIRECTION_DELIMTER)
 			{
-				pipe[i].infile[pipe[i].infile_count] = ft_copy_token(token[++j]);
-				pipe[i].infile[pipe[i].infile_count].type = token[j - 1].type;
+				pipe[i].files[pipe[i].files_count] = ft_copy_token(token[++j]);
+				pipe[i].files[pipe[i].files_count].type = token[j - 1].type;
 			}
 			else
-				pipe[i].infile[pipe[i].infile_count] = ft_copy_token(token[j]);
-			pipe[i].infile_count++;
+				pipe[i].files[pipe[i].files_count] = ft_copy_token(token[j]);
+			pipe[i].files_count++;
 		}
 		j++;
 	}
@@ -142,7 +127,7 @@ t_pipe	*ft_create_pipe(t_token *token, int count)
 {
 	t_pipe	*pipe;
 	int		i;
-	int     j;
+	int		j;
 	int		n;
 
 	pipe = malloc(sizeof(t_pipe) * (count + 1));
@@ -151,25 +136,19 @@ t_pipe	*ft_create_pipe(t_token *token, int count)
 	while (i < count)
 	{
 		pipe[i].cmd_count = 0;
-		pipe[i].infile_count = 0;
-		pipe[i].outfile_count = 0;
+		pipe[i].files_count = 0;
 		n = j;
 		while (token[j].type && token[j].type != TOKEN_PIPE)
 		{
-			if (token[j].type == TOKEN_ARGUMENT || token[j].type == TOKEN_COMMAND)
+			if (token[j].type == TOKEN_ARGUMENT
+				|| token[j].type == TOKEN_COMMAND)
 				pipe[i].cmd_count++;
-			else if (token[j].type == TOKEN_REDIRECTION_INPUT || token[j].type == TOKEN_REDIRECTION_APPEND)
-			{
-				j++;
-				//token[j].type = token[j - 1].type;
-				pipe[i].outfile_count++;
-			}
-			else if (token[j].type == TOKEN_REDIRECTION_OUTPUT || token[j].type == TOKEN_REDIRECTION_OTHER || token[i].type == TOKEN_REDIRECTION_DELIMTER)
+			else if (token[j].type >= TOKEN_REDIRECTION_INPUT
+				&& token[j].type <= TOKEN_REDIRECTION_OTHER)
 			{
 				if (token[i].type != TOKEN_REDIRECTION_DELIMTER)
 					j++;
-				//token[i].type = token[i - 1].type;
-				pipe[i].infile_count++;
+				pipe[i].files_count++;
 			}
 			j++;
 		}
@@ -181,7 +160,7 @@ t_pipe	*ft_create_pipe(t_token *token, int count)
 	return (pipe);
 }
 
-void    ft_parse_token(t_token *token, t_m *mini) // On va assigner les cmd
+void	ft_parse_token(t_token *token, t_m *mini)
 {
 	int		i;
 	int		j;
@@ -199,12 +178,11 @@ void    ft_parse_token(t_token *token, t_m *mini) // On va assigner les cmd
 		if (token[i].value && token[i].type == TOKEN_PIPE)
 			i++;
 	}
-	ft_print_token(token);
+	//ft_print_token(token);
 	pipe = ft_create_pipe(token, count);
-	ft_printf("[%d]\n", i);
 	if (token[i - 1].type == TOKEN_PIPE)
 		return ; // Error parsing
-	//ft_print_pipe(pipe, count);
+	ft_print_pipe(pipe, count);
 	i = 0;
 	pipe[i].parse_cmd = NULL;
 	while (i < count)
