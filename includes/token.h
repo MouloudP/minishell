@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 15:44:14 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/23 16:08:27 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/23 19:16:52 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,6 @@ int		ft_mini_env(t_m *mini, int out_fd);
 int		ft_mini_echo(char **cmd, int out_fd);
 int		ft_mini_export(char **cmd, t_m *mini, int out_fd);
 int		ft_mini_unset(char **cmd, t_m *mini);
+int		ft_tree(char **cmd, int fd_out);
 
 #endif
