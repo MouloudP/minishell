@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 16:42:56 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/22 12:28:37 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/23 09:37:16 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ int	ft_check_syntax(char *str)
 	error = 0;
 	while (str[i])
 	{
-		if (str[i] == '\\')
+		if (str[i] && str[i] == '\\')
 			i++;
-		else if (str[i] == '{')
+		else if (str[i] && str[i] == '{')
 			count[0]++;
-		else if (str[i] == '}')
+		else if (str[i] && str[i] == '}')
 			count[1]++;
-		else if (str[i] == '\'' && ++i)
+		else if (str[i] && str[i] == '\'' && ++i)
 		{
 			count[2]++;
 			while (str[i] && str[i] != '\'')
@@ -39,7 +39,7 @@ int	ft_check_syntax(char *str)
 			else
 				count[2]++;
 		}
-		else if (str[i] == '\"' && ++i)
+		else if (str[i] && str[i] == '\"' && ++i)
 		{
 			count[3]++;
 			while (str[i] && str[i] != '\"' && str[i - 1] != '\\')
@@ -49,16 +49,17 @@ int	ft_check_syntax(char *str)
 			else
 				count[3]++;
 		}
-		else if (str[i] == '|' && ++i)
+		else if (str[i] && str[i] == '|' && ++i)
 		{
 			count[4]++;
 			while (str[i] && ft_whitespace(str[i]))
 				i++;
-			if (str[i] == '|') // Si on a 2 || ou cat blabla |   | wda
+			if (str[i] && str[i] == '|') // Si on a 2 || ou cat blabla |   | wda
 				error = 1;
 			//while (str[++i])
 		}
-		i++;
+		if (str[i])
+			i++;
 	}
 	if (error)
 		ft_printf("Minishell : syntax error\n");

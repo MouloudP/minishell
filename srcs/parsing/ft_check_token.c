@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 12:26:44 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/22 15:31:42 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/23 09:59:41 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,10 +199,14 @@ void    ft_parse_token(t_token *token, t_m *mini) // On va assigner les cmd
 		if (token[i].value && token[i].type == TOKEN_PIPE)
 			i++;
 	}
-	//ft_print_token(token);
+	ft_print_token(token);
 	pipe = ft_create_pipe(token, count);
+	ft_printf("[%d]\n", i);
+	if (token[i - 1].type == TOKEN_PIPE)
+		return ; // Error parsing
 	//ft_print_pipe(pipe, count);
 	i = 0;
+	pipe[i].parse_cmd = NULL;
 	while (i < count)
 	{
 		pipe[i].parse_cmd = malloc(sizeof(char *) * (pipe[i].cmd_count + 1));
@@ -217,7 +221,8 @@ void    ft_parse_token(t_token *token, t_m *mini) // On va assigner les cmd
 	}
 	mini->pipe = pipe;
 	mini->pipe_lenght = count;
-	if (mini->canceldelimiters == 0)
-		pipex(pipe, count, mini->env_bis, mini);
+	if (mini->canceldelimiters != 0)
+		return ; // QUand on controle C un delimiters
+	pipex(pipe, count, mini->env_bis, mini);
 	//ft_print_pipe(pipe, count);
 }

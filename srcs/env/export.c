@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 09:51:42 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/22 18:55:11 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/23 09:29:04 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ t_env	*ft_copy_env(t_m *mini)
 		new[i].init = mini->env[i].init;
 		i++;
 	}
+	new[i].name = NULL;
+	new[i].value = NULL;
+	new[i].init = 0;
 	return (new);
 }
 
