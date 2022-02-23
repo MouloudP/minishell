@@ -90,6 +90,7 @@ int	pipex(t_pipe *pipes, int pipe_size, char **env, t_m *mini)
 	if (pid == 0)
 	{
 		mini->end = 1;
+		signal(SIGINT, mini->cancel_c4);
 		if (iter_pipes(pipes, pipe_size, mini) == -1)
 			return (mini->exit_status = 1, 0);
 		return (mini->end = 0, close(0), 1);
