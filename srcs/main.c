@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 10:20:48 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 10:00:46 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/23 16:33:52 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,5 @@ int	main(int argc, char *argv[], char **env)
 	rl_clear_history();
 	free_env(&mini);
 	free_env_bis(&mini);
-	return (mini.end);
+	return (mini.exit_status);
 }

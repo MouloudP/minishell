@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 10:11:35 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/23 16:06:28 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/23 16:41:32 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,19 @@ int	is_path(char *cmd)
 	return (0);
 }
 
+int	process_path(char **command)
+{
+	if (access(*command, F_OK) == 0)
+	{
+		if (access(*command, F_OK | X_OK) == 0)
+			return (*command = ft_strdupp(*command), VALID_CMD);
+		else
+			return (input_error("Permission denied", *command, 2), EXCUTE_NOT);
+	}
+	input_error("Invalid path", *command, 2);
+	return (INVALID_CMD);
+}
+
 int	parse_cmd(char **command, char **paths)
 {
 	int		i;
@@ -47,17 +60,7 @@ int	parse_cmd(char **command, char **paths)
 	if (!*command)
 		return (-1);
 	if (is_path(*command))
-	{
-		if (access(*command, F_OK) == 0)
-		{
-			if (access(*command, F_OK | X_OK) == 0)
-				return (*command = ft_strdupp(*command), VALID_CMD);
-			else
-				return (input_error("Permission denied", *command, 2), EXCUTE_NOT);
-		}
-		input_error("Invalid path", *command, 2);
-		return (INVALID_CMD);
-	}
+		return (process_path(command));
 	if (is_builtin(*command) == 1)
 		return (*command = ft_strdupp(*command), VALID_CMD);
 	i = -1;
