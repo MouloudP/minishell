@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 09:53:12 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 16:46:30 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/23 19:42:18 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	update_env(t_m *mini)
 	if (first == 0)
 		free_env_bis(mini);
 	first = 0;
-	mini->env_bis = malloc(sizeof(char *) * (j + 1));
+	mini->env_bis = ft_malloc(sizeof(char *) * (j + 1));
 	copy_env(mini);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 11:45:46 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 11:46:52 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/23 19:42:18 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_token	*ft_realloc_cmd(t_token	*cmd, int size)
 	t_token	*new;
 	int		i;
 
-	new = malloc(sizeof(t_token) * (size + 2));
+	new = ft_malloc(sizeof(t_token) * (size + 2));
 	i = 0;
 	while (i < size)
 	{
@@ -34,7 +34,7 @@ t_token	*ft_insert_cmd(t_token *cmd, int size, int ins, t_token token)
 	int		i;
 	int		j;
 
-	new = malloc(sizeof(t_token) * (size + 1));
+	new = ft_malloc(sizeof(t_token) * (size + 1));
 	i = 0;
 	j = 0;
 	while (i < size)
@@ -59,7 +59,7 @@ t_token	*ft_remove_cmd(t_token *cmd, int size, int del)
 	int		i;
 	int		j;
 
-	new = malloc(sizeof(t_token) * (size + 1));
+	new = ft_malloc(sizeof(t_token) * (size + 1));
 	i = 0;
 	j = 0;
 	while (i < size)

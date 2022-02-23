@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:45:45 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 11:12:50 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/23 19:42:18 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	**ft_realloc(char **cmd, int size)
 	char	**new;
 	int		i;
 
-	new = malloc(sizeof(char *) * size + 1);
+	new = ft_malloc(sizeof(char *) * size + 1);
 	i = 0;
 	while (cmd[i])
 	{

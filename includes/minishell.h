@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 10:16:16 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 18:53:34 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/23 19:42:33 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void	free_env_bis(t_m *mini);
 void	free_pipe(t_m *mini);
 void	free_pwd(char *str, int fre);
 char	**ft_realloc(char **cmd, int size);
+void	*ft_malloc(size_t nb);
 
 // Env
 char	*ft_getenv(t_m *mini, char *var);

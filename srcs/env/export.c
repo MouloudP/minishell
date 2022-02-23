@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 09:51:42 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 11:36:02 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/23 19:42:18 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_env	*ft_copy_env(t_m *mini)
 	t_env	*new;
 	int		i;
 
-	new = malloc(sizeof(t_env) * (mini->env_lenght));
+	new = ft_malloc(sizeof(t_env) * (mini->env_lenght));
 	i = 0;
 	while (i < (mini->env_lenght - 1))
 	{

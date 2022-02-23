@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 10:20:48 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 18:36:08 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/23 19:42:18 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	main(int argc, char *argv[], char **env)
 	setup_signal(&mini);
 	get_env(env, &mini);
 	mini.exit_status = 255;
-	mini.exit_char = malloc(sizeof(char) * 4);
+	mini.exit_char = ft_malloc(sizeof(char) * 4);
 	line = readline("\e[0;35mMini\e[0;33mshell $>\e[0;37m ");
 	cmd = NULL;
 	while (line && mini.end == -1)

@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 12:50:05 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 19:31:41 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/23 19:42:18 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_pipe	*ft_create_pipe(t_token *token, int count)
 	int		j;
 	int		n;
 
-	pipe = malloc(sizeof(t_pipe) * (count + 1));
+	pipe = ft_malloc(sizeof(t_pipe) * (count + 1));
 	i = 0;
 	j = 0;
 	while (i < count)
@@ -61,7 +61,7 @@ void	ft_parse_token1(t_pipe *pipe, t_m *mini, int count)
 	pipe[i].parse_cmd = NULL;
 	while (i < count)
 	{
-		pipe[i].parse_cmd = malloc(sizeof(char *) * (pipe[i].cmd_count + 1));
+		pipe[i].parse_cmd = ft_malloc(sizeof(char *) * (pipe[i].cmd_count + 1));
 		j = 0;
 		while (j < pipe[i].cmd_count)
 		{

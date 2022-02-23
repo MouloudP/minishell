@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 15:57:54 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/23 09:21:53 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/23 19:42:22 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ char	**first_split(char *s, char c)
 		return (NULL);
 	size_alpha = ft_strlen_c(s, c);
 	size_omega = ft_strlen_c(s, '\0');
-	sep[0] = malloc(sizeof(char) * (size_alpha + 2));
-	sep[1] = malloc(sizeof(char) * (size_omega + 2));
+	sep[0] = ft_malloc(sizeof(char) * (size_alpha + 2));
+	sep[1] = ft_malloc(sizeof(char) * (size_omega + 2));
 	sep[2] = NULL;
 	if (!sep[0] || !sep[1])
 		return (free(sep[0]), free(sep[1]), free(sep), NULL);
@@ -45,4 +45,19 @@ char	**first_split(char *s, char c)
 	else
 		ft_strlcpy(sep[1], &s[size_alpha + 1], size_omega + 1);
 	return (sep);
+}
+
+void	*ft_malloc(size_t nb)
+{
+	void	*ret;
+
+	ret = malloc(nb);
+	if (ret)
+		return (ret);
+	else
+	{
+		write(2, "Malloc error\n", 13);
+		exit(EXIT_FAILURE);
+	}
+	return (NULL);
 }

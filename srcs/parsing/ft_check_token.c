@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 12:26:44 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 19:08:58 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/23 19:42:18 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,8 @@ t_token	ft_copy_token(t_token token)
 
 void	ft_add_pipe(t_token *token, t_pipe *pipe, int i, int j)
 {
-	pipe[i].cmd = malloc(sizeof(t_token) * (pipe[i].cmd_count + 2));
-	pipe[i].files = malloc(sizeof(t_token) * (pipe[i].files_count + 2));
+	pipe[i].cmd = ft_malloc(sizeof(t_token) * (pipe[i].cmd_count + 2));
+	pipe[i].files = ft_malloc(sizeof(t_token) * (pipe[i].files_count + 2));
 	pipe[i].cmd_count = 0;
 	pipe[i].files_count = 0;
 	while (token[j].type && token[j].type != TOKEN_PIPE)

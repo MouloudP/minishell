@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 11:26:05 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 16:46:46 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/23 19:42:18 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	get_env(char **env, t_m *mini)
 	i = 0;
 	while (env[i])
 		i++;
-	mini->env = malloc(sizeof(t_env) * (i + 1));
+	mini->env = ft_malloc(sizeof(t_env) * (i + 1));
 	mini->env_lenght = (i + 1);
 	i = -1;
 	while (env[++i])

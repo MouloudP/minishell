@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 11:52:32 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 11:54:31 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/23 19:42:18 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	ft_setenv(t_m *mini, char *name, char *value, int init)
 		ft_replaceenv(mini, name, value);
 		return ;
 	}
-	env = malloc(sizeof(t_env) * (mini->env_lenght + 1));
+	env = ft_malloc(sizeof(t_env) * (mini->env_lenght + 1));
 	i = 0;
 	while (i < (mini->env_lenght - 1))
 	{
@@ -98,7 +98,7 @@ void	ft_removeenv(t_m *mini, char *name)
 
 	if (!ft_hasenv(mini, name))
 		return ;
-	env = malloc(sizeof(t_env) * (mini->env_lenght));
+	env = ft_malloc(sizeof(t_env) * (mini->env_lenght));
 	i = 0;
 	j = 0;
 	while (i < (mini->env_lenght - 1))

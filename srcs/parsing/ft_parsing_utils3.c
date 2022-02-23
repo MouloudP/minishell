@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 11:32:00 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 11:46:54 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/23 19:42:18 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_set_token(t_token *token, char c, int type, int i)
 {
-	token->value = malloc(sizeof(char) * 2);
+	token->value = ft_malloc(sizeof(char) * 2);
 	token->value[0] = c;
 	token->value[1] = '\0';
 	if (type != -10)

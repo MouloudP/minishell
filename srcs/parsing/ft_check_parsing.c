@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 15:26:50 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 17:04:52 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/23 19:42:18 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ t_token	ft_pipe(char *str, char c, int *i)
 	}
 	else
 	{
-		token.value = malloc(sizeof(char) * 2);
+		token.value = ft_malloc(sizeof(char) * 2);
 		token.value[0] = c;
 		token.value[1] = '\0';
 		token.type = TOKEN_PIPE;
@@ -106,7 +106,7 @@ t_token	*ft_partsing(char *str, t_m *mini)
 	t_token	*cmd;
 	t_token	temp;
 
-	cmd = malloc(sizeof(t_token) * 1);
+	cmd = ft_malloc(sizeof(t_token) * 1);
 	i = 0;
 	while (str[i] && ft_whitespace(str[i]))
 		i++;
