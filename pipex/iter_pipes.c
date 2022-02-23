@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 12:03:44 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/23 15:36:31 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/23 16:14:57 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	wait_all_pid(t_pstat *pipe_status, int size)
 {
 	int	i;
-	int	test;
+	int	status;
 
 	i = 0;
 	if (!pipe_status)
@@ -26,13 +26,16 @@ int	wait_all_pid(t_pstat *pipe_status, int size)
 		{
 			if (pipe_status[i].pid > 0)
 			{
-				waitpid(pipe_status[i].pid, &test, 0);
-				printf("result: %d\n", test);
+				waitpid(pipe_status[i].pid, &status, 0);
+				if (WIFEXITED(status))
+					pipe_status[i].status = WEXITSTATUS(status);
+				else if (WIFSIGNALED(status))
+					pipe_status[i].status = 128 + WTERMSIG(status);
+				else if (WIFSTOPPED(status))
+					pipe_status[i].status = 128 + WSTOPSIG(status);
+				else if (WIFCONTINUED(status))
+					pipe_status[i].status = 128 + WIFCONTINUED(status);
 			}
-			else if (pipe_status[i].pid == -1)
-				pipe_status[i].status = 1;
-			else if (pipe_status[i].status < 0)
-				pipe_status[i].status = 1;
 		}
 		++i;
 	}
@@ -65,10 +68,11 @@ char	**get_args(t_pipe *pipe_a, t_m *mini, int *redir, t_pstat *pstat)
 		return (NULL);
 	}
 	*redir = parse_cmd(&args[0], paths);
-	if (*redir == INVALID_CMD)
+	if (*redir == INVALID_CMD || *redir == EXCUTE_NOT)
 	{
-		pstat->status = 127;
+		pstat->status = ft_tern(*redir == INVALID_CMD, 127, 126);
 		free(args);
+		return (NULL);
 	}
 	free_split(paths);
 	return (args);
@@ -104,7 +108,7 @@ int	proceed_pipe(int *input_fd, t_pstat *pstat, t_ep *ep, int last_pipe)
 	else if (!ep->pipe->parse_cmd[0])
 		return (0);
 	args = get_args(ep->pipe, ep->m, &redir, pstat);
-	if (redir == INVALID_CMD)
+	if (redir == INVALID_CMD || redir == EXCUTE_NOT)
 		return (0);
 	else if (redir == VALID_CMD)
 	{
@@ -144,8 +148,9 @@ int	iter_pipes(t_pipe *pipes, int pipe_size, t_m *mini)
 	}
 	wait_all_pid(pipe_status, pipe_size);
 	mini->exit_status = pipe_status[pipe_size - 1].status;
+	if (pipes[pipe_size - 1].parse_cmd[0] == NULL && pipe_size > 1)
+		mini->exit_status = 0;
 	if (input_fd > 0)
 		close(input_fd);
-	printf("exit: %d\n", mini->exit_status);
 	return (free(pipe_status), 1);
 }
