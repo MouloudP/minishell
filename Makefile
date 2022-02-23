@@ -1,8 +1,19 @@
 NAME			=	minishell
 
-SRCS 			=	main.c build_in.c signal.c parsing/ft_check_parsing.c parsing/ft_check_token.c parsing/ft_parsing_utils1.c \
- parsing/ft_parsing_utils2.c parsing/ft_check_syntax.c utils.c env/env.c env/utils_env.c env/export.c\
- utils2.c 
+SRCS 			=	main.c \
+					build_in.c \
+					signal.c \
+					parsing/ft_check_parsing.c \
+					parsing/ft_check_token.c \
+					parsing/ft_parsing_utils1.c \
+					parsing/ft_parsing_utils2.c \
+					parsing/ft_check_syntax.c \
+					utils.c \
+					env/env.c \
+					env/utils_env.c \
+					env/export.c \
+					utils2.c \
+					utils3.c \
 
 OBJS			=	${addprefix srcs/,${SRCS:.c=.o}}
 
