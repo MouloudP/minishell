@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 15:26:50 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/22 17:26:21 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/23 10:00:03 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*ft_quote_env(char *str, char c, t_m *mini)
 			free(temp);
 			str = copy;
 			str = ft_quote_env(str, c, mini);
-			break;
+			break ;
 		}
 		i++;
 	}
