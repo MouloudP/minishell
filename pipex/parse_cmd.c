@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 10:11:35 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/22 14:39:34 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/23 16:06:28 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,15 @@ int	parse_cmd(char **command, char **paths)
 		return (-1);
 	if (is_path(*command))
 	{
-		if (access(*command, F_OK | X_OK) == 0)
-			return (*command = ft_strdupp(*command), VALID_CMD);
+		if (access(*command, F_OK) == 0)
+		{
+			if (access(*command, F_OK | X_OK) == 0)
+				return (*command = ft_strdupp(*command), VALID_CMD);
+			else
+				return (input_error("Permission denied", *command, 2), EXCUTE_NOT);
+		}
 		input_error("Invalid path", *command, 2);
-		return (-3);
+		return (INVALID_CMD);
 	}
 	if (is_builtin(*command) == 1)
 		return (*command = ft_strdupp(*command), VALID_CMD);
