@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 12:50:05 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 19:08:53 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/23 19:31:41 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	ft_parse_token1(t_pipe *pipe, t_m *mini, int count)
 
 int	ft_check_token_syntax(t_token *token, int i)
 {
-	if (token[i - 1].type == TOKEN_PIPE)
+	if (i > 0 && token[i - 1].type == TOKEN_PIPE)
 		return (1);
 	i = 0;
 	while (token[i].value)
@@ -116,7 +116,7 @@ void	ft_parse_token(t_token *token, t_m *mini)
 		mini->exit_status = 2;
 		return ;
 	}
-	if (mini->canceldelimiters != 0)
+	if (mini->canceldelimiters != 0 || count <= 0)
 		return ;
 	pipex(pipe, count, mini->env_bis, mini);
 }
