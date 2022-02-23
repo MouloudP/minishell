@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 12:03:44 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/23 17:03:00 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/23 18:30:23 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	**get_args(t_pipe *pipe_a, t_m *mini, int *redir, t_pstat *pstat)
 	if (*redir == INVALID_CMD || *redir == EXCUTE_NOT)
 	{
 		pstat->status = ft_tern(*redir == INVALID_CMD, 127, 126);
-		return (free(args), NULL);
+		return (free(args), free_split(paths), NULL);
 	}
 	return (free_split(paths), args);
 }

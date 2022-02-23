@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 16:24:13 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/23 17:51:02 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/23 18:37:05 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ int	pipex(t_pipe *pipes, int pipe_size, char **env, t_m *mini)
 	if (pid == 0)
 	{
 		mini->end = 1;
+		signal(SIGINT, mini->cancel_c4);
 		if (iter_pipes(pipes, pipe_size, mini) == -1)
 			return (mini->exit_status = 1, 0);
 		return (mini->end = 0, close(0), 1);

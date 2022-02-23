@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 13:15:24 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 17:43:49 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/23 18:36:56 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,6 @@ void	cancel_c3(int sig)
 
 void	cancel_c4(int sig)
 {
-	if (sig == SIGINT || sig == SIGSEGV)
-		cancel_delimiters(NULL, sig);
+	(void) sig;
+	write(1, "\n", 1);
 }

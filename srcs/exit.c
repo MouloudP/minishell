@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 12:01:54 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 16:42:25 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/23 18:28:19 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,6 @@ int	ft_exit(char **cmd, t_m *mini)
 	}
 	else
 		mini->end = (int) long_atoi(cmd[1]);
+	mini->exit_status = mini->end;
 	return (1);
 }
