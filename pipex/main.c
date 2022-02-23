@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 16:24:13 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/23 17:40:24 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/23 17:51:02 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ int	single_builtin(t_pipe pipe, t_m *mini)
 	}
 	mini->exit_status = run_builtin(pipe.parse_cmd, mini,
 			fd_in, fd_out);
-	printf("builtin status %d\n", mini->exit_status);
 	return (0);
 }
 
@@ -98,7 +97,6 @@ int	pipex(t_pipe *pipes, int pipe_size, char **env, t_m *mini)
 		signal(SIGINT, mini->cancel_c2);
 		waitpid(pid, &status, 0);
 		mini->exit_status = WEXITSTATUS(status);
-		printf("builtin status %d\n", mini->exit_status);
 		signal(SIGINT, mini->cancel_c);
 	}
 	return (0);

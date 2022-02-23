@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 13:14:42 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 17:41:18 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/23 17:49:33 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ int	ft_mini_cd(char **cmd, t_m *mini)
 	else if (ft_strncmp(ph, "~", 1) == 0 && base && ++fre)
 		ph = ft_strjoin(base, ph + 1);
 	if (cmd[1] && cmd[2])
-		return (free_pwd(ph, fre), write(1, "cd : too many arguments\n", 24), 1);
+		return (free_pwd(ph, fre), write(1, "cd : too many arguments\n", 24), 2);
 	if (chdir(ph) == -1)
-		return (perror("cd"), EXIT_FAILURE);
+		return (perror("cd"), 2);
 	else
 	{
 		if (getcwd(cwd, sizeof(cwd)) != NULL)
