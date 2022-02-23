@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 16:24:13 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/23 17:02:28 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/23 17:40:24 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	run_builtin(char **cmd, t_m *mini, int fd_in, int fd_out)
 {
 	(void) fd_in;
 	if (!cmd[0])
-		return (0);
+		return (1);
 	if (ft_strcmp(cmd[0], "pwd") == 0)
 		return (ft_mini_pwd(cmd, fd_out));
 	else if (ft_strcmp(cmd[0], "cd") == 0)
@@ -52,19 +52,26 @@ int	run_builtin(char **cmd, t_m *mini, int fd_in, int fd_out)
 		return (ft_exit(cmd, mini));
 	else if (ft_strcmp(cmd[0], "unset") == 0)
 		return (ft_mini_unset(cmd, mini));
-	return (0);
+	return (1);
 }
 
 int	single_builtin(t_pipe pipe, t_m *mini)
 {
 	int		fd_in;
 	int		fd_out;
+	int		test;
 
 	fd_in = 0;
 	fd_out = 1;
-	mini->exit_status = redirections(pipe, &fd_in, &fd_out);
+	test = redirections(pipe, &fd_in, &fd_out);
+	if (test == INVALID_FD)
+	{
+		mini->exit_status = 1;
+		return (0);
+	}
 	mini->exit_status = run_builtin(pipe.parse_cmd, mini,
 			fd_in, fd_out);
+	printf("builtin status %d\n", mini->exit_status);
 	return (0);
 }
 
@@ -90,7 +97,8 @@ int	pipex(t_pipe *pipes, int pipe_size, char **env, t_m *mini)
 	{
 		signal(SIGINT, mini->cancel_c2);
 		waitpid(pid, &status, 0);
-		printf("exit %d\n", WEXITSTATUS(status));
+		mini->exit_status = WEXITSTATUS(status);
+		printf("builtin status %d\n", mini->exit_status);
 		signal(SIGINT, mini->cancel_c);
 	}
 	return (0);
