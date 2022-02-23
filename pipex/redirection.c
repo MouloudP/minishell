@@ -44,7 +44,7 @@ int	redirections(t_pipe pipe, int *input_fd, int *output_fd)
 
 	i = -1;
 	outfile_count = 0;
-	while (++i < pipe.files_count)
+	while (++i < pipe.files_count && pipe.files[i].value)
 	{
 		if (pipe.files[i].type == TOKEN_REDIRECTION_OUTPUT || pipe.files[i].type == TOKEN_REDIRECTION_DELIMTER)
 		{

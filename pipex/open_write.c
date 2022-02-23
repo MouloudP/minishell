@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 12:32:06 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/23 11:00:18 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/23 13:09:44 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,13 @@ int	open_output(char *outfile, int append)
 			readed = read(fd_outfile, buffer, 1023);
 	}
 	return (fd_outfile);
+}
+
+int	print_stdout(int fd)
+{
+	if (fd > 2)
+		close(fd);
+	if (dup2(1, fd) == -1)
+		return (-3);
+	return (0);
 }
