@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 10:20:48 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 16:33:52 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/23 16:59:16 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,38 @@ void	free_exit(t_m *mini)
 	}
 }
 
+void	free_all(t_m *mini)
+{
+	rl_clear_history();
+	free_env(mini);
+	free_env_bis(mini);
+	free_exit(mini);
+}
+
+void	minishell(char **line, t_m *mini, t_token *cmd)
+{
+	add_history(*line);
+	if (*line[0])
+	{
+		ft_printf("dwadwadwa");
+		if (!ft_check_syntax(*line))
+		{
+			cmd = ft_partsing(*line, mini);
+			free_cmd(cmd);
+			free_pipe(mini);
+		}
+	}
+	if (mini->canceldelimiters == 1)
+	{
+		dup2(mini->dup_fd, 0);
+		mini->canceldelimiters = 0;
+		signal(SIGINT, cancel_c);
+	}
+	free(*line);
+	if (mini->end == -1)
+		*line = readline("\e[0;35mLeShell\e[0;33mDeLaHonte $>\e[0;37m ");
+}
+
 int	main(int argc, char *argv[], char **env)
 {
 	char	*line;
@@ -48,31 +80,11 @@ int	main(int argc, char *argv[], char **env)
 	mini.exit_status = 255;
 	mini.exit_char = malloc(sizeof(char) * 4);
 	line = readline("\e[0;35mLeShell\e[0;33mDeLaHonte $>\e[0;37m ");
+	cmd = NULL;
 	while (line && mini.end == -1)
 	{
-		add_history(line);
-		if (line[0])
-		{
-			if (!ft_check_syntax(line))
-			{		
-				cmd = ft_partsing(line, &mini);
-				cmd->mini = mini;
-				free_cmd(cmd);
-				free_pipe(&mini);
-			}
-		}
-		if (mini.canceldelimiters == 1)
-		{
-			dup2(mini.dup_fd, 0);
-			mini.canceldelimiters = 0;
-			signal(SIGINT, cancel_c);
-		}
-		free(line);
-		if (mini.end == -1)
-			line = readline("\e[0;35mLeShell\e[0;33mDeLaHonte $>\e[0;37m ");
+		minishell(&line, &mini, cmd);
 	}
-	rl_clear_history();
-	free_env(&mini);
-	free_env_bis(&mini);
+	free_all(&mini);
 	return (mini.exit_status);
 }

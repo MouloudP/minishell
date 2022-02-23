@@ -49,7 +49,7 @@ int	run_builtin(char **cmd, t_m *mini, int fd_in, int fd_out)
 	else if (ft_strcmp(cmd[0], "env") == 0)
 		return (ft_mini_env(mini, fd_out));
 	else if (ft_strcmp(cmd[0], "exit") == 0)
-		return (ft_exit(mini));
+		return (ft_exit(cmd, mini));
 	else if (ft_strcmp(cmd[0], "unset") == 0)
 		return (ft_mini_unset(cmd, mini));
 	return (0);

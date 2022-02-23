@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 09:53:12 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 11:48:28 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/23 16:46:30 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,34 @@ void	ft_printenv(t_m *mini, int fd_out)
 		}
 		i++;
 	}
+}
+
+char	*ft_getenv(t_m *mini, char *name)
+{
+	int	i;
+
+	i = 0;
+	if (ft_strcmp("?", name) == 0)
+		return (ft_exit_satus(mini->exit_status, mini));
+	while (i < (mini->env_lenght - 1))
+	{
+		if (ft_strcmp(mini->env[i].name, name) == 0)
+			return (mini->env[i].value);
+		i++;
+	}
+	return (NULL);
+}
+
+int	ft_hasenv(t_m *mini, char *name)
+{
+	int	i;
+
+	i = 0;
+	while (i < (mini->env_lenght - 1))
+	{
+		if (ft_strcmp(mini->env[i].name, name) == 0)
+			return (1);
+		i++;
+	}
+	return (0);
 }

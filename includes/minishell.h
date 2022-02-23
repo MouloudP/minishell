@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 10:16:16 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 15:18:29 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/23 16:46:55 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	free_cmd(t_token *cmd);
 void	free_env(t_m *mini);
 void	free_env_bis(t_m *mini);
 void	free_pipe(t_m *mini);
+void	free_pwd(char *str, int fre);
 char	**ft_realloc(char **cmd, int size);
 
 // Env
@@ -81,6 +82,7 @@ void	ft_printexport(t_m *mini, int out_fd);
 void	update_env(t_m *mini);
 void	get_env(char **env, t_m *mini);
 int		ft_hasenv(t_m *mini, char *name);
+char	*ft_exit_satus(int n, t_m *mini);
 
 // Tools
 int		ft_whitespace(char c);
