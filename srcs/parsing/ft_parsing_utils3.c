@@ -1,29 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_parsing_utils1.c                                :+:      :+:    :+:   */
+/*   ft_parsing_utils3.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/19 12:27:14 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 11:46:57 by ahamdoun         ###   ########.fr       */
+/*   Created: 2022/02/23 11:32:00 by ahamdoun          #+#    #+#             */
+/*   Updated: 2022/02/23 11:46:54 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_whitespace(char c)
+void	ft_set_token(t_token *token, char c, int type, int i)
 {
-	return (c == ' ' || c == '\f' || c == '\n'
-		|| c == '\r' || c == '\t' || c == '\v');
+	token->value = malloc(sizeof(char) * 2);
+	token->value[0] = c;
+	token->value[1] = '\0';
+	if (type != -10)
+		token->type = type;
+	else
+		token->type = ft_get_redirection(token->value);
+	(void) i;
 }
 
-int	ft_quote(char c)
+void	ft_reset_token(t_token *token)
 {
-	return (c == '\'' || c == '"');
+	token->env = 0;
+	token->type = 0;
+	token->fd = 0;
 }
 
-int	ft_redirec(char c)
+void	ft_reset_token2(t_token *token)
 {
-	return (c == '>' || c == '<');
+	token->type = TOKEN_NULL;
+	token->value = NULL;
 }

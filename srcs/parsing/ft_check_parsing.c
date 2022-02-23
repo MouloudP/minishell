@@ -6,77 +6,25 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 15:26:50 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 10:00:03 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/23 11:46:47 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_quote_env(char *str, char c, t_m *mini)
-{
-	int		i;
-	int		start;
-	char	*temp;
-	char	*copy;
-	char	*temp2;
-
-	i = 0;
-	while (str[i] && c != '\'')
-	{
-		if (str[i] == '$')
-		{
-			start = i + 1;
-			i++;
-			if (str[i] == '{')
-				start = (++i);
-			while (str[i] && !ft_whitespace(str[i]) && str[i] != '$' && str[i] != '}')
-				i++;
-			temp = str + start;
-			if (str[i] == '}')
-			{
-				temp = ft_strndup(temp, i - start);
-				temp2 = ft_strndup(str, start - 2);
-			}
-			else
-			{
-				temp = ft_strndup(temp, i - start);
-				temp2 = ft_strndup(str, start - 1);
-			}
-			if (ft_getenv(mini, temp))
-				copy = ft_strjoin(temp2, ft_getenv(mini, temp));
-			else
-				copy = ft_strdup(temp2);
-			free(temp);
-			free(temp2);
-			temp = copy;
-			if (str[i] == '}')
-				copy = ft_strjoin(copy, str + i + 1);
-			else
-				copy = ft_strjoin(copy, str + i);
-			free(str);
-			free(temp);
-			str = copy;
-			str = ft_quote_env(str, c, mini);
-			break ;
-		}
-		i++;
-	}
-	return (str);
-}
-
-char	*ft_getquote(char *str, int *i, char c, t_m *mini) // Check env dans les quotes OUBLIE PAS !
+char	*ft_getquote(char *str, int *i, char c, t_m *mini)
 {
 	char	*arg;
 	char	*s;
 
 	arg = ft_calloc(sizeof(char), 1);
 	s = ft_calloc(sizeof(char), 2);
-	while (str[*i] && str[*i] != c) // temps quon retombe pas sur la meme quote
+	while (str[*i] && str[*i] != c)
 	{
-		if (str[*i] == '\\' && str[(*i + 1)] != c) // Pour par exemple si on a :  bonsoir je m\'appelle mouloud 
+		if (str[*i] == '\\' && str[(*i + 1)] != c)
 			(*i)++;
-		s[0] = str[*i]; // MOn strjoin ne prend pas de char seulement de char *
-		arg = free_add_assign(arg, ft_strjoin(arg, s));
+		s[0] = str[*i];
+		arg = ft_fa(arg, ft_strjoin(arg, s));
 		(*i)++;
 	}
 	free(s);
@@ -104,15 +52,14 @@ t_token	ft_redirection(char *str, char c, int *i, t_m *mini)
 	t_token	token;
 	t_token	temp;
 
-	token.env = 0;
-	token.type = 0;
-	if (str[*i + 1] && (ft_redirec(str[*i + 1]))) // On regarde si on a un << ou un >> ou un <> ou un ><
+	ft_reset_token(&token);
+	if (str[*i + 1] && (ft_redirec(str[*i + 1])))
 	{
-		token.value = ft_strndup(str + *i, 2); //On copie a partir de *i 2 cacartere
-		if (c == '>' && str[*i + 1] == '<') // un ><
+		token.value = ft_strndup(str + *i, 2);
+		if (c == '>' && str[*i + 1] == '<')
 			token.type = TOKEN_ERROR;
 		else
-			token.type = ft_get_redirection(token.value); // faire un ft_check redirection
+			token.type = ft_get_redirection(token.value);
 		*i = *i + 2;
 		if (token.type == TOKEN_REDIRECTION_DELIMTER)
 		{
@@ -124,14 +71,8 @@ t_token	ft_redirection(char *str, char c, int *i, t_m *mini)
 			free(temp.value);
 		}
 	}
-	else // Si c'est un seul caractere on le renvoie ce token
-	{
-		token.value = malloc(sizeof(char) * 2);
-		token.value[0] = c;
-		token.value[1] = '\0';
-		token.type = ft_get_redirection(token.value); // faire un ft_check redirection
-		(*i)++;
-	}
+	else
+		ft_set_token(&token, c, -10, (*i)++);
 	return (token);
 }
 
@@ -141,13 +82,13 @@ t_token	ft_pipe(char *str, char c, int *i)
 
 	token.env = 0;
 	token.type = 0;
-	if (str[*i + 1] && (c == str[*i + 1])) // On regarde si on a un ||
+	if (str[*i + 1] && (c == str[*i + 1]))
 	{
-		token.value = ft_strndup(str + *i, 2); //On copie a partir de *i 2 cacartere
-		token.type = TOKEN_ERROR; // || est dans les bonus donc erreur de syntax
+		token.value = ft_strndup(str + *i, 2);
+		token.type = TOKEN_ERROR;
 		*i = *i + 2;
 	}
-	else // Si c'est un seul caractere on le renvoie ce token
+	else
 	{
 		token.value = malloc(sizeof(char) * 2);
 		token.value[0] = c;
@@ -158,97 +99,7 @@ t_token	ft_pipe(char *str, char c, int *i)
 	return (token);
 }
 
-t_token	ft_getarg(char *str, int *i, t_m *mini) // On va traiter un argument et voir comment le traiter
-{
-	t_token	token; // A mon avis un token sera mieux
-	char	*s;
-	char	*temp;
-
-	token.value = ft_calloc(sizeof(char), 1);
-	token.env = 0;
-	token.fd = 0;
-	s = ft_calloc(sizeof(char), 2);
-	while (str[*i] && !ft_whitespace(str[*i])) // Temps que ya pas de whitespace
-	{
-		if (ft_quote(str[*i])) // Si on tombe sur une quote alors on la parser correctement ducoup ici ca sera forcement un CHAR ARGUMENT de type CHAR *
-		{
-			(*i)++;
-			token.type = TOKEN_ARGUMENT;
-			temp = ft_getquote(str, i, str[*i - 1], mini);
-			token.value = free_add_assign(token.value, ft_strjoin(token.value, temp)); // Et on va la mettre dans token.value avec strjoin
-			free(temp);
-		}
-		else // Sinon c un argument classique IL FAUT REGATDER SI YA DES PIPES OU DES TRUCS CHELOU
-		{
-			if (str[*i] == '\\') // Pour par exemple si on a :  bonsoir je m\'appelle mouloud 
-				(*i)++;
-			else if (ft_redirec(str[*i]))
-			{
-				if (ft_strlen(token.value) >= 1)
-					return (free_and_return(s, token));
-				else
-					return (free_and_return(token.value, free_and_return(s, ft_redirection(str, str[*i], i, mini)))); // On capture le < ou le > << >>
-			}
-			else if (str[*i] == '|')
-			{
-				if (ft_strlen(token.value) >= 1)
-					return (free_and_return(s, token));
-				else
-					return (free_and_return(token.value, free_and_return(s, ft_pipe(str, str[*i], i)))); // On capture le | ou le ||
-			}
-			else if (str[*i] == '$')
-				token.env = 1;
-			s[0] = str[*i]; // Pour le strjoin
-			token.type = TOKEN_ARGUMENT;
-			token.value = free_add_assign(token.value, ft_strjoin(token.value, s)); // Ducoup on va join chaque charactère
-		}
-		(*i)++;
-	}
-	return (free_and_return(s, token));
-}
-
-t_token *ft_parse_env(t_token *cmd, t_m *mini, int size)
-{
-	int 	i;
-	int		h;
-	int		count;
-	t_token token;
-	//char	*temp;
-
-	i = 0;
-	while (cmd[i].type)
-	{
-		if (cmd[i].env)
-		{
-			cmd[i].value = ft_quote_env(cmd[i].value, '"', mini);
-			//temp = cmd[i].value;
-			if (!cmd[i].value || ft_strlen(cmd[i].value) <= 0)
-			{
-				cmd = ft_remove_cmd(cmd, size--, i);
-				cmd = ft_parse_env(cmd, mini, size);
-				break;
-			}
-			h = 0;
-			count = 1;
-			while (cmd[i].value[h])
-			{
-				token = ft_getarg(cmd[i].value, &h, mini);
-				token.type = cmd[i].type;
-				token.env = 0;
-				cmd = ft_insert_cmd(cmd, ++size, i + count++, token);
-				while (cmd[i].value[h] && ft_whitespace(cmd[i].value[h])) // On évite les boucles infini
-					h++;
-			}
-			cmd = ft_remove_cmd(cmd, size--, i);
-			cmd = ft_parse_env(cmd, mini, size);
-			break;
-		}
-		i++;
-	}
-	return (cmd);
-}
-
-t_token	*ft_partsing(char *str, t_m *mini) // La base en gros on va juste récupérér la commande de base et après le parsing va faire le reste
+t_token	*ft_partsing(char *str, t_m *mini)
 {
 	int		i;
 	int		j;
@@ -257,22 +108,21 @@ t_token	*ft_partsing(char *str, t_m *mini) // La base en gros on va juste récup
 
 	cmd = malloc(sizeof(t_token) * 1);
 	i = 0;
-	while (str[i] && ft_whitespace(str[i]))  // On va au prochain argument
+	while (str[i] && ft_whitespace(str[i]))
 		i++;
 	j = 0;
 	while (str[i])
 	{
-		temp = ft_getarg(str, &i, mini); // On va recup chaque argument
+		temp = ft_getarg(str, &i, mini);
 		if (temp.value)
 		{
 			cmd = ft_realloc_cmd(cmd, j);
 			cmd[j++] = temp;
 		}
-		while (str[i] && ft_whitespace(str[i])) // On évite les boucles infini
+		while (str[i] && ft_whitespace(str[i]))
 			i++;
 	}
-	cmd[j].type = TOKEN_NULL;
-	cmd[j].value = NULL;
+	ft_reset_token2(&cmd[j]);
 	cmd = ft_parse_env(cmd, mini, j);
 	ft_parse_token(cmd, mini);
 	return (cmd);
