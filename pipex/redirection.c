@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 11:45:20 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/23 16:56:05 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/23 18:53:53 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,9 @@ int	proceed_input(int *input_fd, t_token *file)
 	if (file->type == TOKEN_REDIRECTION_OUTPUT)
 		*input_fd = open(file->value, O_RDONLY);
 	else if (file->type == TOKEN_REDIRECTION_DELIMTER)
+	{
 		*input_fd = file->fd;
+	}
 	return (0);
 }
 

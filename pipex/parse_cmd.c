@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 10:11:35 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/23 16:41:32 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/23 19:41:24 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,11 @@ int	process_path(char **command)
 	if (access(*command, F_OK) == 0)
 	{
 		if (access(*command, F_OK | X_OK) == 0)
-			return (*command = ft_strdupp(*command), VALID_CMD);
+		{
+			if (access(*command, ENOTDIR) == 0)
+				return (*command = ft_strdupp(*command), VALID_CMD);
+			return (input_error("Is a directory", *command, 2), EXCUTE_NOT);
+		}
 		else
 			return (input_error("Permission denied", *command, 2), EXCUTE_NOT);
 	}

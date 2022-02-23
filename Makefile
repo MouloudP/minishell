@@ -22,6 +22,7 @@ SRCS 			=	main.c \
 					utils2.c \
 					utils3.c \
 					exit.c \
+					bonus_builtin.c \
 
 OBJS			=	${addprefix srcs/,${SRCS:.c=.o}}
 
