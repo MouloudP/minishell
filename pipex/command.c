@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 19:13:26 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/23 17:40:50 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/23 19:04:07 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ int	is_builtin(char *cmd)
 	else if (ft_strcmp(cmd, "exit") == 0)
 		return (1);
 	else if (ft_strcmp(cmd, "unset") == 0)
+		return (1);
+	else if (ft_strcmp(cmd, "tree") == 0)
 		return (1);
 	return (0);
 }

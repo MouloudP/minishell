@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 16:24:13 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/23 18:37:05 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/23 19:17:11 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ int	run_builtin(char **cmd, t_m *mini, int fd_in, int fd_out)
 		return (ft_exit(cmd, mini));
 	else if (ft_strcmp(cmd[0], "unset") == 0)
 		return (ft_mini_unset(cmd, mini));
+	else if (ft_strcmp(cmd[0], "tree") == 0)
+		return (ft_tree(cmd, fd_out));
 	return (1);
 }
 
