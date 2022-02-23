@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 12:32:06 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/22 10:08:12 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/23 11:00:18 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@ int	write_command_output(char *outfile, int fd_src)
 	if (!outfile)
 		return (input_error("parse error near '\\n'", NULL, 0));
 	fd_outfile = open(outfile, O_RDWR | O_CREAT, S_IRWXU);
-	if (fd_outfile == -1)
-		return (input_error("cant open fd", NULL, 0));
+	if (fd_outfile == INVALID_FD)
+		return (INVALID_FD);
 	close(fd_outfile);
 	unlink(outfile);
 	fd_outfile = open(outfile, O_RDWR | O_CREAT, S_IRWXU);
-	if (fd_outfile == -1)
-		return (input_error("cant open fd", NULL, 0));
+	if (fd_outfile == INVALID_FD)
+		return (INVALID_FD);
 	return (write_fd_to_fd(fd_src, fd_outfile));
 }
 
@@ -56,15 +56,15 @@ int	open_output(char *outfile, int append)
 	if (!outfile)
 		return (input_error("parse error near '\\n'", NULL, 0));
 	fd_outfile = open(outfile, O_RDWR | O_CREAT, S_IRWXU);
-	if (fd_outfile == -1)
-		return (input_error("cant open fd", NULL, 0));
+	if (fd_outfile == INVALID_FD)
+		return (INVALID_FD);
 	if (append == 0)
 	{
 		close(fd_outfile);
 		unlink(outfile);
 		fd_outfile = open(outfile, O_RDWR | O_CREAT, S_IRWXU);
-		if (fd_outfile == -1)
-			return (input_error("cant open fd", NULL, 0));
+		if (fd_outfile == INVALID_FD)
+			return (INVALID_FD);
 	}
 	else
 	{

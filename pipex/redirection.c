@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 11:45:20 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/22 10:09:08 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/23 12:18:45 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,28 +40,33 @@ t_str_tab	*create_str_tab(t_str_tab *tab, int size)
 int	redirections(t_pipe pipe, int *input_fd, int *output_fd)
 {
 	int			i;
+	int			outfile_count;
 
 	i = -1;
-	while (++i < pipe.infile_count)
+	outfile_count = 0;
+	while (++i < pipe.files_count)
 	{
-		if (*input_fd != 0)
-			close(*input_fd);
-		if (pipe.infile[i].type == TOKEN_REDIRECTION_OUTPUT)
-			*input_fd = open(pipe.infile[i].value, O_RDONLY);
-		if (pipe.infile[i].type == TOKEN_REDIRECTION_DELIMTER)
-			*input_fd = pipe.infile[i].fd;
-		if (*input_fd == -1)
-			return (-1);
+		if (pipe.files[i].type == TOKEN_REDIRECTION_OUTPUT || pipe.files[i].type == TOKEN_REDIRECTION_DELIMTER)
+		{
+			if (*input_fd > 2)
+				close(*input_fd);
+			if (pipe.files[i].type == TOKEN_REDIRECTION_OUTPUT ||)
+				*input_fd = open(pipe.files[i].value, O_RDONLY);
+			else if (pipe.files[i].type == TOKEN_REDIRECTION_DELIMTER)
+				*input_fd = pipe.files[i].fd;
+		}
+		else
+		{
+			outfile_count = 1;
+			if (*output_fd != 1)
+				close(*output_fd);
+			*output_fd = open_output(pipe.files[i].value,
+					ft_tern(pipe.files[i].type == TOKEN_REDIRECTION_INPUT, 0, 1));
+		}
+		if (*input_fd == INVALID_FD || *output_fd == INVALID_FD)
+			return (input_error(pipe.files[i].value, NULL, -666), INVALID_FD);
 	}
-	i = -1;
-	while (++i < pipe.outfile_count)
-	{
-		if (*output_fd != 1)
-			close(*output_fd);
-		*output_fd = open_output(pipe.outfile[i].value,
-				ft_tern(pipe.outfile[i].type == TOKEN_REDIRECTION_INPUT, 0, 1));
-	}
-	if (pipe.outfile_count > 0)
+	if (outfile_count > 0)
 		return (1);
 	return (0);
 }
