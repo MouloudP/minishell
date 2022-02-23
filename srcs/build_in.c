@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 13:14:42 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 16:45:37 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/23 17:41:18 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,30 @@
 int	ft_mini_cd(char **cmd, t_m *mini)
 {
 	char	*base;
-	char	*path;
+	char	*ph;
 	char	cwd[1024];
 	int		fre;
 
 	fre = 0;
 	base = ft_getenv(mini, "HOME");
-	path = cmd[1];
-	if (!path || ft_strlen(path) == 0)
-		path = base;
-	else if (ft_strncmp(path, "~", 1) == 0 && base && ++fre)
-		path = ft_strjoin(base, path + 1);
-	if (chdir(path) == -1)
-		perror("cd");
+	ph = cmd[1];
+	if (!ph || ft_strlen(ph) == 0)
+		ph = base;
+	else if (ft_strncmp(ph, "~", 1) == 0 && base && ++fre)
+		ph = ft_strjoin(base, ph + 1);
+	if (cmd[1] && cmd[2])
+		return (free_pwd(ph, fre), write(1, "cd : too many arguments\n", 24), 1);
+	if (chdir(ph) == -1)
+		return (perror("cd"), EXIT_FAILURE);
 	else
 	{
 		if (getcwd(cwd, sizeof(cwd)) != NULL)
 		{
 			ft_setenv(mini, "OLDPWD", ft_getenv(mini, "PWD"), 1);
-			ft_setenv(mini, "PWD", path, 1);
+			ft_setenv(mini, "PWD", ph, 1);
 		}
 	}
-	return (free_pwd(path, fre), EXIT_SUCCESS);
+	return (free_pwd(ph, fre), EXIT_SUCCESS);
 }
 
 int	ft_mini_pwd(char **cmd, int fd_out)
@@ -80,7 +82,7 @@ int	ft_mini_echo(char **cmd, int fd_out)
 			n = 1;
 			i++;
 			if (!cmd[i])
-				return (1);
+				return (EXIT_SUCCESS);
 			continue ;
 		}
 		write(fd_out, cmd[i], ft_strlen(cmd[i]));
