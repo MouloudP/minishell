@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 15:44:14 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/23 14:58:03 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/23 15:18:41 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct s_m // La struc du minishell
 	void			(*signal_save)(int);
 	void			(*cancel_c)(int);
 	void			(*cancel_c2)(int);
+	void			(*cancel_c4)(int);
 	int				canceldelimiters;
 	int				dup_fd;
 	t_env			*env;
@@ -34,6 +35,7 @@ typedef struct s_m // La struc du minishell
 	int				pipe_lenght;
 	int				end;
 	int				exit_status;
+	char			*exit_char;
 }	t_m;
 
 typedef struct s_token // Parsing au départ des éléments
