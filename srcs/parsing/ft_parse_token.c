@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 12:50:05 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/24 14:44:13 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/24 19:08:46 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_create_pipe1(t_token *token, t_pipe *pipe, int i, int *j)
 		|| token[*j].type == TOKEN_COMMAND)
 		pipe[i].cmd_count++;
 	else if (token[*j].type >= TOKEN_REDIRECTION_INPUT
-		&& token[*j].type <= TOKEN_REDIRECTION_OTHER)
+		&& token[*j].type <= TOKEN_REDIRECTION_DELIMTER)
 	{
 		if (token[*j].type != TOKEN_REDIRECTION_DELIMTER)
 			(*j)++;
@@ -95,6 +95,28 @@ int	ft_check_token_syntax(t_token *token, int i)
 	}
 	return (0);
 }
+
+/*void	ft_print_token(t_token *token)
+{
+	int	i;
+	i = 0;
+	while (token[i].value)
+	{
+		if (token[i].type == 1)
+			ft_printf("[%d] TYPE : %s | VALUE : %s\n", i, "COMMAND", token[i].value);
+		else if (token[i].type == 2)
+			ft_printf("[%d] TYPE : %s | VALUE : %s\n", i, "ARGUMENT", token[i].value);
+		else if (token[i].type == 3)
+			ft_printf("[%d] TYPE : %s | VALUE : %s\n", i, "PIPE", token[i].value);
+		else if (token[i].type >= 4 && token[i].type <= 8)
+			ft_printf("[%d] TYPE : %s | VALUE : %s\n", i, "REDIRECTION", token[i].value);
+		else if (token[i].type == 9)
+			ft_printf("[%d] TYPE : %s | VALUE : %s\n", i, "FILE", token[i].value);
+		else if (token[i].type == 10)
+			ft_printf("[%d] TYPE : %s | VALUE : %s\n", i, "ERROR", token[i].value);
+		i++;
+	}
+}*/
 
 void	ft_parse_token(t_token *token, t_m *mini)
 {

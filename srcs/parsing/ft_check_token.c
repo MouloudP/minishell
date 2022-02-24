@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 12:26:44 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/24 15:02:46 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/24 19:08:14 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	ft_add_pipe(t_token *token, t_pipe *pipe, int i, int j)
 			pipe[i].cmd[pipe[i].cmd_count++] = ft_copy_token(token[j]);
 		}
 		else if (token[j].type >= TOKEN_REDIRECTION_INPUT
-			&& token[j].type <= TOKEN_REDIRECTION_OTHER)
+			&& token[j].type <= TOKEN_REDIRECTION_DELIMTER)
 		{
 			if (token[j].type != TOKEN_REDIRECTION_DELIMTER)
 			{
