@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 12:26:44 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 19:42:18 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/24 12:33:17 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 	int	i;
 
 	i = 0;
-	while (token[i].value)
+	while (token[i].value && token[i].type)
 	{
 		if (token[i].type == 1)
 			ft_printf("[%d] TYPE : %s | VALUE : %s\n", i, "COMMAND", token[i].value);
@@ -70,19 +70,20 @@ void	ft_parse_start(t_token *token, int *i)
 	cmd = 1;
 	while (token[*i].value && token[*i].type != TOKEN_PIPE)
 	{
-		if (token[*i].type >= 4 && token[*i].type <= 8
+		if (token[*i].value && token[*i].type >= 4 && token[*i].type <= 8
 			&& token[*i].type != TOKEN_REDIRECTION_DELIMTER)
 		{
 			(*i)++;
-			if (token[*i].type == TOKEN_ARGUMENT)
+			if (token[*i].value && token[*i].type == TOKEN_ARGUMENT)
 				token[*i].type = TOKEN_FILE;
 		}
-		else if (cmd && token[*i].type == TOKEN_ARGUMENT)
+		else if (cmd && token[*i].value && token[*i].type == TOKEN_ARGUMENT)
 		{
 			token[*i].type = TOKEN_COMMAND;
 			cmd = 0;
 		}
-		(*i)++;
+		if (token[*i].value)
+			(*i)++;
 	}
 }
 
@@ -121,6 +122,7 @@ void	ft_add_pipe(t_token *token, t_pipe *pipe, int i, int j)
 				pipe[i].files[pipe[i].files_count] = ft_copy_token(token[j]);
 			pipe[i].files_count++;
 		}
-		j++;
+		if (token[j].type)
+			j++;
 	}
 }

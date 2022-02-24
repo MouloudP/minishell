@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 12:50:05 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 19:42:18 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/24 12:42:12 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ void	ft_create_pipe1(t_token *token, t_pipe *pipe, int i, int *j)
 			(*j)++;
 		pipe[i].files_count++;
 	}
-	(*j)++;
+	if (token[*j].value)
+		(*j)++;
 }
 
 t_pipe	*ft_create_pipe(t_token *token, int count)

@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 10:41:15 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 11:12:50 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/24 12:38:02 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ t_token	ft_getarg(char *str, int *i, t_m *mini)
 			token.type = TOKEN_ARGUMENT;
 			token.value = ft_fa(token.value, ft_strjoin(token.value, arg.s));
 		}
-		(*i)++;
+		ft_i_incre(str, i);
 	}
 	return (free_and_return(arg.s, token));
 }

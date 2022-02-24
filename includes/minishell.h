@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 10:16:16 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 19:45:11 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/24 12:38:15 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ int		ft_whitespace(char c);
 int		ft_quote(char c);
 int		ft_redirec(char c);
 void	ft_exit_error(char *str, int num);
+void	ft_i_incre(char *str, int *i);
 
 // Pipex
 int		pipex(t_pipe *pipes, int pipe_size, char **env, t_m *mini);

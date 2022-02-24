@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 11:32:00 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 19:42:18 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/24 12:37:55 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,10 @@ void	ft_reset_token2(t_token *token)
 {
 	token->type = TOKEN_NULL;
 	token->value = NULL;
+}
+
+void	ft_i_incre(char *str, int *i)
+{
+	if (str[*i])
+		(*i)++;
 }

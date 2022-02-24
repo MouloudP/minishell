@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 10:02:18 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 10:29:16 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/24 12:10:57 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*ft_quote_env2(t_quote_env arg, char c, int i)
 
 void	ft_quote_env3(t_quote_env *arg, int start, int i)
 {
-	if (arg->str[i] == '}')
+	if (arg->str[i] == '}' && arg->str[start - 1] == '{')
 	{
 		arg->temp = ft_strndup(arg->temp, i - start);
 		arg->temp2 = ft_strndup(arg->str, start - 2);
