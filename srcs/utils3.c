@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 18:25:28 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/23 17:43:54 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/24 17:22:26 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,6 @@ void	setup_signal(t_m *mini)
 	mini->cancel_c = cancel_c;
 	mini->cancel_c2 = cancel_c2;
 	mini->cancel_c4 = cancel_c4;
+	signal(SIGQUIT, cancel_c2);
 	cancel_delimiters(mini, 0);
 }
