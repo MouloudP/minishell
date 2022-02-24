@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 12:01:54 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 18:28:19 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/24 19:33:28 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,13 @@
 
 long long	long_atoi(const char *nptr)
 {
-	int			i;
+	long long	i;
 	long long	total;
-	int			neg;
+	long long	neg;
 
 	i = 0;
 	total = 0;
 	neg = 1;
-	while (nptr[i] == ' ' || (nptr[i] >= 9 && nptr[i] <= 13))
-		i++;
 	if (nptr[i] == '+')
 		i++;
 	else if (nptr[i] == '-')
@@ -38,13 +36,17 @@ long long	long_atoi(const char *nptr)
 	return (total * neg);
 }
 
+/* check if the arg is a number */
+
 int	check_argv(char *argv)
 {
 	int	j;
 
-	if ((ft_strlen(argv) <= 0) || (ft_strlen(argv) > 11)
-		|| (long_atoi(argv) < -2147483648)
-		|| (long_atoi(argv) > 2147483647))
+	if (!argv)
+		return (1);
+	if ((ft_strlen(argv) >= 20 && ft_strcmp(argv, "-9223372036854775808") > 0)
+		|| (ft_strlen(argv) >= 19
+			&& ft_strcmp(argv, "9223372036854775807") > 0))
 		return (1);
 	j = 0;
 	while (argv[j])
@@ -61,24 +63,28 @@ int	check_argv(char *argv)
 int	ft_exit(char **cmd, t_m *mini)
 {
 	int	i;
+	int	err;
 
 	i = 1;
+	err = 0;
 	while (cmd[i])
 		i++;
-	if (i > 2)
+	if (i > 2 && ++err)
 	{
-		mini->end = EXIT_FAILURE;
 		write(2, "exit: too many arguments\n", 25);
+		if (check_argv(cmd[1]) == 0)
+			return (1);
 	}
-	else if (i == 1)
-		mini->end = EXIT_SUCCESS;
-	else if (check_argv(cmd[1]))
-	{
-		mini->end = EXIT_FAILURE;
-		write(2, "exit: numeric argument required\n", 32);
-	}
+	mini->print_exit = 1;
+	mini->end = EXIT_SUCCESS;
+	if (!cmd[1])
+		return (0);
+	if (check_argv(cmd[1]) == 0)
+		return (long_atoi(cmd[1]));
 	else
-		mini->end = (int) long_atoi(cmd[1]);
-	mini->exit_status = mini->end;
-	return (1);
+	{
+		if (err == 0)
+			write(2, "exit: numeric argument required\n", 32);
+		return (mini->end = EXIT_FAILURE, 2);
+	}
 }
