@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 19:02:04 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/23 19:26:47 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/24 13:10:25 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,10 @@ int	write_times(int times, char *line, int fd_out)
 
 int	ft_tree(char **cmd, int fd_out)
 {
-	char	lines[100] = " ======== ====**=======****=======**==== ========     ==        ==        ==       ====   ";
-	int		i;
-	int		size;
+	static char	lines[100] = " ======== ====**=======****=======**==== ====="
+		"===     ==        ==        ==        ==       ====   ";
+	int			i;
+	int			size;
 
 	(void)cmd;
 	if (cmd[1] != NULL)
