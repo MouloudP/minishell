@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 16:24:21 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/23 19:04:48 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/24 12:00:08 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # include <sys/stat.h>
 # include "get_next_line.h"
 # include <../includes/token.h>
+# include <dirent.h>
+# include <errno.h>
 
 # define TOKEN_NULL 0
 # define TOKEN_COMMAND 1
