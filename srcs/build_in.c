@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 13:14:42 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 19:02:07 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/24 13:21:48 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	ft_mini_cd(char **cmd, t_m *mini)
 {
 	char	*base;
 	char	*ph;
-	char	cwd[1024];
 	int		fre;
 
 	fre = 0;
@@ -28,16 +27,12 @@ int	ft_mini_cd(char **cmd, t_m *mini)
 		ph = ft_strjoin(base, ph + 1);
 	if (cmd[1] && cmd[2])
 		return (free_pwd(ph, fre), write(1, "cd : too many arguments\n", 24), 2);
-	if (chdir(ph) == -1)
+	if (!ph || ft_strlen(ph) == 0 || !ft_getenv(mini, "PWD"))
+		return (write(2, "cd : Environement unvailable\n", 29), 2);
+	else if (chdir(ph) == -1)
 		return (perror("cd"), 2);
 	else
-	{
-		if (getcwd(cwd, sizeof(cwd)) != NULL)
-		{
-			ft_setenv(mini, "OLDPWD", ft_getenv(mini, "PWD"), 1);
-			ft_setenv(mini, "PWD", ph, 1);
-		}
-	}
+		ft_go_cd(mini, ph);
 	return (free_pwd(ph, fre), EXIT_SUCCESS);
 }
 

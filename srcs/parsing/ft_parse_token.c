@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 12:50:05 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/24 12:42:12 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/24 13:23:30 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void	ft_parse_token(t_token *token, t_m *mini)
 	if (ft_check_token_syntax(token, i))
 	{
 		write(2, "Minishell : syntax error\n", 25);
-		mini->exit_status = 2;
+		mini->exit_status = 1;
 		return ;
 	}
 	if (mini->canceldelimiters != 0 || count <= 0)

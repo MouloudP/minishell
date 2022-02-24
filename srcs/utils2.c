@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 15:57:54 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/23 19:42:22 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/24 13:18:52 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,15 @@ void	*ft_malloc(size_t nb)
 		exit(EXIT_FAILURE);
 	}
 	return (NULL);
+}
+
+void	ft_go_cd(t_m *mini, char *ph)
+{
+	char	cwd[1024];
+
+	if (getcwd(cwd, sizeof(cwd)) != NULL)
+	{
+		ft_setenv(mini, "OLDPWD", ft_getenv(mini, "PWD"), 1);
+		ft_setenv(mini, "PWD", ph, 1);
+	}
 }
