@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 15:57:54 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/24 13:18:52 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/24 15:12:35 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,23 @@ void	ft_go_cd(t_m *mini, char *ph)
 		ft_setenv(mini, "OLDPWD", ft_getenv(mini, "PWD"), 1);
 		ft_setenv(mini, "PWD", ph, 1);
 	}
+}
+
+int	ft_clean_export(char *s, int *ret)
+{
+	int	i;
+
+	i = 0;
+	if (ft_isdigit(s[0]))
+		return (*ret = 2, 1);
+	while (s[i])
+	{
+		if (!ft_isalnum(s[i]) && s[i] != '_')
+		{
+			*ret = 2;
+			return (1);
+		}
+		i++;
+	}
+	return (0);
 }

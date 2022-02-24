@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 11:26:05 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 19:42:18 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/24 15:13:06 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,17 @@ int	ft_mini_export(char **cmd, t_m *mini, int out_fd)
 {
 	int		i;
 	char	**sep;
+	int		ret;
 
 	i = 1;
+	ret = EXIT_SUCCESS;
 	while (cmd[i])
 	{
 		sep = first_split(cmd[i], '=');
 		if (!sep)
 			return (EXIT_SUCCESS);
+		if (ft_clean_export(sep[0], &ret))
+			write(2, "export: not a valid identifier\n", 31);
 		if (!sep[1])
 			ft_setenv(mini, sep[0], NULL, 0);
 		else
@@ -34,7 +38,7 @@ int	ft_mini_export(char **cmd, t_m *mini, int out_fd)
 	}
 	if (i == 1)
 		ft_printexport(mini, out_fd);
-	return (EXIT_SUCCESS);
+	return (ret);
 }
 
 int	ft_mini_unset(char **cmd, t_m *mini)

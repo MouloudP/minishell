@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 12:50:05 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/24 13:23:30 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/24 14:44:13 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ int	ft_check_token_syntax(t_token *token, int i)
 	i = 0;
 	while (token[i].value)
 	{
+		if (token[i].type && token[i].type == TOKEN_ERROR)
+			return (1);
 		if (token[i].type >= 4 && token[i].type <= 8
 			&& token[i].type != TOKEN_REDIRECTION_DELIMTER)
 		{

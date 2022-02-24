@@ -6,34 +6,11 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 12:26:44 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/24 12:33:17 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/24 15:02:46 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*void	ft_print_token(t_token *token)
-{
-	int	i;
-
-	i = 0;
-	while (token[i].value && token[i].type)
-	{
-		if (token[i].type == 1)
-			ft_printf("[%d] TYPE : %s | VALUE : %s\n", i, "COMMAND", token[i].value);
-		else if (token[i].type == 2)
-			ft_printf("[%d] TYPE : %s | VALUE : %s\n", i, "ARGUMENT", token[i].value);
-		else if (token[i].type == 3)
-			ft_printf("[%d] TYPE : %s | VALUE : %s\n", i, "PIPE", token[i].value);
-		else if (token[i].type >= 4 && token[i].type <= 8)
-			ft_printf("[%d] TYPE : %s | VALUE : %s\n", i, "REDIRECTION", token[i].value);
-		else if (token[i].type == 9)
-			ft_printf("[%d] TYPE : %s | VALUE : %s\n", i, "FILE", token[i].value);
-		else if (token[i].type == 10)
-			ft_printf("[%d] TYPE : %s | VALUE : %s\n", i, "ERROR", token[i].value);
-		i++;
-	}
-}*/
 
 void	ft_print_pipe(t_pipe *pipe, int count)
 {

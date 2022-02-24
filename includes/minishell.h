@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 10:16:16 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/24 13:21:32 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/24 15:08:15 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 # define TOKEN_REDIRECTION_OUTPUT 5 // <
 # define TOKEN_REDIRECTION_APPEND 6 // >>
 # define TOKEN_REDIRECTION_DELIMTER 7 // <<
-# define TOKEN_REDIRECTION_OTHER 8 // <>
+# define TOKEN_REDIRECTION_OTHER 5 // <>
 # define TOKEN_FILE 9
 # define TOKEN_ERROR 10 // >< Error de parsing || &&
 
@@ -94,6 +94,7 @@ int		ft_redirec(char c);
 void	ft_exit_error(char *str, int num);
 void	ft_i_incre(char *str, int *i);
 void	ft_go_cd(t_m *mini, char *ph);
+int		ft_clean_export(char *s, int *ret);
 
 // Pipex
 int		pipex(t_pipe *pipes, int pipe_size, char **env, t_m *mini);

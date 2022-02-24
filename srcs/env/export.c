@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 09:51:42 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 19:42:18 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/24 14:56:51 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ void	ft_print_new_export(t_m *mini, int out_fd, t_env *new)
 		if (new[i].init)
 		{
 			write(out_fd, new[i].name, ft_strlen(new[i].name));
-			write(out_fd, "=", 1);
+			write(out_fd, "=\"", 2);
 			write(out_fd, new[i].value, ft_strlen(new[i].value));
-			write(out_fd, "\n", 1);
+			write(out_fd, "\"\n", 2);
 		}
 		else
 		{

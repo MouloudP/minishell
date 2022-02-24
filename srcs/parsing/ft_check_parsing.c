@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 15:26:50 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/24 11:57:08 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/24 14:42:13 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	ft_get_redirection(char *s)
 	else if (ft_strcmp(s, "<<") == 0)
 		return (TOKEN_REDIRECTION_DELIMTER);
 	else if (ft_strcmp(s, "<>") == 0)
-		return (TOKEN_REDIRECTION_OTHER);
+		return (TOKEN_ERROR);
 	return (TOKEN_ERROR);
 }
 
