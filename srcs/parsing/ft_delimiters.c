@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 11:38:23 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 19:10:05 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/26 18:14:17 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_delimiters2(char **line, char *s, char *temp, char **ret)
 {
 	free(*line);
 	*line = readline("\e[0;35m>\e[0;37m ");
-	if (*line && *line[0] && ft_strcmp(*line, s) != 0)
+	if (*line && ft_strcmp(*line, s) != 0)
 	{
 		temp = *ret;
 		*ret = ft_strjoin(*ret, *line);
@@ -42,6 +42,7 @@ void	ft_delimiters(char *s, t_token *token, t_m *mini)
 	char	*ret;
 	char	*temp;
 	int		pipes[2];
+	int		start;
 
 	if (pipe(pipes) == -1)
 	{
@@ -53,8 +54,12 @@ void	ft_delimiters(char *s, t_token *token, t_m *mini)
 	temp = NULL;
 	signal(SIGINT, cancel_c3);
 	mini->dup_fd = dup(0);
-	while (line && ft_strcmp(line, s) != 0 && mini->canceldelimiters == 0)
+	start = 1;
+	while (start || (line && ft_strcmp(line, s) != 0 && mini->canceldelimiters == 0))
+	{
+		start = 0;
 		ft_delimiters2(&line, s, temp, &ret);
+	}
 	if (mini->canceldelimiters)
 		return ;
 	if (line)
