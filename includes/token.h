@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 15:44:14 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/23 19:16:52 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/24 18:34:06 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_m // La struc du minishell
 	int				end;
 	int				exit_status;
 	char			*exit_char;
+	int				print_exit;
 }	t_m;
 
 typedef struct s_token // Parsing au départ des éléments
