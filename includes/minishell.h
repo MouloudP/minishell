@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 10:16:16 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/24 19:14:58 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/27 10:47:28 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ t_token	*ft_parse_env(t_token *cmd, t_m *mini, int size);
 void	ft_print_pipe(t_pipe *pipe, int count);
 void	ft_parse_token(t_token *token, t_m *mini);
 int		ft_check_syntax(char *str);
-void	ft_delimiters(char *s, t_token *token, t_m *mini);
+void	ft_delimiters(char *s, t_token *token, t_m *mini, int expand);
 void	ft_print_token(t_token *token);
 void	ft_add_pipe(t_token *token, t_pipe *pipe, int i, int j);
 void	ft_parse_start(t_token *token, int *i);
@@ -96,6 +96,7 @@ void	ft_exit_error(char *str, int num);
 void	ft_i_incre(char *str, int *i);
 void	ft_go_cd(t_m *mini, char *ph);
 int		ft_clean_export(char *s, int *ret);
+int		ft_expand(char c);
 
 // Pipex
 int		pipex(t_pipe *pipes, int pipe_size, char **env, t_m *mini);

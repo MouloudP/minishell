@@ -6,24 +6,27 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 11:38:23 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/26 18:14:17 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/27 10:41:06 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_delimiters2(char **line, char *s, char *temp, char **ret)
+void	ft_delimiters2(t_delimiters *del, char *s, int expand)
 {
-	free(*line);
-	*line = readline("\e[0;35m>\e[0;37m ");
-	if (*line && ft_strcmp(*line, s) != 0)
+	del->temp = NULL;
+	free(del->line);
+	del->line = readline("\e[0;35m>\e[0;37m ");
+	if (del->line && ft_strcmp(del->line, s) != 0)
 	{
-		temp = *ret;
-		*ret = ft_strjoin(*ret, *line);
-		free(temp);
-		temp = *ret;
-		*ret = ft_strjoin(*ret, "\n");
-		free(temp);
+		if (!expand)
+			del->line = ft_quote_env(del->line, '"', del->mini);
+		del->temp = del->ret;
+		del->ret = ft_strjoin(del->ret, del->line);
+		free(del->temp);
+		del->temp = del->ret;
+		del->ret = ft_strjoin(del->ret, "\n");
+		free(del->temp);
 	}
 }
 
@@ -36,33 +39,31 @@ void	ft_delimiters1(char *ret, char *s, int *pipes, t_token *token)
 	free(ret);
 }
 
-void	ft_delimiters(char *s, t_token *token, t_m *mini)
+void	ft_delimiters(char *s, t_token *token, t_m *mini, int expand)
 {
-	char	*line;
-	char	*ret;
-	char	*temp;
-	int		pipes[2];
-	int		start;
+	t_delimiters	del;
+	int				pipes[2];
 
 	if (pipe(pipes) == -1)
 	{
 		perror("pipe");
 		return ;
 	}
-	ret = ft_calloc(sizeof(char), 1);
-	line = ft_calloc(sizeof(char), 1);
-	temp = NULL;
+	del.ret = ft_calloc(sizeof(char), 1);
+	del.line = ft_calloc(sizeof(char), 1);
+	del.mini = mini;
 	signal(SIGINT, cancel_c3);
 	mini->dup_fd = dup(0);
-	start = 1;
-	while (start || (line && ft_strcmp(line, s) != 0 && mini->canceldelimiters == 0))
+	del.start = 1;
+	while (del.start || (del.line && ft_strcmp(del.line, s) != 0
+			&& mini->canceldelimiters == 0))
 	{
-		start = 0;
-		ft_delimiters2(&line, s, temp, &ret);
+		del.start = 0;
+		ft_delimiters2(&del, s, expand);
 	}
 	if (mini->canceldelimiters)
 		return ;
-	if (line)
-		free(line);
-	ft_delimiters1(ret, s, pipes, token);
+	if (del.line)
+		free(del.line);
+	ft_delimiters1(del.ret, s, pipes, token);
 }

@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 15:26:50 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/24 14:42:13 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/27 10:50:03 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ t_token	ft_redirection(char *str, char c, int *i, t_m *mini)
 				(*i)++;
 			temp = ft_getarg(str, i, mini);
 			if (mini->canceldelimiters == 0)
-				ft_delimiters(temp.value, &token, mini);
+				ft_delimiters(temp.value, &token, mini, ft_expand(str[*i - 1]));
 			free(temp.value);
 		}
 	}

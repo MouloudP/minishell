@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 15:44:14 by pleveque          #+#    #+#             */
-/*   Updated: 2022/02/24 18:34:06 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/02/27 10:41:23 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,15 @@ typedef struct s_get_arg
 	char	*str;
 	t_m		*mini;
 }	t_get_arg;
+
+typedef struct s_delimiters
+{
+	char	*line;
+	char	*ret;
+	char	*temp;
+	int		start;
+	t_m		*mini;
+}	t_delimiters;
 
 /* BUILTS IN */
 int		ft_mini_cd(char **cmd, t_m *mini);
