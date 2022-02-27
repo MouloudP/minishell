@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 10:16:16 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/27 10:47:28 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/27 18:20:39 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_token	*ft_realloc_cmd(t_token	*cmd, int size);
 t_token	free_and_return(char *str, t_token token);
 t_token	*ft_remove_cmd(t_token *cmd, int size, int del);
 t_token	*ft_insert_cmd(t_token *cmd, int size, int insert, t_token token);
-t_token	ft_getarg(char *str, int *i, t_m *mini);
+t_token	ft_getarg(char *str, int *i, t_m *mini, int no);
 t_token	ft_redirection(char *str, char c, int *i, t_m *mini);
 t_token	ft_pipe(char *str, char c, int *i);
 t_token	*ft_parse_env(t_token *cmd, t_m *mini, int size);

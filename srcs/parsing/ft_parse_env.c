@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 11:14:50 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/24 12:11:17 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/27 18:22:14 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_token	*ft_parse_env2(t_token *cmd, t_m *mini, int *size, int i)
 	count = 1;
 	while (cmd[i].value[h])
 	{
-		token = ft_getarg(cmd[i].value, &h, mini);
+		token = ft_getarg(cmd[i].value, &h, mini, 1);
 		token.type = cmd[i].type;
 		token.env = 0;
 		cmd = ft_insert_cmd(cmd, ++(*size), i + count++, token);

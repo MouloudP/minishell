@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 13:14:42 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/24 13:21:48 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/27 17:39:37 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	ft_mini_echo(char **cmd, int fd_out)
 		}
 		write(fd_out, cmd[i], ft_strlen(cmd[i]));
 		i++;
-		if (cmd[i])
+		if (cmd[i] && ft_strlen(cmd[i - 1]) > 0)
 			write(fd_out, " ", 1);
 	}
 	if (n == 0)

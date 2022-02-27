@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 10:41:15 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/24 12:38:02 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/27 18:20:53 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	ft_set_base(t_token *token, t_get_arg *arg, t_m *mini)
 	arg->mini = mini;
 }
 
-t_token	ft_getarg(char *str, int *i, t_m *mini)
+t_token	ft_getarg(char *str, int *i, t_m *mini, int no)
 {
 	t_token		token;
 	t_get_arg	arg;
@@ -61,7 +61,7 @@ t_token	ft_getarg(char *str, int *i, t_m *mini)
 	ft_set_base(&token, &arg, mini);
 	while (str[*i] && !ft_whitespace(str[*i]))
 	{
-		if (ft_quote(str[*i]))
+		if (ft_quote(str[*i]) && !no)
 			ft_quote_arg(arg, &token, i, str);
 		else
 		{

@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 11:52:32 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/23 19:42:18 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/27 18:24:45 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,10 @@ void	ft_setenv(t_m *mini, char *name, char *value, int init)
 	ft_setenv1(mini, &i, env, value);
 }
 
-void	ft_removeenv1(t_m *mini, int *j, t_env *env)
+void	ft_removeenv1(t_m *mini, int *j, t_env *env, int temp)
 {
+	free(mini->env[temp].name);
+	free(mini->env[temp].value);
 	env[(*j)].name = NULL;
 	env[(*j)].init = 1;
 	env[(*j)++].value = NULL;
@@ -95,6 +97,7 @@ void	ft_removeenv(t_m *mini, char *name)
 	int		i;
 	int		j;
 	t_env	*env;
+	int		temp;
 
 	if (!ft_hasenv(mini, name))
 		return ;
@@ -110,7 +113,9 @@ void	ft_removeenv(t_m *mini, char *name)
 			env[j].init = mini->env[i].init;
 			j++;
 		}
+		else
+			temp = i;
 		i++;
 	}
-	ft_removeenv1(mini, &j, env);
+	ft_removeenv1(mini, &j, env, temp);
 }

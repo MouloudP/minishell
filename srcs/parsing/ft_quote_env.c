@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 10:02:18 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/24 18:16:56 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/27 18:22:24 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	v_c(char *str, int i, int start)
 {
 	return (str[i] && !ft_whitespace(str[i]) && str[i] != '$'
 		&& str[i] != '}' && !ft_isdigit(str[start])
-		&& (ft_isalnum(str[i]) || str[i] == '_'));
+		&& (ft_isalnum(str[i]) || str[i] == '_' || str[i] == '?'));
 }
 
 char	*ft_quote_env(char *str, char c, t_m *mini)

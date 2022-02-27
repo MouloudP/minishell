@@ -6,7 +6,7 @@
 /*   By: ahamdoun <ahamdoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 15:26:50 by ahamdoun          #+#    #+#             */
-/*   Updated: 2022/02/27 10:50:03 by ahamdoun         ###   ########.fr       */
+/*   Updated: 2022/02/27 18:22:33 by ahamdoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ t_token	ft_redirection(char *str, char c, int *i, t_m *mini)
 		{
 			while (str[(*i)] && ft_whitespace(str[(*i)]))
 				(*i)++;
-			temp = ft_getarg(str, i, mini);
+			temp = ft_getarg(str, i, mini, 0);
 			if (mini->canceldelimiters == 0)
 				ft_delimiters(temp.value, &token, mini, ft_expand(str[*i - 1]));
 			free(temp.value);
@@ -113,7 +113,7 @@ t_token	*ft_partsing(char *str, t_m *mini)
 	j = 0;
 	while (str[i])
 	{
-		temp = ft_getarg(str, &i, mini);
+		temp = ft_getarg(str, &i, mini, 0);
 		if (temp.value)
 		{
 			cmd = ft_realloc_cmd(cmd, j);
